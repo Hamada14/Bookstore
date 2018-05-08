@@ -44,15 +44,77 @@ CREATE TABLE IF NOT EXISTS AUTHORS (
     PRIMARY KEY (AUTHOR_ID)
 );
 
+#############################################################################
 CREATE TABLE IF NOT EXISTS BOOKS (
 	BOOK_ISBN               VARCHAR(15) NOT NULL,
     BOOK_TITLE	            VARCHAR(45) NOT NULL,
     PUBLICATION_YEAR	    YEAR NOT NULL,
     SELLING_PRICE	        DECIMAL(6, 2) NOT NULL,
     BOOK_CATEGORY	        VARCHAR(9) NOT NULL,
+    MIN_THRESHOLD			INT UNSIGNED NOT NULL,
+	QUANTITY				INT UNSIGNED NOT NULL,
+    ORDER_QUANTITY			INT UNSIGNED NOT NULL,
     
     PRIMARY KEY (BOOK_ISBN)
 );
+
+delimiter $$
+create trigger POSITIVE_QUANTITY_INSERT before insert on BOOKS
+for each row
+begin
+	if new.MIN_THRESHOLD < 0 OR new.QUANTITY < 0 OR new.ORDER_QUANTITY then
+		signal sqlstate '45000';
+	end if;
+end;$$
+delimiter ;
+
+delimiter $$
+create trigger POSITIVE_QUANTITY_UPDATE before update on BOOKS
+for each row
+begin
+	if new.MIN_THRESHOLD < 0 OR new.QUANTITY < 0 OR new.ORDER_QUANTITY then
+		signal sqlstate '45000';
+	end if;
+end;$$
+delimiter ;
+
+delimiter $$
+create trigger BOOK_CATEGORY_INSERT before insert on BOOKS
+for each row
+begin
+	if new.BOOK_CATEGORY <> "Science" AND new.BOOK_CATEGORY <> "Art" AND
+		new.BOOK_CATEGORY <> "Religion" AND new.BOOK_CATEGORY <> "History" AND
+        new.BOOK_CATEGORY <> "Geography" then
+		signal sqlstate '45000';
+	end if;
+end;$$
+delimiter ;
+
+delimiter $$
+create trigger BOOK_CATEGORY_UPDATE before update on BOOKS
+for each row
+begin
+	if new.BOOK_CATEGORY <> "Science" AND new.BOOK_CATEGORY <> "Art" AND
+		new.BOOK_CATEGORY <> "Religion" AND new.BOOK_CATEGORY <> "History" AND
+        new.BOOK_CATEGORY <> "Geography" then
+		signal sqlstate '45000';
+	end if;
+end;$$
+delimiter ;
+
+delimiter $$
+create trigger BOOK_ORDER_BELOW_THRESHOLD after update on BOOKS
+for each row
+begin
+	if new.QUANTITY < new.MIN_THRESHOLD AND old.QUANTITY >= new.MIN_THRESHOLD then
+		INSERT into BOOK_ORDER(BOOK_ISBN, QUANTITY) VALUES(new.BOOK_ISBN, new.ORDER_QUANTITY);
+    end if;
+end;$$
+delimiter ;
+#############################################################################
+
+
+
 
 CREATE TABLE IF NOT EXISTS BOOK_PUBLISHERS (
 	BOOK_ISBN 	            VARCHAR(15) NOT NULL,
@@ -85,6 +147,18 @@ CREATE TABLE IF NOT EXISTS BOOK_ORDER(
     PRIMARY KEY(ORDER_ID),
     FOREIGN KEY(BOOK_ISBN) REFERENCES BOOKS(BOOK_ISBN) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+delimiter $$
+create trigger UPDATE_BOOK_QUANTITY_AFTER_ORDER before delete on BOOK_ORDER
+for each row
+begin
+	INSERT INTO COMPLETE_ORDERS(ORDER_ID, BOOK_ISBN, QUANTITY, ISSUE_TIME) 
+		VALUES(old.ORDER_ID, old.BOOK_ISBN, old.QUANTITY, old.ISSUE_TIME);
+	UPDATE BOOKS
+		SET BOOKS.QUANTITY = BOOKS.QUANTITY + old.QUANTITY
+        where BOOKS.ISBN = old.BOOK_ISBN;
+end;$$
+delimiter ;
 
 CREATE TABLE IF NOT EXISTS COMPLETE_ORDERS(
 	ORDER_ID				INT NOT NULL,
@@ -136,3 +210,9 @@ CREATE TABLE IF NOT EXISTS SHOPPING_ORDER_ITEMS (
     FOREIGN KEY(SHOPPING_ORDER_ID) REFERENCES SHOPPING_ORDER(SHOPPING_ORDER_ID) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(BOOK_ISBN) REFERENCES BOOKS(BOOK_ISBN) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
+
+
+
+#### Indices to speed up tables
