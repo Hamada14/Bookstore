@@ -5,10 +5,10 @@ import javafx.stage.Stage;
 
 public class BookStoreUI extends Application {
 
-	private static final String APP_TITLE = "Alphabit Bookstore";
-	private static final String LOGIN_VIEW = "view/LoginView.fxml";
-	private static final String REGISTER_VIEW = "view/RegisterView.fxml";
-	private static final String MANAGER_VIEW = "view/ManagerView.fxml";
+	private static final String APP_TITLE = "Alphabet Bookstore";
+	private static final String LOGIN_VIEW = "/LoginView.fxml";
+	private static final String REGISTER_VIEW = "/RegisterView.fxml";
+	private static final String MANAGER_VIEW = "/ManagerView.fxml";
 
 	private Stage primaryStage;
 	private static ControlForm login, register, manager;

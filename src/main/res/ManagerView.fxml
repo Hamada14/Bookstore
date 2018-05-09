@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <ToolBar prefHeight="50.0" prefWidth="472.0" style="-fx-background-color: #926757;" BorderPane.alignment="CENTER">
          <items>
@@ -17,7 +17,7 @@
     			<graphic>
         			<ImageView fitHeight="45.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/logo.PNG" />
+                        <Image url="@/images/logo.PNG" />
                      </image>
                   </ImageView>
     			</graphic>
@@ -32,7 +32,7 @@
     			<graphic>
         			<ImageView fitHeight="51.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                       <image>
-                        <Image url="@../../../images/shoppingCart.PNG" />
+                        <Image url="@/images/shoppingCart.PNG" />
                      </image>
                    </ImageView>
     			</graphic>
@@ -41,7 +41,7 @@
     			<graphic>
         			<ImageView fitHeight="55.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
                       <image>
-                        <Image url="@../../../images/settings.PNG" />
+                        <Image url="@/images/settings.PNG" />
                      </image>
                    </ImageView>
     			</graphic>
@@ -55,7 +55,7 @@
 			<graphic>
     			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="@../../../images/addUser.PNG" />
+                    <Image url="@/images/addUser.PNG" />
                  </image>
                </ImageView>
 			</graphic>
@@ -64,7 +64,7 @@
 			<graphic>
       			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="@../../../images/addBook.PNG" />
+                    <Image url="@/images/addBook.PNG" />
                  </image>
                </ImageView>
 			</graphic>
@@ -73,7 +73,7 @@
 			<graphic>
       			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="@../../../images/modifyBook.PNG" />
+                    <Image url="@/images/modifyBook.PNG" />
                  </image>
                </ImageView>
 			</graphic>
@@ -82,7 +82,7 @@
 			<graphic>
       			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="@../../../images/placeOrder.PNG" />
+                    <Image url="@/images/placeOrder.PNG" />
                  </image>
                </ImageView>
 			</graphic>
@@ -91,7 +91,7 @@
 			<graphic>
       			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="@../../../images/modifyOrder.PNG" />
+                    <Image url="@/images/modifyOrder.PNG" />
                  </image>
                </ImageView>
 			</graphic>
@@ -100,7 +100,7 @@
 			<graphic>
       			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="@../../../images/report.PNG" />
+                    <Image url="@/images/report.PNG" />
                  </image>
                </ImageView>
 			</graphic>

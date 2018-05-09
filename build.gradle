@@ -1,0 +1,47 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+archivesBaseName = 'Bookstore'
+version = '1.0-SNAPSHOT' 
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'alphabit.BookStoreUI'
+    }
+}
+
+buildscript {
+        repositories {
+                jcenter()
+        }
+        dependencies {
+                // Embedded Jetty 9 Gradle Plugin
+                classpath (group: 'com.sahlbach.gradle', name: 'gradle-jetty-eclipse-plugin', version: '1.9.+')
+        }
+}
+
+apply plugin: 'jettyEclipse'
+apply plugin: 'war'
+
+dependencies {
+	compile  'log4j:log4j:1.2.16'
+	// JAX-RS 2.0(.1)
+	compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+	// Jersey 2.15
+	compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.15'
+	// Servlet 3
+	compile 'javax.servlet:javax.servlet-api:3.1.0'
+} 
+
+sourceSets.main {
+    java {
+        srcDirs = ['/src/main/java'] //assume that your source codes are inside this path
+    }
+    resources {
+        srcDirs = ['/src/main/res']
+        exclude "**/*.java"
+    }
+}

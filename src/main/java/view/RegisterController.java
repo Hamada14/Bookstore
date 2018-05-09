@@ -1,4 +1,4 @@
-package alphabit.view;
+package view;
 
 
 import alphabit.BookStoreUI;
