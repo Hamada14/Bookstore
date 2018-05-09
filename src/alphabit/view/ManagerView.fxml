@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <ToolBar prefHeight="50.0" prefWidth="472.0" style="-fx-background-color: #926757;" BorderPane.alignment="CENTER">
+         <items>
+         	<Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="146.0" style="-fx-background-color: transparent;">
+    			<graphic>
+        			<ImageView fitHeight="45.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/logo.PNG" />
+                     </image>
+                  </ImageView>
+    			</graphic>
+			</Button>
+            <Pane prefHeight="6.0" prefWidth="374.0" />
+            <Label alignment="CENTER" text=" User Name " textFill="#f8f3f3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="72.0" style="-fx-background-color: transparent;">
+    			<graphic>
+        			<ImageView fitHeight="51.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../../../images/shoppingCart.PNG" />
+                     </image>
+                   </ImageView>
+    			</graphic>
+			</Button>
+			<Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="62.0" style="-fx-background-color: transparent;">
+    			<graphic>
+        			<ImageView fitHeight="55.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../../../images/settings.PNG" />
+                     </image>
+                   </ImageView>
+    			</graphic>
+			</Button>
+         </items>
+      </ToolBar>
+   </top>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      	<Button layoutX="30.0" layoutY="26.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="208.0" prefWidth="228.0" style="-fx-background-color: transparent;">
+			<graphic>
+    			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@../../../images/addUser.PNG" />
+                 </image>
+               </ImageView>
+			</graphic>
+		</Button>
+		<Button layoutX="321.0" layoutY="26.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="208.0" prefWidth="55.0" style="-fx-background-color: transparent;">
+			<graphic>
+      			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@../../../images/addBook.PNG" />
+                 </image>
+               </ImageView>
+			</graphic>
+		</Button>
+		<Button layoutX="556.0" layoutY="35.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="208.0" prefWidth="55.0" style="-fx-background-color: transparent;">
+			<graphic>
+      			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@../../../images/modifyBook.PNG" />
+                 </image>
+               </ImageView>
+			</graphic>
+		</Button>
+		<Button layoutX="30.0" layoutY="296.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="208.0" prefWidth="55.0" style="-fx-background-color: transparent;">
+			<graphic>
+      			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@../../../images/placeOrder.PNG" />
+                 </image>
+               </ImageView>
+			</graphic>
+		</Button>
+		<Button layoutX="321.0" layoutY="302.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="166.0" prefWidth="205.0" style="-fx-background-color: transparent;">
+			<graphic>
+      			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@../../../images/modifyOrder.PNG" />
+                 </image>
+               </ImageView>
+			</graphic>
+		</Button>
+		<Button layoutX="555.0" layoutY="302.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="166.0" prefWidth="181.0" style="-fx-background-color: transparent;">
+			<graphic>
+      			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@../../../images/report.PNG" />
+                 </image>
+               </ImageView>
+			</graphic>
+		</Button>
+      </Pane>
+   </center>
+</BorderPane>
