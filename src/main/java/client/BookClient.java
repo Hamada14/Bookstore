@@ -9,7 +9,6 @@ import javax.xml.ws.Service;
 
 import server.BookStoreServer;
 import server.Publisher;
-import server.database.entities.User;
 
 public class BookClient {
 

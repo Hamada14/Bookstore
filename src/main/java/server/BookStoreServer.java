@@ -10,6 +10,7 @@ import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
 import server.database.entities.Book;
+import server.database.entities.Identity;
 import server.database.entities.User;
 
 
@@ -34,5 +35,11 @@ public interface BookStoreServer {
 
 	@WebMethod
 	boolean promoteUser(HashMap<String, User> temp);
+	
+	@WebMethod
+	ResponseData loginUser(Identity identity);
+
+	@WebMethod
+	boolean isManager(Identity identity);
 
 }

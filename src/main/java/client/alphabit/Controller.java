@@ -12,7 +12,7 @@ public class Controller implements ControlForm {
 	private Stage primaryStage;
 	private BorderPane view;
 	private Scene scene;
-
+	
 	public Controller(Stage primaryStage, String fxml) {
 		this.primaryStage = primaryStage;
 		try {

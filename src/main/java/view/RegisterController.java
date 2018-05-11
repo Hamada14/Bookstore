@@ -4,7 +4,6 @@ package view;
 import client.BookClient;
 import client.alphabit.BookStoreUI;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import server.ResponseData;
@@ -36,9 +35,10 @@ public class RegisterController {
 		User registeredUser = getUser();
 		ResponseData response = BookClient.getServer().addNewUser(registeredUser);
 		if(!response.isSuccessful()) {
-			displayErrorDialog(response.getError());
+			BookStoreUI.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, ERROR_MESSAGE_HEADER, response.getError());
 		} else {
-			displaySuccessDialog();
+			BookStoreUI.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, SUCCESSFUL_TEXT);
+			clearTextFields();
 			BookStoreUI.showLogin();
 		}
 	}
@@ -54,20 +54,13 @@ public class RegisterController {
 		return userBuilder.buildUser();
 	}
 	
-	private void displayErrorDialog(String errorMessage) {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle(ERROR_MESSAGE_TITLE);
-		alert.setHeaderText(ERROR_MESSAGE_HEADER);
-		alert.setContentText(errorMessage);
-		alert.showAndWait();
-	}
-	
-	private void displaySuccessDialog() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle(SUCCESSFUL_TITLE);
-		alert.setHeaderText(null);
-		alert.setContentText(SUCCESSFUL_TEXT);
 
-		alert.showAndWait();
+	private void clearTextFields() {
+		firstName.clear();
+		lastName.clear();
+		password.clear();
+		address.clear();
+		email.clear();
+		phoneNumber.clear();
 	}
 }

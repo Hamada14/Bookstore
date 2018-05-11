@@ -9,7 +9,6 @@ public class DBConfig {
 	public static final String DB_USER_NAME = "user";
 	public static final String DB_PASSWORD = "password";
 	public static final String DB_NAME = "db";
-	public static final String USER_TABLE_NAME = "userTable";
 	
 	private static final String PROP_FILE_NAME = "config.properties";
 	

@@ -2,7 +2,6 @@ package server;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +10,7 @@ import javax.jws.WebService;
 
 import server.database.DBConfig;
 import server.database.entities.Book;
+import server.database.entities.Identity;
 import server.database.entities.User;
 
 //Service Implementation
@@ -27,25 +27,19 @@ public class BookStoreServerImpl implements BookStoreServer {
 
 	@Override
 	public ResponseData addNewUser(User user) {
-		String userErrors = user.validateData();
-		if(userErrors != null) {
-			ResponseData rs = new ResponseData();
-			rs.setError(userErrors);
-			return rs;
-		}
-		try {
-			Statement st = connection.createStatement();
-			st.execute("use " + config.getPropertyValue(DBConfig.DB_NAME));
-			user.registerUser(connection, config.getPropertyValue(DBConfig.USER_TABLE_NAME));
-		} catch (SQLException e) {
-			ResponseData rs = new ResponseData();
-			rs.setError("Couldn't execute query");
-			e.printStackTrace();
-			return rs;
-		}
-		return new ResponseData();
+		return User.addNewUser(user, connection);
 	}
 
+	@Override
+	public ResponseData loginUser(Identity identity) {
+		return identity.isValidIdentity(connection);
+	}
+	
+	@Override
+	public boolean isManager(Identity identity) {
+		return identity.isManager(connection);
+	}
+	
 	@Override
 	public boolean editUser(User user) {
 		// TODO Auto-generated method stub
@@ -77,13 +71,15 @@ public class BookStoreServerImpl implements BookStoreServer {
 			String password = config.getPropertyValue(DBConfig.DB_PASSWORD);
 
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dbName, userName, password);
+			Statement st = con.createStatement();
+			st.execute("use " + config.getPropertyValue(DBConfig.DB_NAME));
 			return con;
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	@Override
 	public boolean promoteUser(HashMap<String, User> temp) {
 		// TODO Auto-generated method stub
