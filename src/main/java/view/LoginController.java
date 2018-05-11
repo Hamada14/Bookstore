@@ -1,6 +1,6 @@
 package view;
 
-import alphabit.BookStoreUI;
+import client.alphabit.BookStoreUI;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;

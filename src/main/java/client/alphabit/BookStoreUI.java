@@ -1,4 +1,4 @@
-package alphabit;
+package client.alphabit;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

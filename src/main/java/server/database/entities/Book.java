@@ -1,4 +1,4 @@
-package entities;
+package server.database.entities;
 
 public class Book {
 	private String bookISBN;

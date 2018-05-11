@@ -1,4 +1,4 @@
-package alphabit;
+package client.alphabit;
 
 import java.io.IOException;
 
