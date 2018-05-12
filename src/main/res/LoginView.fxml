@@ -22,12 +22,12 @@
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="202.0" layoutY="57.0" prefHeight="68.0" prefWidth="138.0" text="email">
+            <Label layoutX="202.0" layoutY="57.0" prefHeight="68.0" prefWidth="138.0" text="User Name">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label layoutX="202.0" layoutY="136.0" text="Passwoard">
+            <Label layoutX="202.0" layoutY="136.0" text="Password">
                <font>
                   <Font size="23.0" />
                </font>
@@ -38,7 +38,7 @@
                </font>
             </Button>
             <Hyperlink layoutX="436.0" layoutY="236.0" onAction="#goToRegister" text="Don't have an account?" />
-            <TextField fx:id="email" layoutX="367.0" layoutY="79.0" prefHeight="25.0" prefWidth="201.0" promptText="email" />
+            <TextField fx:id="userName" layoutX="367.0" layoutY="79.0" prefHeight="25.0" prefWidth="201.0" promptText="email" />
             <PasswordField fx:id="password" layoutX="367.0" layoutY="141.0" prefHeight="25.0" prefWidth="201.0" promptText="password" />
          </children>
       </Pane>

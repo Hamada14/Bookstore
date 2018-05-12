@@ -16,15 +16,19 @@ public class User extends Entity implements Serializable {
 
 	public static final String USER_TABLE = "USERS";
 
-	private static final String NEW_USER_QUERY = "Insert into %s(FIRST_NAME, LAST_NAME, EMAIL, PASSWORD_SHA1, PHONE_NUMBER, ADDRESS)"
-			+ "VALUES (%s, %s, %s, SHA1(%s), %s, %s);";
+	private static final String NEW_USER_QUERY = "Insert into %s(USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD_SHA1, PHONE_NUMBER, ADDRESS)"
+			+ "VALUES (%s, %s, %s, %s, SHA1(%s), %s, %s);";
+
 	private static final String GET_USER_BY_EMAIL = "Select * from %s where EMAIL = %s;";
+	private static final String GET_USER_BY_USER_NAME = "Select * from %s where USER_NAME = %s";
 
 	private static final String SHORTER_THAN_ALLOWED_ERROR = "Field can't be less than";
 	private static final String LONGER_THAN_ALLOWED_ERROR = "Field can't be longer than";
 
-	private static final String DUPLICATE_EMAIL_REGISTRATION_ERROR = "User with this email already registered";
+	private static final String DUPLICATE_EMAIL_ERROR = "User with this email already registered";
+	private static final String DUPLICATE_USER_NAME_ERROR = "User with this user name already registered";
 
+	private String userName;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -33,8 +37,13 @@ public class User extends Entity implements Serializable {
 	private String phoneNumber;
 	private boolean isManager;
 
-	public User(String firstName, String lastName, String email, String password, String address, String phoneNumber,
-			boolean isManager) {
+	public User() {
+
+	}
+
+	public User(String userName, String firstName, String lastName, String email, String password, String address,
+			String phoneNumber, boolean isManager) {
+		this.userName = userName;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -42,9 +51,6 @@ public class User extends Entity implements Serializable {
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 		this.isManager = isManager;
-	}
-
-	public User() {
 	}
 
 	@Override
@@ -61,11 +67,11 @@ public class User extends Entity implements Serializable {
 
 	public String validateData() {
 		StringBuilder sb = new StringBuilder();
-		List<String> attributes = Arrays.asList("First Name", "Last Name", "Email", "Password", "Address",
+		List<String> attributes = Arrays.asList("User Name", "First Name", "Last Name", "Email", "Password", "Address",
 				"Phone Number");
-		List<String> values = Arrays.asList(firstName, lastName, email, password, address, phoneNumber);
-		List<Integer> maxLength = Arrays.asList(20, 20, 20, 40, 50, 15);
-		List<Integer> minLength = Arrays.asList(5, 5, 5, 8, 5, 8);
+		List<String> values = Arrays.asList(userName, firstName, lastName, email, password, address, phoneNumber);
+		List<Integer> maxLength = Arrays.asList(20, 20, 20, 20, 40, 50, 15);
+		List<Integer> minLength = Arrays.asList(5, 5, 5, 5, 8, 5, 8);
 		for (int i = 0; i < attributes.size(); i++) {
 			String value = values.get(i);
 			String attribute = attributes.get(i);
@@ -81,9 +87,8 @@ public class User extends Entity implements Serializable {
 	}
 
 	private String createInsertUserQuery(String tableName) {
-		String query = String.format(NEW_USER_QUERY, tableName, addQuotes(firstName), addQuotes(lastName),
-				addQuotes(email), addQuotes(password), addQuotes(phoneNumber), addQuotes(address));
-		System.out.print(query);
+		String query = String.format(NEW_USER_QUERY, tableName, addQuotes(userName), addQuotes(firstName),
+				addQuotes(lastName), addQuotes(email), addQuotes(password), addQuotes(phoneNumber), addQuotes(address));
 		return query;
 	}
 
@@ -93,8 +98,10 @@ public class User extends Entity implements Serializable {
 		try {
 			if (userErrors != null) {
 				rs.setError(userErrors);
-			} else if (user.isAlreadyRegistered(connection)) {
-				rs.setError(DUPLICATE_EMAIL_REGISTRATION_ERROR);
+			} else if (user.isAlreadyRegisteredUserName(connection)) {
+				rs.setError(DUPLICATE_USER_NAME_ERROR);
+			} else if (user.isAlreadyRegisteredEmail(connection)) {
+				rs.setError(DUPLICATE_EMAIL_ERROR);
 			} else {
 				user.registerUser(connection, USER_TABLE);
 			}
@@ -105,13 +112,30 @@ public class User extends Entity implements Serializable {
 		return rs;
 	}
 
-	private boolean isAlreadyRegistered(Connection connection) throws SQLException {
+	private boolean isAlreadyRegisteredEmail(Connection connection) throws SQLException {
+		return isAlreadyRegistered(connection, GET_USER_BY_EMAIL, email);
+	}
+
+	private boolean isAlreadyRegisteredUserName(Connection connection) throws SQLException {
+		return isAlreadyRegistered(connection, GET_USER_BY_USER_NAME, userName);
+	}
+
+	private boolean isAlreadyRegistered(Connection connection, String selectionType, String attribute)
+			throws SQLException {
 		Statement st = connection.createStatement();
-		String query = String.format(GET_USER_BY_EMAIL, USER_TABLE, addQuotes(email));
+		String query = String.format(selectionType, USER_TABLE, addQuotes(attribute));
 		ResultSet rs = st.executeQuery(query);
 		return rs.next();
 	}
-	
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
 	public boolean isManager() {
 		return isManager;
 	}

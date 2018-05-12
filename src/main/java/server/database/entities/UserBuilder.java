@@ -2,6 +2,7 @@ package server.database.entities;
 
 public class UserBuilder {
 
+	private String userName;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -15,9 +16,13 @@ public class UserBuilder {
 	}
 
 	public User buildUser() {
-		return new User(firstName, lastName, email, password, address, phoneNumber, isManager);
+		return new User(userName, firstName, lastName, email, password, address, phoneNumber, isManager);
 	}
 
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}

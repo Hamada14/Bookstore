@@ -2,7 +2,7 @@ package view;
 
 
 import client.BookClient;
-import client.alphabit.BookStoreUI;
+import client.alphabit.BookStoreApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
@@ -18,6 +18,7 @@ public class RegisterController {
 	private static final String SUCCESSFUL_TITLE = "Registered Successfully";
 	private static final String SUCCESSFUL_TEXT = "Account registered successfully";
 	
+	@FXML private TextField userName;
 	@FXML private TextField password;
 	@FXML private TextField firstName;
 	@FXML private TextField lastName;
@@ -27,7 +28,7 @@ public class RegisterController {
 
 	@FXML
 	private void gotoLogin() {
-		BookStoreUI.showLogin();
+		BookStoreApp.showLogin();
 	}
 
 	@FXML
@@ -35,16 +36,17 @@ public class RegisterController {
 		User registeredUser = getUser();
 		ResponseData response = BookClient.getServer().addNewUser(registeredUser);
 		if(!response.isSuccessful()) {
-			BookStoreUI.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, ERROR_MESSAGE_HEADER, response.getError());
+			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, ERROR_MESSAGE_HEADER, response.getError());
 		} else {
-			BookStoreUI.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, SUCCESSFUL_TEXT);
+			BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, SUCCESSFUL_TEXT);
 			clearTextFields();
-			BookStoreUI.showLogin();
+			BookStoreApp.showLogin();
 		}
 	}
 	
 	private User getUser() {
 		UserBuilder userBuilder = new UserBuilder();
+		userBuilder.setUserName(userName.getText());
 		userBuilder.setFirstName(firstName.getText());
 		userBuilder.setLastName(lastName.getText());
 		userBuilder.setPassword(password.getText());
@@ -56,6 +58,7 @@ public class RegisterController {
 	
 
 	private void clearTextFields() {
+		userName.clear();
 		firstName.clear();
 		lastName.clear();
 		password.clear();

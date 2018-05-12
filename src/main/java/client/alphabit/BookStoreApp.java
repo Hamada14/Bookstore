@@ -4,8 +4,9 @@ import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import server.database.entities.Identity;
 
-public class BookStoreUI extends Application {
+public class BookStoreApp extends Application {
 
 	private static final String APP_TITLE = "Alphabet Bookstore";
 	private static final String LOGIN_VIEW = "/LoginView.fxml";
@@ -16,6 +17,7 @@ public class BookStoreUI extends Application {
 	private Stage primaryStage;
 	private static ControlForm login, register, manager, customer;
 	
+	private static Identity userIdentity;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -40,7 +42,8 @@ public class BookStoreUI extends Application {
 		launch(args);
 	}
 
-	public static void showCustomer() {
+	public static void showCustomer(Identity userIdentity) {
+		BookStoreApp.userIdentity = userIdentity;
 		customer.show();
 	}
 	

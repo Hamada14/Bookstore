@@ -24,8 +24,8 @@
          </image>
       </ImageView>
    </top>
-   <right>
-      <Pane prefHeight="481.0" prefWidth="800.0" translateY="-80.0" BorderPane.alignment="CENTER">
+   <center>
+      <Pane prefHeight="481.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="163.0" layoutY="136.0" text="First Name">
                <font>
@@ -52,6 +52,7 @@
                   <Font size="23.0" />
                </font>
             </Label>
+            <TextField fx:id="userName" layoutX="341.0" layoutY="48.0" prefHeight="25.0" prefWidth="257.0" promptText="no more than 20 characters" />
             <PasswordField fx:id="password" layoutX="341.0" layoutY="95.0" prefHeight="25.0" prefWidth="257.0" promptText="no more than 40 characters" />
             <TextField fx:id="firstName" layoutX="341.0" layoutY="140.0" prefHeight="25.0" prefWidth="257.0" promptText="no more than 20 characters" />
             <TextField fx:id="lastName" layoutX="341.0" layoutY="184.0" prefHeight="25.0" prefWidth="257.0" promptText="no more than 20 characters" />
@@ -69,7 +70,12 @@
                   <Font size="23.0" />
                </font>
             </Label>
+            <Label layoutX="162.0" layoutY="47.0" text="User name">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-   </right>
+   </center>
 </BorderPane>

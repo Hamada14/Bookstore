@@ -19,7 +19,7 @@
     			<graphic>
         			<ImageView fitHeight="45.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/logo.PNG" />
+                        <Image url="@images/logo.PNG" />
                      </image>
                   </ImageView>
     			</graphic>
@@ -31,7 +31,7 @@
                   <ChoiceBox fx:id="categories" layoutY="6.0" prefHeight="26.0" prefWidth="120.0" />
       			<ImageView fitHeight="39.0" fitWidth="32.0" layoutX="358.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../images/search.PNG" />
+                  <Image url="@images/search.PNG" />
                </image>
             </ImageView>
                </children></Pane>
@@ -44,7 +44,7 @@
     			<graphic>
         			<ImageView fitHeight="36.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                       <image>
-                        <Image url="@../../../images/shoppingCart.PNG" />
+                        <Image url="@images/shoppingCart.PNG" />
                      </image>
                    </ImageView>
     			</graphic>
@@ -54,7 +54,7 @@
     			<graphic>
         			<ImageView fitHeight="36.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                       <image>
-                        <Image url="@../../../images/settings.PNG" />
+                        <Image url="@images/settings.PNG" />
                      </image>
                    </ImageView>
     			</graphic>
