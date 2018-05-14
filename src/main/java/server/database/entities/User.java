@@ -2,25 +2,33 @@ package server.database.entities;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 
+
 import server.ResponseData;
 
-public class User extends Entity implements Serializable {
+public class User implements Serializable {
 
 	private static final long serialVersionUID = -6108052518548327564L;
 
 	public static final String USER_TABLE = "USERS";
 
 	private static final String NEW_USER_QUERY = "Insert into %s(USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD_SHA1, PHONE_NUMBER, ADDRESS)"
-			+ "VALUES (%s, %s, %s, %s, SHA1(%s), %s, %s);";
-
-	private static final String GET_USER_BY_EMAIL = "Select * from %s where EMAIL = %s;";
-	private static final String GET_USER_BY_USER_NAME = "Select * from %s where USER_NAME = %s";
+			+ "VALUES (?, ?, ?, ?, SHA1(?), ?, ?);";
+	private static final int INSERT_USER_NAME_INDEX = 1;
+	private static final int INSERT_FIRST_NAME_INDEX = 2;
+	private static final int INSERT_LAST_NAME_INDEX = 3;
+	private static final int INSERT_EMAIL_INDEX = 4;
+	private static final int INSERT_PASSWORD_INDEX = 5;
+	private static final int INSERT_PHONE_NUMBER_INDEX = 6;
+	private static final int INSERT_ADDRESS_INDEX = 7;
+	
+	private static final String GET_USER_BY_EMAIL = "Select * from %s where EMAIL = ?;";
+	private static final String GET_USER_BY_USER_NAME = "Select * from %s where USER_NAME = ?";
 
 	private static final String SHORTER_THAN_ALLOWED_ERROR = "Field can't be less than";
 	private static final String LONGER_THAN_ALLOWED_ERROR = "Field can't be longer than";
@@ -60,9 +68,8 @@ public class User extends Entity implements Serializable {
 	}
 
 	public void registerUser(Connection connection, String tableName) throws SQLException {
-		Statement stat = connection.createStatement();
-		String insertUserQuery = createInsertUserQuery(tableName);
-		stat.execute(insertUserQuery);
+		PreparedStatement registerUserQuery = createInsertUserQuery(connection, tableName);
+		registerUserQuery.execute();
 	}
 
 	public String validateData() {
@@ -86,10 +93,17 @@ public class User extends Entity implements Serializable {
 		return sb.length() != 0 ? sb.toString() : null;
 	}
 
-	private String createInsertUserQuery(String tableName) {
-		String query = String.format(NEW_USER_QUERY, tableName, addQuotes(userName), addQuotes(firstName),
-				addQuotes(lastName), addQuotes(email), addQuotes(password), addQuotes(phoneNumber), addQuotes(address));
-		return query;
+	private PreparedStatement createInsertUserQuery(Connection con, String tableName) throws SQLException {
+		String query = String.format(NEW_USER_QUERY, tableName);
+		PreparedStatement st = con.prepareStatement(query);
+		st.setString(INSERT_USER_NAME_INDEX, userName);
+		st.setString(INSERT_FIRST_NAME_INDEX, firstName);
+		st.setString(INSERT_LAST_NAME_INDEX, lastName);
+		st.setString(INSERT_EMAIL_INDEX, email);
+		st.setString(INSERT_PASSWORD_INDEX, password);
+		st.setString(INSERT_PHONE_NUMBER_INDEX, phoneNumber);
+		st.setString(INSERT_ADDRESS_INDEX, address);
+		return st;
 	}
 
 	public static ResponseData addNewUser(User user, Connection connection) {
@@ -122,9 +136,10 @@ public class User extends Entity implements Serializable {
 
 	private boolean isAlreadyRegistered(Connection connection, String selectionType, String attribute)
 			throws SQLException {
-		Statement st = connection.createStatement();
-		String query = String.format(selectionType, USER_TABLE, addQuotes(attribute));
-		ResultSet rs = st.executeQuery(query);
+		String query = String.format(selectionType, USER_TABLE);
+		PreparedStatement st = connection.prepareStatement(query);
+		st.setString(1, attribute);
+		ResultSet rs = st.executeQuery();
 		return rs.next();
 	}
 
