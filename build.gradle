@@ -26,6 +26,7 @@ buildscript {
 apply plugin: 'jettyEclipse'
 apply plugin: 'war'
 
+
 dependencies {
 	compile  'log4j:log4j:1.2.16'
 	// JAX-RS 2.0(.1)
@@ -36,6 +37,10 @@ dependencies {
 	compile 'javax.servlet:javax.servlet-api:3.1.0'
 	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
 	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
+	
+	// https://mvnrepository.com/artifact/javax.xml.ws/jaxws-api
+    compile group: 'javax.xml.ws', name: 'jaxws-api', version: '2.2.1'
+
 
 } 
 

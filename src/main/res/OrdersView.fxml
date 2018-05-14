@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<top>
+      <ToolBar prefHeight="50.0" prefWidth="472.0" style="-fx-background-color: #926757;" BorderPane.alignment="CENTER">
+         <items>
+         	<Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="146.0" style="-fx-background-color: transparent;">
+    			<graphic>
+        			<ImageView fitHeight="45.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/logo.PNG" />
+                     </image>
+                  </ImageView>
+    			</graphic>
+			</Button>
+            <Pane prefHeight="6.0" prefWidth="533.0" />
+            <Label alignment="CENTER" text=" User Name " textFill="#f8f3f3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
+   </top>
+    <center>
+      <Pane prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="271.0" layoutY="20.0" prefHeight="45.0" prefWidth="249.0" text="Ordered Items">
+               <font>
+                  <Font name="Book Antiqua Bold" size="30.0" />
+               </font>
+            </Label>
+            <ScrollPane layoutX="89.0" layoutY="83.0" prefHeight="368.0" prefWidth="612.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="315.0" prefWidth="603.0">
+                     <children>
+                        <GridPane fx:id="ordersPane" layoutY="6.0" prefHeight="306.0" prefWidth="598.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.5999755859375" minWidth="0.0" prefWidth="45.80000610351563" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="120.99999389648438" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="170.00002441406252" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="48.39997558593751" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="75.99997558593748" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="163.40003662109376" />
+                          </columnConstraints>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="697.0" layoutY="495.0" mnemonicParsing="false" text="CheckOut">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+               </font>
+            </Button>
+            <Label layoutX="596.0" layoutY="20.0" prefHeight="21.0" prefWidth="102.0" text="Total Price">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalPrice" alignment="CENTER" layoutX="698.0" layoutY="22.0" prefHeight="17.0" prefWidth="59.0" text="Label" />
+            <ImageView fitHeight="67.0" fitWidth="65.0" layoutX="710.0" layoutY="430.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/checkOut.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+    </center>
+</BorderPane>

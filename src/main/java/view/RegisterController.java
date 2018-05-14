@@ -10,7 +10,7 @@ import server.ResponseData;
 import server.database.entities.User;
 import server.database.entities.UserBuilder;
 
-public class RegisterController {
+public class RegisterController implements CustomController{
 		
 	private static final String ERROR_MESSAGE_TITLE = "Couldn't Register";
 	private static final String ERROR_MESSAGE_HEADER = "Please fix the following";
@@ -65,5 +65,11 @@ public class RegisterController {
 		address.clear();
 		email.clear();
 		phoneNumber.clear();
+	}
+
+	@Override
+	public void initData(Parameters parameters) {
+		// TODO Auto-generated method stub
+		
 	}
 }

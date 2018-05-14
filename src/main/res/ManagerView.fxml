@@ -41,7 +41,7 @@
 			</Button>
 			<MenuButton lineSpacing="10.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="62.0" style="-fx-background-color: transparent;">
     			<graphic>
-        			<ImageView fitHeight="55.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+        			<ImageView fitHeight="39.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                         <Image url="@images/settings.png" />
                      </image>

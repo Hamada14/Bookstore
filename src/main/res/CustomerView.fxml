@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="alphabit.view.CustomerController">
-   <top>
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CustomerController">
+	 <top>
       <ToolBar prefHeight="50.0" prefWidth="472.0" style="-fx-background-color: #926757;" BorderPane.alignment="CENTER">
-          <items>
-         	<Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="146.0" style="-fx-background-color: transparent;">
+         <items>
+         	<Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="130.0" style="-fx-background-color: transparent;">
     			<graphic>
         			<ImageView fitHeight="45.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -24,43 +30,111 @@
                   </ImageView>
     			</graphic>
 			</Button>
-			
-			<Pane prefHeight="6.0" prefWidth="374.0">
+            <Pane prefHeight="40.6" prefWidth="430.0">
                <children>
-                  <TextField layoutX="119.0" layoutY="6.0" prefHeight="26.0" prefWidth="269.0" />
-                  <ChoiceBox fx:id="categories" layoutY="6.0" prefHeight="26.0" prefWidth="120.0" />
-      			<ImageView fitHeight="39.0" fitWidth="32.0" layoutX="358.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/search.PNG" />
-               </image>
-            </ImageView>
+                  <ChoiceBox fx:id="categories" layoutX="-6.0" layoutY="8.0" prefHeight="20.0" prefWidth="100.0" />
+                  <TextField layoutX="93.0" layoutY="8.0" prefHeight="25.0" prefWidth="300.0" />
+                  <Button layoutX="392.0" layoutY="8.0" mnemonicParsing="false" onAction="#searchBooks" prefHeight="25.0" prefWidth="35.0" style="-fx-background-color: transparent;">
+                 	<graphic> 
+                 	 <ImageView fitHeight="23.0" fitWidth="21.0" layoutX="402.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/search.png" />
+                           </image></ImageView>
+                 	 </graphic>
+                  </Button>
+                  
                </children></Pane>
-            <Label alignment="CENTER" prefHeight="19.0" prefWidth="104.0" text=" User Name " textFill="#f8f3f3">
+            <Label alignment="CENTER" prefWidth="93.0" text=" User Name " textFill="#f8f3f3">
                <font>
-                  <Font size="12.0" />
+                  <Font size="14.0" />
                </font>
             </Label>
-            <Button lineSpacing="6.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="44.0" style="-fx-background-color: transparent;">
+            <Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="40.0" style="-fx-background-color: transparent;">
     			<graphic>
-        			<ImageView fitHeight="36.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+        			<ImageView fitHeight="51.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                       <image>
-                        <Image url="@images/shoppingCart.PNG" />
+                        <Image url="@images/shoppingCart.png" />
                      </image>
                    </ImageView>
     			</graphic>
 			</Button>
-            <ChoiceBox prefHeight="34.0" prefWidth="2.0">
-            <Button lineSpacing="6.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="44.0" style="-fx-background-color: transparent;">
+			<MenuButton lineSpacing="10.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="62.0" style="-fx-background-color: transparent;">
     			<graphic>
-        			<ImageView fitHeight="36.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+        			<ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                       <image>
-                        <Image url="@images/settings.PNG" />
+                        <Image url="@images/settings.png" />
                      </image>
                    </ImageView>
     			</graphic>
-			</Button>
-            </ChoiceBox>
-		 </items>
-	</ToolBar>   
+    			<items>
+                      <MenuItem mnemonicParsing="false" text="Edit your profle" />
+                  	  <MenuItem mnemonicParsing="false" text="Manager Mode" />
+                      <MenuItem mnemonicParsing="false" text="Logout" />
+                 </items>
+			</MenuButton>
+         </items>
+      </ToolBar>
    </top>
+   <left>
+      <Pane prefHeight="502.0" prefWidth="774.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="18.0" layoutY="22.0" prefHeight="30.0" prefWidth="166.0" text="Advanced Search">
+           		<font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <VBox layoutX="20.0" layoutY="60.0" prefHeight="312.0" prefWidth="168.0" spacing="5.0">
+               <children>
+                  <CheckBox mnemonicParsing="false" text="By Author">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </CheckBox>
+                  <TextField disable="true" />
+                  <CheckBox mnemonicParsing="false" text="By Publisher">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </CheckBox>
+                  <TextField disable="true" />
+                  <CheckBox mnemonicParsing="false" text="By Publication Year">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </CheckBox>
+                  <TextField disable="true" />
+                  <CheckBox mnemonicParsing="false" text="By ISBN">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </CheckBox>
+                  <TextField disable="true" />
+                  <CheckBox mnemonicParsing="false" text="By Price">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </CheckBox>
+                  <TextField disable="true" />
+                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="174.0" text="GO" textOverrun="WORD_ELLIPSIS" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="20.0" />
+               </padding>
+            </VBox>
+            <Label alignment="CENTER" layoutX="419.0" layoutY="22.0" prefHeight="30.0" prefWidth="166.0" text="Found Books">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <ScrollPane layoutX="243.0" layoutY="54.0" prefHeight="446.0" prefWidth="508.0">
+               <content>
+                  <VBox fx:id="booksLinks" prefHeight="421.0" prefWidth="479.0" />
+               </content>
+            </ScrollPane>
+            <Button fx:id="loadMore" layoutX="648.0" layoutY="510.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Load More" visible="false" />
+         </children></Pane>
+   </left>
 </BorderPane>

@@ -9,7 +9,7 @@ import server.ResponseData;
 import server.database.entities.Identity;
 import javafx.scene.control.PasswordField;
 
-public class LoginController {
+public class LoginController implements CustomController {
 
 	private static final String ERROR_LOGIN_TITLE = "Login failed";
 
@@ -32,5 +32,11 @@ public class LoginController {
 		} else {
 			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_LOGIN_TITLE, null, response.getError());
 		}
+	}
+
+	@Override
+	public void initData(Parameters parameters) {
+		// TODO Auto-generated method stub
+		
 	}
 }

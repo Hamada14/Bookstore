@@ -1,11 +1,37 @@
 package server.database.entities;
 
 public class Book {
+	
+	public Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
+			boolean inStock) {
+		super();
+		this.bookISBN = bookISBN;
+		this.bookTitle = bookTitle;
+		this.publicationYear = publicationYear;
+		this.sellingPrice = sellingPrice;
+		Category = category;
+		this.inStock = inStock;
+	}
 	private String bookISBN;
     private String bookTitle;
     private String publicationYear;
     private float sellingPrice;
     private String Category;
+    private boolean inStock;
+    
+    public Book() {
+    	
+    }
+    public Book(String title) {
+    	this.bookTitle = title;
+    }
+    
+	public boolean isInStock() {
+		return inStock;
+	}
+	public void setInStock(boolean inStock) {
+		this.inStock = inStock;
+	}
 	public String getBookISBN() {
 		return bookISBN;
 	}
