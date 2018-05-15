@@ -18,7 +18,6 @@ public class Controller implements ControlForm {
 	public Controller(Stage primaryStage, String fxml) {
 		this.primaryStage = primaryStage;
 		try {
-		
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
 			view = ( BorderPane) loader.load();
 			controller = loader.<CustomController>getController();

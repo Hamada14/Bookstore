@@ -36,7 +36,7 @@
       </ToolBar>
    </top>
    <center>
-      <Pane prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="276.0" layoutY="20.0" prefHeight="45.0" prefWidth="249.0" text="Book Information">
                <font>

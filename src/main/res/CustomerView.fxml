@@ -76,7 +76,7 @@
       </ToolBar>
    </top>
    <left>
-      <Pane prefHeight="502.0" prefWidth="774.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="549.0" prefWidth="799.0" style="-fx-background-color: #FFFFFF;" stylesheets="@styleSheet.css" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" layoutX="18.0" layoutY="22.0" prefHeight="30.0" prefWidth="166.0" text="Advanced Search">
            		<font>

@@ -14,7 +14,7 @@ public class ShoppingCart implements Iterable<Order>{
 	}
 	
 	public void addOrder (Order newOrder) {
-		if (orders.contains(newOrder)) {
+		if (!orders.contains(newOrder)) {
 			orders.add(newOrder);
 		}
 	}
@@ -31,5 +31,9 @@ public class ShoppingCart implements Iterable<Order>{
 	public Iterator<Order> iterator() {
 		// TODO Auto-generated method stub
 		return orders.iterator();
+	}
+	
+	public int getSize() {
+		return orders.size();
 	}
 }

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@styleSheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.OrdersController">
 	<top>
       <ToolBar prefHeight="50.0" prefWidth="472.0" style="-fx-background-color: #926757;" BorderPane.alignment="CENTER">
          <items>
@@ -35,30 +37,28 @@
          </items>
       </ToolBar>
    </top>
-    <center>
-      <Pane prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+   <right>
+      <Pane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="271.0" layoutY="20.0" prefHeight="45.0" prefWidth="249.0" text="Ordered Items">
                <font>
                   <Font name="Book Antiqua Bold" size="30.0" />
                </font>
             </Label>
-            <ScrollPane layoutX="89.0" layoutY="83.0" prefHeight="368.0" prefWidth="612.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="315.0" prefWidth="603.0">
-                     <children>
-                        <GridPane fx:id="ordersPane" layoutY="6.0" prefHeight="306.0" prefWidth="598.0">
+            <ScrollPane hbarPolicy="NEVER" layoutX="89.0" layoutY="117.0" prefHeight="336.0" prefWidth="604.0">
+              <content>             
+                        <GridPane fx:id="ordersPane" layoutX="2.0" layoutY="14.0" prefHeight="18.0" prefWidth="603.0" style="-fx-background-color: #FFFFFF;" vgap="5.0">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.5999755859375" minWidth="0.0" prefWidth="45.80000610351563" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="120.99999389648438" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="170.00002441406252" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="48.39997558593751" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="75.99997558593748" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="163.40003662109376" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.5999755859375" minWidth="0.0" prefWidth="24.799993896484374" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="284.7999755859375" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="87.60000000000002" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="82.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="83.2000610351563" />
                           </columnConstraints>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
+                     <padding>
+                        <Insets bottom="5.0" />
+                     </padding>
+                    </GridPane>
               </content>
             </ScrollPane>
             <Button alignment="CENTER" contentDisplay="CENTER" layoutX="697.0" layoutY="495.0" mnemonicParsing="false" text="CheckOut">
@@ -71,13 +71,38 @@
                   <Font name="Berlin Sans FB Demi Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="totalPrice" alignment="CENTER" layoutX="698.0" layoutY="22.0" prefHeight="17.0" prefWidth="59.0" text="Label" />
+            <Label fx:id="totalPrices" alignment="CENTER" layoutX="698.0" layoutY="22.0" prefHeight="17.0" prefWidth="59.0" text="Label" />
             <ImageView fitHeight="67.0" fitWidth="65.0" layoutX="710.0" layoutY="430.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/checkOut.png" />
                </image>
             </ImageView>
+            <HBox layoutX="91.0" layoutY="82.0" prefHeight="20.0" prefWidth="592.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="33.0" text="#">
+                   <font>
+                  	<Font name="Book Antiqua Bold" size="16.0" />
+               	   </font>
+            	  </Label>
+                  <Label prefHeight="18.0" prefWidth="291.0" text="Book Title">
+                     <font>
+                  		<Font name="Book Antiqua Bold" size="16.0" />
+               		</font>
+            	  </Label>
+                  <Label prefHeight="18.0" prefWidth="98.0" text="Price">
+                     <font>
+                  		<Font name="Book Antiqua Bold" size="16.0" />
+              		</font>
+            	</Label>
+                  <Label text="Quantity">
+                   <font>
+                  	<Font name="Book Antiqua Bold" size="16.0" />
+              	 </font>
+            	</Label>
+               </children>
+            </HBox>
+            <Line endX="492.0" layoutX="200.0" layoutY="110.0" startX="-108.0" strokeWidth="3.0" style="-fx-fill: #926757; -fx-stroke: #926757;" />
          </children>
       </Pane>
-    </center>
+   </right>
 </BorderPane>
