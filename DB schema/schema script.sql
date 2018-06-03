@@ -66,7 +66,7 @@ delimiter $$
 create trigger POSITIVE_QUANTITY_INSERT before insert on BOOKS
 for each row
 begin
-	if new.MIN_THRESHOLD < 0 OR new.QUANTITY < 0 OR new.ORDER_QUANTITY then
+	if new.MIN_THRESHOLD < 0 OR new.QUANTITY < 0 then
 		signal sqlstate '45000';
 	end if;
 end;$$
@@ -76,7 +76,7 @@ delimiter $$
 create trigger POSITIVE_QUANTITY_UPDATE before update on BOOKS
 for each row
 begin
-	if new.MIN_THRESHOLD < 0 OR new.QUANTITY < 0 OR new.ORDER_QUANTITY then
+	if new.MIN_THRESHOLD < 0 OR new.QUANTITY < 0 then
 		signal sqlstate '45000';
 	end if;
 end;$$
@@ -202,7 +202,6 @@ CREATE EVENT remove_old_orders
 ON SCHEDULE EVERY 1 DAY
 DO
 	DELETE FROM SHOPPING_ORDER WHERE CHECKOUT_TIME < NOW() - interval 3 MONTH;
-    
     
     
 CREATE TABLE IF NOT EXISTS SHOPPING_ORDER_ITEMS (
