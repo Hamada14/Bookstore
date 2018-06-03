@@ -182,6 +182,7 @@ CREATE TABLE IF NOT EXISTS USERS(
     PRIMARY KEY(USER_NAME),
     UNIQUE(EMAIL)
 );
+select * from USERS where USER_NAME = "12345678" AND PASSWORD_SHA1 = SHA1("12345678");
 
 # Check https://docs.oracle.com/javase/6/docs/api/java/sql/Statement.html#executeUpdate%28java.lang.String,%20int%29
 # To obtain auto generated ID after insert.
@@ -195,6 +196,15 @@ CREATE TABLE IF NOT EXISTS SHOPPING_ORDER (
     INDEX(CHECKOUT_TIME)
 );
 
+# Event used to delete all the old data in the shopping order table.
+# It basically runs every day once and delete every shopping order that is older than three months.\
+CREATE EVENT remove_old_orders
+ON SCHEDULE EVERY 1 DAY
+DO
+	DELETE FROM SHOPPING_ORDER WHERE CHECKOUT_TIME < NOW() - interval 3 MONTH;
+    
+    
+    
 CREATE TABLE IF NOT EXISTS SHOPPING_ORDER_ITEMS (
 	SHOPPING_ORDER_ID		INT NOT NULL,
     BOOK_ISBN				VARCHAR(20) NOT NULL,
