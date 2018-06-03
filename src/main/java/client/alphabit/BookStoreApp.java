@@ -36,10 +36,10 @@ public class BookStoreApp extends Application {
 		customer = new Controller(primaryStage, CUSTOMER_VIEW);
 		bookView = new Controller(primaryStage, BOOK_VIEW);
 		ordersView = new Controller(primaryStage, ORDERS_VIEW);
-		pushSomeOrders();
-		showOrdersView();
+		//pushSomeOrders();
+		//showOrdersView();
 
-		//showLogin();
+		showLogin();
 	}
 	
 	public static void showLogin() {
