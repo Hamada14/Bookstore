@@ -44,12 +44,12 @@
                   </Button>
                   
                </children></Pane>
-            <Label alignment="CENTER" prefWidth="93.0" text=" User Name " textFill="#f8f3f3">
+            <Label fx:id="userName" alignment="CENTER" prefWidth="93.0" text=" User Name " textFill="#f8f3f3">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+            <Button lineSpacing="10.0" mnemonicParsing="false" onAction="#viewOrders" prefHeight="22.0" prefWidth="40.0" style="-fx-background-color: transparent;">
     			<graphic>
         			<ImageView fitHeight="51.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                       <image>
@@ -68,8 +68,8 @@
     			</graphic>
     			<items>
                       <MenuItem mnemonicParsing="false" text="Edit your profle" />
-                  	  <MenuItem mnemonicParsing="false" text="Manager Mode" />
-                      <MenuItem mnemonicParsing="false" text="Logout" />
+                  	  <MenuItem mnemonicParsing="false" onAction="#goToManagerView" text="Manager Mode" />
+                      <MenuItem mnemonicParsing="false" onAction="#logOut" text="Logout" />
                  </items>
 			</MenuButton>
          </items>

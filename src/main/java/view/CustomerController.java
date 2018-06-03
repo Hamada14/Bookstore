@@ -38,7 +38,7 @@ public class CustomerController implements Initializable, CustomController{
 	private void searchBooks() {
 		
 		ArrayList<Book> books = new ArrayList<Book>();
-		for (int i = 0; i < 1; i++) {	
+		for (int i = 0; i < 10; i++) {	
 			float x = 9.7f;
 			Book book = new Book ("1234",new String("book" + i), "1960", x, "art", true);
 			books.add(book);
@@ -73,5 +73,19 @@ public class CustomerController implements Initializable, CustomController{
 		
 	}
 	
+	@FXML
+	private void viewOrders() {
+		BookStoreApp.showOrdersView();
+	}
 	
+	@FXML 
+	private void logOut() {
+		BookStoreApp.setUser(null);
+		BookStoreApp.showLogin();
+	}
+	
+	@FXML 
+	private void goToManagerView() {
+		BookStoreApp.showManager();
+	}
 }

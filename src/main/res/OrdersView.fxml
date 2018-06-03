@@ -19,7 +19,7 @@
 	<top>
       <ToolBar prefHeight="50.0" prefWidth="472.0" style="-fx-background-color: #926757;" BorderPane.alignment="CENTER">
          <items>
-         	<Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="146.0" style="-fx-background-color: transparent;">
+         	<Button lineSpacing="10.0" mnemonicParsing="false" onAction="#goHome" prefHeight="0.0" prefWidth="146.0" style="-fx-background-color: transparent;">
     			<graphic>
         			<ImageView fitHeight="45.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -29,7 +29,7 @@
     			</graphic>
 			</Button>
             <Pane prefHeight="6.0" prefWidth="533.0" />
-            <Label alignment="CENTER" text=" User Name " textFill="#f8f3f3">
+            <Label fx:id="userName" alignment="CENTER" text=" User Name " textFill="#f8f3f3">
                <font>
                   <Font size="14.0" />
                </font>
@@ -37,7 +37,7 @@
          </items>
       </ToolBar>
    </top>
-   <right>
+   <bottom>
       <Pane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="271.0" layoutY="20.0" prefHeight="45.0" prefWidth="249.0" text="Ordered Items">
@@ -45,7 +45,7 @@
                   <Font name="Book Antiqua Bold" size="30.0" />
                </font>
             </Label>
-            <ScrollPane hbarPolicy="NEVER" layoutX="89.0" layoutY="117.0" prefHeight="336.0" prefWidth="604.0">
+            <ScrollPane hbarPolicy="NEVER" layoutX="85.0" layoutY="116.0" prefHeight="302.0" prefWidth="604.0">
               <content>             
                         <GridPane fx:id="ordersPane" layoutX="2.0" layoutY="14.0" prefHeight="18.0" prefWidth="603.0" style="-fx-background-color: #FFFFFF;" vgap="5.0">
                           <columnConstraints>
@@ -61,7 +61,7 @@
                     </GridPane>
               </content>
             </ScrollPane>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="697.0" layoutY="495.0" mnemonicParsing="false" text="CheckOut">
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="697.0" layoutY="495.0" mnemonicParsing="false" onAction="#checkOut" text="CheckOut">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                </font>
@@ -104,5 +104,5 @@
             <Line endX="492.0" layoutX="200.0" layoutY="110.0" startX="-108.0" strokeWidth="3.0" style="-fx-fill: #926757; -fx-stroke: #926757;" />
          </children>
       </Pane>
-   </right>
+   </bottom>
 </BorderPane>

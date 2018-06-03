@@ -36,8 +36,9 @@ public class BookStoreApp extends Application {
 		customer = new Controller(primaryStage, CUSTOMER_VIEW);
 		bookView = new Controller(primaryStage, BOOK_VIEW);
 		ordersView = new Controller(primaryStage, ORDERS_VIEW);
-		//showOrdersView();
-		//getOrderViewController().initData(null);
+		pushSomeOrders();
+		showOrdersView();
+
 		//showLogin();
 	}
 	
@@ -55,7 +56,7 @@ public class BookStoreApp extends Application {
 	
 	public static void showOrdersView() {	
 		ordersView.show();
-		
+		ordersView.getController().initData(null);
 	}
 	
 	public static CustomController getBookViewController() {
@@ -78,10 +79,15 @@ public class BookStoreApp extends Application {
 		return userIdentity;
 	}
 	
+	public static void setUser(Identity user) {
+		userIdentity = user;
+	}
+	
 	public static ShoppingCart getShoppingCart() {
 		return currentCart;
 		
 	}
+	
 	public static void displayDialog(AlertType alertType, String dialogTitle, String dialogHeader, String dialogText) {
 		Alert alert = new Alert(alertType);
 		alert.setTitle(dialogTitle);

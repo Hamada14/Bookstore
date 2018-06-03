@@ -22,16 +22,19 @@ public class BookController implements CustomController{
 	@FXML private Label publicationYear;
 	@FXML private Label price;
 	@FXML private TextField quantity;
-	
+	@ FXML private Label userName;
 	private Book selectedBook;
 	@Override
 	public void initData(Parameters parameters) {
+		System.out.println("hey");
 		 Book selectedBook = parameters.getBook();
 		 title.setText(selectedBook .getBookTitle());
 		 category.setText(selectedBook .getCategory());
 	     isbn.setText(selectedBook .getBookISBN());
 	     publicationYear.setText(selectedBook .getPublicationYear());
 	     price.setText(String.valueOf(selectedBook .getSellingPrice()));
+//	     userName.setText(BookStoreApp.getUser().getUserName());
+	     
 	}
   
 	@FXML 
