@@ -19,7 +19,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 
 	private final Connection connection;
 	private final JasperReporter jasperReporter;
-	
+
 	public BookStoreServerImpl(Connection connection, JasperReporter jasperReporter) {
 		this.connection = connection;
 		this.jasperReporter = jasperReporter;
@@ -32,24 +32,26 @@ public class BookStoreServerImpl implements BookStoreServer {
 
 	@Override
 	public ResponseData loginUser(Identity identity) {
-		return identity.isValidIdentity(connection);
+		return identity.isUser(connection);
 	}
-	
+
 	@Override
 	public boolean isManager(Identity identity) {
 		return identity.isManager(connection);
 	}
-	
+
 	@Override
 	public byte[] generateReport(Identity identity, String reportType) {
 		try {
-			identity.isManager(connection);
-			return jasperReporter.generateReport(reportType);
+			if (identity.isManager(connection)) {
+				return jasperReporter.generateReport(reportType);
+			}
 		} catch (JRException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+
 	@Override
 	public boolean editUser(User user) {
 		// TODO Auto-generated method stub
@@ -72,7 +74,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 
 	@Override
 	public boolean promoteUser(HashMap<String, User> temp) {

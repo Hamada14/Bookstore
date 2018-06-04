@@ -12,13 +12,17 @@ public class Identity implements Serializable {
 
 	private static final long serialVersionUID = -8050350344524286767L;
 
+	private static final String MANAGER_TABLE = "MANAGERS";
+	
 	private static final String GET_USER_BY_EMAIL_PASSWORD = "Select * from %s where USER_NAME = ? AND PASSWORD_SHA1 = SHA1(?);";
-	private static final int USER_NAME_INDEX = 1;
-	private static final int PASSWORD_INDEX = 2;
+	private static final int USER_NAME_INDEX_IN_USER = 1;
+	private static final int PASSWORD_INDEX_IN_USER = 2;
+	
+	private static final String GET_MANAGER_BY_USER_NAME = "Select * from %s where USER_NAME = ?;";
+	private static final int USER_NAME_INDEX_IN_MANAGER = 1;
 	
 	private static final String INVALID_CREDENTIALS = "Invalid credentials specified.";
 
-	private static final int IS_MANAGER_COL_INDEX = 8;
 
 	private String userName;
 	private String password;
@@ -31,7 +35,7 @@ public class Identity implements Serializable {
 		this.password = password;
 	}
 
-	public ResponseData isValidIdentity(Connection connection) {
+	public ResponseData isUser(Connection connection) {
 		ResponseData rd = new ResponseData();
 		try {
 			if (!isValidUser(connection)) {
@@ -44,28 +48,34 @@ public class Identity implements Serializable {
 		return rd;
 	}
 
-	private boolean isValidUser(Connection connection) throws SQLException {
-		ResultSet rs = getUser(connection);
-		return rs.next();
-	}
 
 	public boolean isManager(Connection connection) {
-		ResultSet rs;
 		boolean isManager = false;
 		try {
-			rs = getUser(connection);
-			isManager = rs.getBoolean(IS_MANAGER_COL_INDEX);
+			isManager = isValidManager(connection);
 		} catch (SQLException e) {
 			return false;
 		}
 		return isManager;
 	}
+	
+	private boolean isValidUser(Connection connection) throws SQLException {
+		ResultSet rs = getUser(connection);
+		return rs.next();
+	}
+	
+	private boolean isValidManager(Connection connection) throws SQLException {
+		String query = String.format(GET_MANAGER_BY_USER_NAME, Identity.MANAGER_TABLE);
+		PreparedStatement st = connection.prepareStatement(query);
+		st.setString(USER_NAME_INDEX_IN_MANAGER, userName);
+		return st.executeQuery().next();
+	}
 
 	private ResultSet getUser(Connection connection) throws SQLException {
 		String query = String.format(GET_USER_BY_EMAIL_PASSWORD, User.USER_TABLE);
 		PreparedStatement st = connection.prepareStatement(query);
-		st.setString(USER_NAME_INDEX, userName);
-		st.setString(PASSWORD_INDEX, password);
+		st.setString(USER_NAME_INDEX_IN_USER, userName);
+		st.setString(PASSWORD_INDEX_IN_USER, password);
 		return st.executeQuery();
 	}
 

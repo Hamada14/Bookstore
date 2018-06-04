@@ -9,14 +9,12 @@ public class UserBuilder {
 	private String password;
 	private String address;
 	private String phoneNumber;
-	private boolean isManager;
 
 	public UserBuilder() {
-		this.isManager = false;
 	}
 
 	public User buildUser() {
-		return new User(userName, firstName, lastName, email, password, address, phoneNumber, isManager);
+		return new User(userName, firstName, lastName, email, password, address, phoneNumber);
 	}
 
 	public void setUserName(String userName) {

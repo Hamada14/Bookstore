@@ -43,14 +43,13 @@ public class User implements Serializable {
 	private String password;
 	private String address;
 	private String phoneNumber;
-	private boolean isManager;
 
 	public User() {
 
 	}
 
 	public User(String userName, String firstName, String lastName, String email, String password, String address,
-			String phoneNumber, boolean isManager) {
+			String phoneNumber) {
 		this.userName = userName;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -58,13 +57,12 @@ public class User implements Serializable {
 		this.password = password;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-		this.isManager = isManager;
 	}
 
 	@Override
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password
-				+ ", address=" + address + ", phoneNumber=" + phoneNumber + ", isManager=" + isManager + "]";
+				+ ", address=" + address + ", phoneNumber=" + phoneNumber + "]";
 	}
 
 	public void registerUser(Connection connection, String tableName) throws SQLException {
@@ -149,14 +147,6 @@ public class User implements Serializable {
 
 	public String getUserName() {
 		return userName;
-	}
-
-	public boolean isManager() {
-		return isManager;
-	}
-
-	public void setManager(boolean isManager) {
-		this.isManager = isManager;
 	}
 
 	public String getFirstName() {
