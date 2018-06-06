@@ -1,14 +1,12 @@
 package view;
 
 import server.database.entities.Book;
-import server.database.entities.Identity;
 
 public class Parameters {
     private Book book;
     private boolean firstTimeRegistered;
     
     public Parameters() {
-    	
     }
     
     public void setRegisterationMode(boolean registerationMode) {
