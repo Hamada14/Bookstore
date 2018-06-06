@@ -45,10 +45,11 @@ dependencies {
     
    // https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports
 	compile group: 'net.sf.jasperreports', name: 'jasperreports', version: '4.5.0'
-
+	//https://mvnrepository.com/artifact/mysql/mysql-connector-java/8.0.1
 	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
+	//https://mvnrepository.com/artifact/org.projectlombok/lombok/1.16.20
+	compileOnly('org.projectlombok:lombok:1.16.20')
 	
-
 } 
 
 sourceSets.main {

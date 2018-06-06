@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RegisterController">
+<BorderPane prefHeight="698.0" prefWidth="727.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RegisterController">
    <top>
       <ImageView fitHeight="250.0" fitWidth="415.0" onDragDetected="#gotoLogin" onDragDone="#gotoLogin" onDragDropped="#gotoLogin" onDragEntered="#gotoLogin" onDragExited="#gotoLogin" onDragOver="#gotoLogin" onMouseDragEntered="#gotoLogin" onMouseDragExited="#gotoLogin" onMouseDragOver="#gotoLogin" onMouseDragReleased="#gotoLogin" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
@@ -20,68 +20,69 @@
       </ImageView>
    </top>
    <center>
-      <Pane prefHeight="481.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <Pane minHeight="490.0" prefHeight="510.0" prefWidth="711.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="163.0" layoutY="136.0" text="First Name">
+            <Label layoutX="164.0" layoutY="119.0" text="First Name">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label layoutX="163.0" layoutY="169.0" text="Last Name">
+            <Label layoutX="163.0" layoutY="163.0" text="Last Name">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label layoutX="162.0" layoutY="36.0" text="Password">
+            <Label layoutX="163.0" layoutY="78.0" text="Password">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label layoutX="163.0" layoutY="203.0" text="Email">
+            <Label layoutX="165.0" layoutY="204.0" text="Email">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label layoutX="162.0" layoutY="264.0" text="Address">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Label>
-            <TextField fx:id="userName" layoutX="341.0" layoutY="6.0" prefHeight="25.0" prefWidth="257.0" promptText="5- 20 characters" />
-            <PasswordField fx:id="password" layoutX="341.0" layoutY="40.0" prefHeight="25.0" prefWidth="257.0" promptText="8 - 40 characters" />
-            <TextField fx:id="firstName" layoutX="341.0" layoutY="140.0" prefHeight="25.0" prefWidth="257.0" promptText="5 - 20 characters" />
-            <TextField fx:id="lastName" layoutX="341.0" layoutY="174.0" prefHeight="25.0" prefWidth="257.0" promptText="5 - 20 characters" />
+            <TextField fx:id="userName" layoutX="341.0" layoutY="41.0" prefHeight="25.0" prefWidth="257.0" promptText="User Name" />
+            <PasswordField fx:id="password" layoutX="341.0" layoutY="80.0" prefHeight="25.0" prefWidth="257.0" promptText="Password" />
+            <TextField fx:id="firstName" layoutX="341.0" layoutY="123.0" prefHeight="25.0" prefWidth="257.0" promptText="First Name" />
+            <TextField fx:id="lastName" layoutX="341.0" layoutY="167.0" prefHeight="25.0" prefWidth="257.0" promptText="Last Name" />
             <TextField fx:id="email" layoutX="341.0" layoutY="208.0" prefHeight="25.0" prefWidth="257.0" promptText="user@gmail.com" />
-            <TextField fx:id="address" layoutX="341.0" layoutY="269.0" prefHeight="25.0" prefWidth="257.0" promptText="building, street, district, city, country" />
-            <Hyperlink fx:id="signLink" layoutX="469.0" layoutY="366.0" onAction="#gotoLogin" text="Go back to Sign in page" />
-            <Button fx:id="confirm" layoutX="366.0" layoutY="361.0" mnemonicParsing="false" onAction="#registerUser" style="-fx-background-color: #926757;" text="Register" textFill="#f8f1f1">
+            <TextField fx:id="phoneNumber" layoutX="341.0" layoutY="250.0" prefHeight="25.0" prefWidth="257.0" promptText="phone number" />
+            <Label layoutX="163.0" layoutY="243.0" text="Phone">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="162.0" layoutY="37.0" text="User name">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="163.0" layoutY="289.0" text="Street">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+
+            <TextField fx:id="street" layoutX="341.0" layoutY="293.0" prefHeight="25.0" prefWidth="257.0" promptText="Street" />
+            <Label layoutX="163.0" layoutY="330.0" text="City">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <TextField fx:id="city" layoutX="341.0" layoutY="334.0" prefHeight="25.0" prefWidth="257.0" promptText="City" />
+            <Label layoutX="163.0" layoutY="372.0" text="Country">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <TextField fx:id="country" layoutX="341.0" layoutY="376.0" prefHeight="25.0" prefWidth="257.0" promptText="Country" />
+            <Button fx:id="confirm" layoutX="309.0" layoutY="429.0" mnemonicParsing="false" onAction="#registerUser" style="-fx-background-color: #926757;" text="Register" textFill="#f8f1f1">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Label layoutX="162.0" layoutY="1.0" text="User name">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Label>
-            <Label fx:id="newPassowrd1" layoutX="162.0" layoutY="66.0" text="New Password" visible="false">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Label>
-            <PasswordField fx:id="passwordValue1" layoutX="341.0" layoutY="70.0" prefHeight="25.0" prefWidth="257.0" promptText="8 - 40 characters" visible="false" />
-            <Label fx:id="newPassword2" layoutX="161.0" layoutY="94.0" text="Password" visible="false">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Label>
-            <PasswordField fx:id="passwordValue2" layoutX="340.0" layoutY="98.0" prefHeight="25.0" prefWidth="257.0" promptText="8 - 40 characters" visible="false" />
-            <TextField fx:id="phoneNumber" layoutX="341.0" layoutY="238.0" prefHeight="25.0" prefWidth="257.0" promptText="phone number" />
-            <Label layoutX="161.0" layoutY="233.0" text="Phone">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Label>
+            <Hyperlink fx:id="signLink" layoutX="422.0" layoutY="440.0" onAction="#gotoLogin" text="Go back to Sign in page" />
          </children>
       </Pane>
    </center>

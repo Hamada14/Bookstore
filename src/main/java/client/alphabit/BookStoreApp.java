@@ -7,11 +7,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import server.database.entities.Book;
-import server.database.entities.Identity;
 import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
 import server.database.entities.User;
-import view.CustomController;
 
 
 public class BookStoreApp extends Application {
