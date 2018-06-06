@@ -2,15 +2,20 @@ package server;
 
 import java.sql.Connection;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.jws.WebService;
+
 
 import net.sf.jasperreports.engine.JRException;
 import server.database.JasperReporter;
 import server.database.entities.Book;
 import server.database.entities.Identity;
+import server.database.entities.Order;
 import server.database.entities.User;
 import server.database.entities.UserBuilder;
 
@@ -18,6 +23,7 @@ import server.database.entities.UserBuilder;
 //Service Implementation
 @WebService(endpointInterface = "server.BookStoreServer")
 public class BookStoreServerImpl implements BookStoreServer {
+
 
 	private final Connection connection;
 	private final JasperReporter jasperReporter;
@@ -83,11 +89,22 @@ public class BookStoreServerImpl implements BookStoreServer {
 		return false;
 	}
 
-
-
 	@Override
 	public boolean promoteUser(HashMap<String, User> temp) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean placeOrder(String isbn, String quantity) {
+		int q = 0;
+		try {
+			q = Integer.valueOf(quantity);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		Book book = new Book();
+		book.setBookISBN(isbn);
+		return Order.addNewOrder(new Order(q, book), connection);
 	}
 }

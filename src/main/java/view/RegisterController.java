@@ -14,7 +14,7 @@ import server.database.entities.UserBuilder;
 
 public class RegisterController implements CustomController {
 
-	private static final String ERROR_MESSAGE_TITLE = "Couldn't Register";
+	private static final String ERROR_MESSAGE_TITLE = "Registeraing Error";
 	private static final String ERROR_MESSAGE_HEADER = "Please fix the following";
 
 	private static final String SUCCESSFUL_TITLE = "Registered Successfully";

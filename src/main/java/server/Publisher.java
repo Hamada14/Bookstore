@@ -12,7 +12,8 @@ import server.database.JasperReporter;
 
 public class Publisher {
 
-	public static final String endPointURL = "http://localhost:9991/server/bookStore";
+
+	public static final String endPointURL = "http://localhost:9994/server/bookStore";
 
 	public static void main(String[] args) {
 		try {
