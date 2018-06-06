@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import lombok.Getter;
@@ -126,6 +128,19 @@ public class User implements Serializable {
 		return rs;
 	}
 
+	public static List<String> getValidCountries() {
+		Locale[] locales = Locale.getAvailableLocales();
+		List<String> countries = new ArrayList<>();
+		for (Locale locale : locales) {
+			String country = locale.getDisplayCountry();
+			if (country.trim().length() > 0 && !countries.contains(country)) {
+				countries.add(country);
+			}
+		}
+		Collections.sort(countries);
+		return countries;
+	}
+	
 	private boolean isAlreadyRegisteredEmail(Connection connection) throws SQLException {
 		return isAlreadyRegistered(connection, GET_USER_BY_EMAIL, email);
 	}
