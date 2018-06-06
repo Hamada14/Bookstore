@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -103,16 +106,22 @@ public class User implements Serializable {
 	public static ResponseData addNewUser(User user, Connection connection) {
 		ResponseData rs = new ResponseData();
 		try {
-			if (user.isAlreadyRegisteredUserName(connection)) {
-				rs.setError(DUPLICATE_USER_NAME_ERROR);
-			} else if (user.isAlreadyRegisteredEmail(connection)) {
-				rs.setError(DUPLICATE_EMAIL_ERROR);
-			} else {
-				user.registerUser(connection, USER_TABLE);
-			}
+			user.registerUser(connection, USER_TABLE);
 		} catch (SQLException e) {
-			rs.setError("Couldn't execute query");
-			e.printStackTrace();
+			try {
+				List<String> errors = new ArrayList<>();
+				if (user.isAlreadyRegisteredUserName(connection)) {
+					errors.add(DUPLICATE_USER_NAME_ERROR);
+				} 
+				if (user.isAlreadyRegisteredEmail(connection)) {
+					errors.add(DUPLICATE_EMAIL_ERROR);
+				}
+				String combinedErrors = errors.stream().map(error -> "* " + error)
+						.collect(Collectors.joining(System.lineSeparator()));
+				rs.setError(combinedErrors);
+			} catch (SQLException e1) {
+				rs.setError("Please try again later");
+			}
 		}
 		return rs;
 	}
