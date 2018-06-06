@@ -1,11 +1,12 @@
 package view;
 
 import client.BookClient;
+
+
 import client.alphabit.BookStoreApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import server.ResponseData;
 import server.database.entities.Identity;
 import javafx.scene.control.PasswordField;
 
@@ -18,17 +19,18 @@ public class LoginController implements CustomController {
 
 	@FXML
 	private void goToRegister() {
-		BookStoreApp.showRegister();
+		BookStoreApp.showRegister(true);
 	}
 
 	@FXML
 	private void signInAction() {
 		Identity identity = new Identity(userName.getText(), password.getText());
-		ResponseData response = BookClient.getServer().loginUser(identity);
+		server.UserResponseData response = BookClient.getServer().loginUser(identity);
 		if (response.isSuccessful()) {
 			userName.clear();
 			password.clear();
-			BookStoreApp.showCustomer(identity);
+			BookStoreApp.setUser(response.getUser());
+			BookStoreApp.showCustomer();
 		} else {
 			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_LOGIN_TITLE, null, response.getError());
 		}

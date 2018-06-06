@@ -26,7 +26,6 @@ public class BookController implements CustomController{
 	private Book selectedBook;
 	@Override
 	public void initData(Parameters parameters) {
-		System.out.println("hey");
 		 Book selectedBook = parameters.getBook();
 		 title.setText(selectedBook .getBookTitle());
 		 category.setText(selectedBook .getCategory());
@@ -39,7 +38,7 @@ public class BookController implements CustomController{
   
 	@FXML 
 	private void goHome() {
-	   BookStoreApp.showCustomer(BookStoreApp.getUser());
+	   BookStoreApp.showCustomer();
 	}
 	
 	@FXML 

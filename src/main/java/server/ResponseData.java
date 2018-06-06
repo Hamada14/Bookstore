@@ -1,9 +1,12 @@
 package server;
 
+
+
 public class ResponseData {
 
 	private boolean isSuccess;
 	private String error;
+	
 	
 	public ResponseData() {
 		this.isSuccess = true;
@@ -21,4 +24,5 @@ public class ResponseData {
 	public boolean isSuccessful() {
 		return isSuccess;
 	}
+
 }

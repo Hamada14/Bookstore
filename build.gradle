@@ -14,13 +14,13 @@ jar {
 }
 
 buildscript {
-        repositories {
-                jcenter()
-        }
-        dependencies {
-                // Embedded Jetty 9 Gradle Plugin
-                classpath (group: 'com.sahlbach.gradle', name: 'gradle-jetty-eclipse-plugin', version: '1.9.+')
-        }
+ 	repositories {
+		jcenter()
+	}
+	dependencies {
+		// Embedded Jetty 9 Gradle Plugin
+		classpath (group: 'com.sahlbach.gradle', name: 'gradle-jetty-eclipse-plugin', version: '1.9.+')
+	}
 }
 
 apply plugin: 'jettyEclipse'
@@ -35,14 +35,21 @@ dependencies {
 	compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.15'
 	// Servlet 3
 	compile 'javax.servlet:javax.servlet-api:3.1.0'
-	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
-	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
+	
 	
 	// https://mvnrepository.com/artifact/javax.xml.ws/jaxws-api
     compile group: 'javax.xml.ws', name: 'jaxws-api', version: '2.2.1'
     
+    // https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-rt 
     compile group: 'com.sun.xml.ws', name: 'jaxws-rt', version: '2.1.4'
-
+    
+   // https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports
+	compile group: 'net.sf.jasperreports', name: 'jasperreports', version: '4.5.0'
+	//https://mvnrepository.com/artifact/mysql/mysql-connector-java/8.0.1
+	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
+	//https://mvnrepository.com/artifact/org.projectlombok/lombok/1.16.20
+	compileOnly('org.projectlombok:lombok:1.16.20')
+	
 } 
 
 sourceSets.main {
