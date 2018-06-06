@@ -43,6 +43,8 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports
 	compile group: 'net.sf.jasperreports', name: 'jasperreports', version: '4.5.0'
+	compileOnly('org.projectlombok:lombok:1.16.20')
+	
 } 
 
 sourceSets.main {
