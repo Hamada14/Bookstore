@@ -4,9 +4,20 @@ import server.database.entities.Book;
 import server.database.entities.Identity;
 
 public class Parameters {
-    Book book;
-    Identity userIdentity;
+    private Book book;
+    private boolean firstTimeRegistered;
     
+    public Parameters() {
+    	
+    }
+    
+    public void setRegisterationMode(boolean registerationMode) {
+    	firstTimeRegistered = registerationMode;
+    }
+    
+    public boolean getRegisterationMode() {
+    	return firstTimeRegistered;
+    }
     public void setBook (Book book) {
     	this.book = book;
     }

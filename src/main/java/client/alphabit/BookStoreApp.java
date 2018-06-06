@@ -9,7 +9,9 @@ import server.database.entities.Book;
 import server.database.entities.Identity;
 import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
+import server.database.entities.User;
 import view.CustomController;
+import view.Parameters;
 
 public class BookStoreApp extends Application {
 
@@ -23,7 +25,8 @@ public class BookStoreApp extends Application {
 	private Stage primaryStage;
 	private static ControlForm login, register, manager, customer, bookView, ordersView;
 	private static ShoppingCart currentCart;
-	private static Identity userIdentity;
+	private static User currentUser;
+
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -35,23 +38,26 @@ public class BookStoreApp extends Application {
 		manager = new Controller(primaryStage, MANAGER_VIEW);
 		customer = new Controller(primaryStage, CUSTOMER_VIEW);
 		bookView = new Controller(primaryStage, BOOK_VIEW);
-		ordersView = new Controller(primaryStage, ORDERS_VIEW);
-		pushSomeOrders();
-		showOrdersView();
-
-		//showLogin();
-	}
+		ordersView = new Controller(primaryStage, ORDERS_VIEW);	
+		showLogin();
+	};
 	
 	public static void showLogin() {
 		login.show();
 	}
 	
-	public static void showRegister() {
+	public static void showRegister(boolean firstTimeRegistered) {
 		register.show();
+		view.Parameters params = new view.Parameters();
+		params.setRegisterationMode(firstTimeRegistered);
+		register.getController().initData(params);
 	}
 
-	public static void showBookView() {
+	public static void showBookView(Book book) {
 		bookView.show();
+		view.Parameters params = new view.Parameters();
+		params.setBook(book);
+    	bookView.getController().initData(params);
 	}
 	
 	public static void showOrdersView() {	
@@ -59,28 +65,21 @@ public class BookStoreApp extends Application {
 		ordersView.getController().initData(null);
 	}
 	
-	public static CustomController getBookViewController() {
-		return bookView.getController();
+	public static void setUser(User user) {
+		BookStoreApp.currentUser = user;
 	}
-
-	public static CustomController getOrderViewController() {
-		return ordersView.getController();
+	
+	public static User getUser() {
+		return currentUser;
 	}
-	public static void showCustomer(Identity userIdentity) {
-		BookStoreApp.userIdentity = userIdentity;
+	
+	public static void showCustomer() {
 		customer.show();
+		customer.getController().initData(null);
 	}
 	
 	public static void showManager() {
 		manager.show();
-	}
-	
-	public static Identity getUser() {
-		return userIdentity;
-	}
-	
-	public static void setUser(Identity user) {
-		userIdentity = user;
 	}
 	
 	public static ShoppingCart getShoppingCart() {

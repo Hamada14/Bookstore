@@ -2,6 +2,7 @@ package server;
 
 import java.sql.Connection;
 
+
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import server.database.DBConfig;
 import server.database.entities.Book;
 import server.database.entities.Identity;
 import server.database.entities.User;
+
 
 //Service Implementation
 @WebService(endpointInterface = "server.BookStoreServer")
@@ -32,7 +34,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public ResponseData loginUser(Identity identity) {
+	public UserResponseData loginUser(Identity identity) {
 		return identity.isValidIdentity(connection);
 	}
 	
@@ -70,8 +72,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 			String dbName = config.getPropertyValue(DBConfig.DB_NAME);
 			String userName = config.getPropertyValue(DBConfig.DB_USER_NAME);
 			String password = config.getPropertyValue(DBConfig.DB_PASSWORD);
-
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dbName, userName, password);
+			Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + dbName, userName, password);
 			Statement st = con.createStatement();
 			st.execute("use " + config.getPropertyValue(DBConfig.DB_NAME));
 			return con;

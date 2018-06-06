@@ -18,6 +18,7 @@ public class DBConfig {
 		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PROP_FILE_NAME);
 		this.properties = new Properties();
 		properties.load(inputStream);
+		
 	}
 
 	public String getPropertyValue(String property) {

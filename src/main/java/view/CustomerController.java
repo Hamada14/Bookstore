@@ -2,6 +2,7 @@ package view;
 import java.net.URL;
 
 
+
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -14,7 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import server.database.entities.Book;
 
@@ -26,7 +27,7 @@ public class CustomerController implements Initializable, CustomController{
 	@FXML private ChoiceBox<String> categories;
 	@FXML private VBox booksLinks;
 	@FXML private  Button loadMore;
-	
+	@FXML private Label userName;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -53,11 +54,7 @@ public class CustomerController implements Initializable, CustomController{
 			link.setOnAction(new EventHandler<ActionEvent>() {
 			    @Override
 			    public void handle(ActionEvent e) {
-			    	Parameters params = new Parameters();
-			    	params.setBook(link.getBook());
-			    	BookStoreApp.showBookView();
-			    	CustomController bookController = BookStoreApp.getBookViewController();
-			    	bookController.initData(params);
+			    	BookStoreApp.showBookView(link.getBook());
 			        System.out.println(link.getBook().getBookTitle());
 			    }
 			});
@@ -69,7 +66,7 @@ public class CustomerController implements Initializable, CustomController{
 
 	@Override
 	public void initData(Parameters parameters) {
-		
+		userName.setText(BookStoreApp.getUser().getUserName());
 		
 	}
 	
@@ -82,10 +79,17 @@ public class CustomerController implements Initializable, CustomController{
 	private void logOut() {
 		BookStoreApp.setUser(null);
 		BookStoreApp.showLogin();
+		BookStoreApp.getShoppingCart().clearCart();
 	}
 	
 	@FXML 
 	private void goToManagerView() {
 		BookStoreApp.showManager();
+	}
+	
+	@FXML
+	private void goToInformationForm() {
+		System.out.println("Zzzz");
+		BookStoreApp.showRegister(false);
 	}
 }

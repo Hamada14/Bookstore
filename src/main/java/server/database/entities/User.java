@@ -36,35 +36,33 @@ public class User implements Serializable {
 	private static final String DUPLICATE_EMAIL_ERROR = "User with this email already registered";
 	private static final String DUPLICATE_USER_NAME_ERROR = "User with this user name already registered";
 
-	private String userName;
+	private Identity identity;
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String password;
 	private String address;
 	private String phoneNumber;
-	private boolean isManager;
 
 	public User() {
-
+		this.identity = new Identity();
 	}
 
-	public User(String userName, String firstName, String lastName, String email, String password, String address,
-			String phoneNumber, boolean isManager) {
-		this.userName = userName;
+	public User(String userName,  String email, String firstName, String lastName, String password, String phoneNumber,
+			String address) {
+		this.identity = new Identity();
+		this.identity.setUserName(userName);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.password = password;
+		this.identity.setPassword(password);
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-		this.isManager = isManager;
 	}
 
 	@Override
 	public String toString() {
-		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password
-				+ ", address=" + address + ", phoneNumber=" + phoneNumber + ", isManager=" + isManager + "]";
+		return "User [firstName=" + firstName + ", lastName=" + lastName +", userName=" + identity.getUserName() +  ", email=" + email + ", password=" + identity.getPassword()
+				+ ", address=" + address + ", phoneNumber=" + phoneNumber ;
 	}
 
 	public void registerUser(Connection connection, String tableName) throws SQLException {
@@ -76,9 +74,9 @@ public class User implements Serializable {
 		StringBuilder sb = new StringBuilder();
 		List<String> attributes = Arrays.asList("User Name", "First Name", "Last Name", "Email", "Password", "Address",
 				"Phone Number");
-		List<String> values = Arrays.asList(userName, firstName, lastName, email, password, address, phoneNumber);
-		List<Integer> maxLength = Arrays.asList(20, 20, 20, 20, 40, 50, 15);
-		List<Integer> minLength = Arrays.asList(5, 5, 5, 5, 8, 5, 8);
+		List<String> values = Arrays.asList(identity.getUserName(),email, firstName, lastName,  identity.getPassword(),  phoneNumber, address);
+		List<Integer> maxLength = Arrays.asList(20, 20, 20, 20, 40, 15, 50);
+		List<Integer> minLength = Arrays.asList(5, 5, 5, 5, 8, 8, 5);
 		for (int i = 0; i < attributes.size(); i++) {
 			String value = values.get(i);
 			String attribute = attributes.get(i);
@@ -96,11 +94,11 @@ public class User implements Serializable {
 	private PreparedStatement createInsertUserQuery(Connection con, String tableName) throws SQLException {
 		String query = String.format(NEW_USER_QUERY, tableName);
 		PreparedStatement st = con.prepareStatement(query);
-		st.setString(INSERT_USER_NAME_INDEX, userName);
+		st.setString(INSERT_USER_NAME_INDEX, identity.getUserName());
 		st.setString(INSERT_FIRST_NAME_INDEX, firstName);
 		st.setString(INSERT_LAST_NAME_INDEX, lastName);
 		st.setString(INSERT_EMAIL_INDEX, email);
-		st.setString(INSERT_PASSWORD_INDEX, password);
+		st.setString(INSERT_PASSWORD_INDEX, identity.getPassword());
 		st.setString(INSERT_PHONE_NUMBER_INDEX, phoneNumber);
 		st.setString(INSERT_ADDRESS_INDEX, address);
 		return st;
@@ -131,7 +129,7 @@ public class User implements Serializable {
 	}
 
 	private boolean isAlreadyRegisteredUserName(Connection connection) throws SQLException {
-		return isAlreadyRegistered(connection, GET_USER_BY_USER_NAME, userName);
+		return isAlreadyRegistered(connection, GET_USER_BY_USER_NAME, identity.getUserName());
 	}
 
 	private boolean isAlreadyRegistered(Connection connection, String selectionType, String attribute)
@@ -144,19 +142,15 @@ public class User implements Serializable {
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		identity.setUserName(userName);
 	}
 
 	public String getUserName() {
-		return userName;
+		return identity.getUserName();
 	}
 
 	public boolean isManager() {
-		return isManager;
-	}
-
-	public void setManager(boolean isManager) {
-		this.isManager = isManager;
+		return false;
 	}
 
 	public String getFirstName() {
@@ -184,11 +178,11 @@ public class User implements Serializable {
 	}
 
 	public String getPassword() {
-		return password;
+		return identity.getPassword();
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		identity.setPassword(password);
 	}
 
 	public String getAddress() {

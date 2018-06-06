@@ -2,6 +2,7 @@ package server;
 
 import java.util.ArrayList;
 
+
 import java.util.HashMap;
 
 import javax.jws.WebMethod;
@@ -13,6 +14,7 @@ import javax.jws.soap.SOAPBinding.Style;
 import server.database.entities.Book;
 import server.database.entities.Identity;
 import server.database.entities.User;
+import server.UserResponseData;
 
 
 @WebService
@@ -38,7 +40,7 @@ public interface BookStoreServer {
 	boolean promoteUser(HashMap<String, User> temp);
 	
 	@WebMethod
-	ResponseData loginUser(Identity identity);
+	UserResponseData loginUser(Identity identity);
 
 	@WebMethod
 	boolean isManager(Identity identity);

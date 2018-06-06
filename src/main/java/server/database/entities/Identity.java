@@ -1,12 +1,14 @@
 package server.database.entities;
 
 import java.io.Serializable;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import server.ResponseData;
+import server.UserResponseData;
+
 
 public class Identity implements Serializable {
 
@@ -17,7 +19,13 @@ public class Identity implements Serializable {
 	private static final int PASSWORD_INDEX = 2;
 	
 	private static final String INVALID_CREDENTIALS = "Invalid credentials specified.";
-
+	private static final int USER_NAME_COL_INDEX = 1;
+	private static final int EMAIL_COL_INDEX = 2;
+	private static final int FISRT_NAME_COL_INDEX = 3;
+	private static final int LAST_NAME_COL_INDEX = 4;
+	private static final int PASSWORD_COL_INDEX = 5;
+	private static final int PHONENUMBER_COL_INDEX = 6;	
+	private static final int ADDRESS_COL_INDEX = 7;	
 	private static final int IS_MANAGER_COL_INDEX = 8;
 
 	private String userName;
@@ -31,11 +39,14 @@ public class Identity implements Serializable {
 		this.password = password;
 	}
 
-	public ResponseData isValidIdentity(Connection connection) {
-		ResponseData rd = new ResponseData();
+	public UserResponseData isValidIdentity(Connection connection) {
+		UserResponseData rd = new UserResponseData();
 		try {
-			if (!isValidUser(connection)) {
+			ResultSet rs = getUser(connection);
+			if (!isValidUser(rs)) {
 				rd.setError(INVALID_CREDENTIALS);
+			} else {
+				constructUser(rs,rd);
 			}
 		} catch (SQLException e) {
 			rd.setError("Unhandled SQL exception");
@@ -44,10 +55,11 @@ public class Identity implements Serializable {
 		return rd;
 	}
 
-	private boolean isValidUser(Connection connection) throws SQLException {
-		ResultSet rs = getUser(connection);
+	private boolean isValidUser(ResultSet rs) throws SQLException {
 		return rs.next();
 	}
+		
+	
 
 	public boolean isManager(Connection connection) {
 		ResultSet rs;
@@ -69,6 +81,25 @@ public class Identity implements Serializable {
 		return st.executeQuery();
 	}
 
+	private void constructUser(ResultSet rs, UserResponseData urs) {
+		UserBuilder builder = new UserBuilder();
+		try {
+			builder.setUserName(rs.getString(USER_NAME_COL_INDEX));
+			builder.setPassword(rs.getString(PASSWORD_COL_INDEX));
+			builder.setFirstName(rs.getString(FISRT_NAME_COL_INDEX));
+			builder.setLastName(rs.getString(LAST_NAME_COL_INDEX));
+			builder.setAddress(rs.getString(ADDRESS_COL_INDEX));
+			builder.setPhoneNumber(rs.getString(PHONENUMBER_COL_INDEX));
+			builder.setEmail(rs.getString(EMAIL_COL_INDEX));
+	
+			urs.setUser(builder.buildUser());
+			
+		}catch (SQLException e) {
+			
+		   urs.setError(e.getMessage());
+		}
+		
+	}
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}

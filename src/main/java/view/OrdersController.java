@@ -96,7 +96,7 @@ public class OrdersController implements CustomController {
     
 	@FXML
 	private void goHome() {
-		BookStoreApp.showCustomer(BookStoreApp.getUser());
+		BookStoreApp.showCustomer();
 	}
 	
 	
@@ -161,7 +161,7 @@ public class OrdersController implements CustomController {
     
     	((ButtonBase) buyButton).setOnAction(
     			 event -> {
-    				 BookStoreApp.showCustomer(BookStoreApp.getUser());
+    				 BookStoreApp.showCustomer();
     			 }
     			);
  

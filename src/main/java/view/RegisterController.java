@@ -5,6 +5,8 @@ import client.BookClient;
 import client.alphabit.BookStoreApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import server.ResponseData;
 import server.database.entities.User;
@@ -18,6 +20,10 @@ public class RegisterController implements CustomController{
 	private static final String SUCCESSFUL_TITLE = "Registered Successfully";
 	private static final String SUCCESSFUL_TEXT = "Account registered successfully";
 	
+    private static final String EDIT_BUTTON_TEXT = "Edit User";
+    
+	private boolean firstTimeRegistered;
+	
 	@FXML private TextField userName;
 	@FXML private TextField password;
 	@FXML private TextField firstName;
@@ -25,7 +31,11 @@ public class RegisterController implements CustomController{
 	@FXML private TextField address;
 	@FXML private TextField email;
 	@FXML private TextField phoneNumber;
-
+    @FXML private Button confirm;
+	@FXML private Hyperlink signLink;
+	
+	
+	
 	@FXML
 	private void gotoLogin() {
 		BookStoreApp.showLogin();
@@ -34,13 +44,15 @@ public class RegisterController implements CustomController{
 	@FXML
 	private void registerUser() {
 		User registeredUser = getUser();
-		ResponseData response = BookClient.getServer().addNewUser(registeredUser);
-		if(!response.isSuccessful()) {
-			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, ERROR_MESSAGE_HEADER, response.getError());
-		} else {
-			BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, SUCCESSFUL_TEXT);
-			clearTextFields();
-			BookStoreApp.showLogin();
+		if (firstTimeRegistered) {
+				ResponseData response = BookClient.getServer().addNewUser(registeredUser);
+				if(!response.isSuccessful()) {
+					BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, ERROR_MESSAGE_HEADER, response.getError());
+				} else {
+					BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, SUCCESSFUL_TEXT);
+					clearTextFields();
+					BookStoreApp.showLogin();
+				}
 		}
 	}
 	
@@ -69,7 +81,19 @@ public class RegisterController implements CustomController{
 
 	@Override
 	public void initData(Parameters parameters) {
-		// TODO Auto-generated method stub
+		firstTimeRegistered = parameters.getRegisterationMode();
+		if (!firstTimeRegistered) {
+			signLink.setVisible(false);
+			confirm.setText(EDIT_BUTTON_TEXT);
+			User currentUser = BookStoreApp.getUser();
+			userName.setText(currentUser.getUserName());
+			firstName.setText(currentUser.getFirstName());
+			lastName.setText(currentUser.getLastName());
+			email.setText(currentUser.getEmail());
+			address.setText(currentUser.getAddress());
+			phoneNumber.setText(currentUser.getEmail());
+			TextField newPassword = new TextField();
+		}
 		
 	}
 }
