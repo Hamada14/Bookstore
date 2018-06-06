@@ -6,13 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import lombok.Getter;
+import lombok.Setter;
 import server.ResponseData;
 
+@Setter @Getter
 public class Identity implements Serializable {
 
 	private static final long serialVersionUID = -8050350344524286767L;
 
-	private static final String MANAGER_TABLE = "MANAGERS";
+	private static final String MANAGER_TABLE = "MANAGER";
 	
 	private static final String GET_USER_BY_EMAIL_PASSWORD = "Select * from %s where USER_NAME = ? AND PASSWORD_SHA1 = SHA1(?);";
 	private static final int USER_NAME_INDEX_IN_USER = 1;
@@ -22,7 +25,6 @@ public class Identity implements Serializable {
 	private static final int USER_NAME_INDEX_IN_MANAGER = 1;
 	
 	private static final String INVALID_CREDENTIALS = "Invalid credentials specified.";
-
 
 	private String userName;
 	private String password;
@@ -77,21 +79,5 @@ public class Identity implements Serializable {
 		st.setString(USER_NAME_INDEX_IN_USER, userName);
 		st.setString(PASSWORD_INDEX_IN_USER, password);
 		return st.executeQuery();
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPassword() {
-		return password;
 	}
 }

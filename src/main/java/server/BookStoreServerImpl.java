@@ -12,6 +12,7 @@ import server.database.JasperReporter;
 import server.database.entities.Book;
 import server.database.entities.Identity;
 import server.database.entities.User;
+import server.database.entities.UserBuilder;
 
 //Service Implementation
 @WebService(endpointInterface = "server.BookStoreServer")
@@ -26,8 +27,14 @@ public class BookStoreServerImpl implements BookStoreServer {
 	};
 
 	@Override
-	public ResponseData addNewUser(User user) {
-		return User.addNewUser(user, connection);
+	public ResponseData addNewUser(UserBuilder userBuilder) {
+		String errors = userBuilder.validateData();
+		if(errors != null) {
+			ResponseData rs = new ResponseData();
+			rs.setError(errors);
+			return rs;
+		}
+		return User.addNewUser(userBuilder.buildUser(), connection);
 	}
 
 	@Override

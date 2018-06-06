@@ -13,6 +13,7 @@ import javax.jws.soap.SOAPBinding.Style;
 import server.database.entities.Book;
 import server.database.entities.Identity;
 import server.database.entities.User;
+import server.database.entities.UserBuilder;
 
 
 @WebService
@@ -20,7 +21,7 @@ import server.database.entities.User;
 public interface BookStoreServer {
 
 	@WebMethod
-	ResponseData addNewUser(User newUser);
+	ResponseData addNewUser(UserBuilder newUserBuilder);
 
 	@WebMethod
 	boolean editUser(User modifiedUser);

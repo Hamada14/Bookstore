@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import server.ResponseData;
-import server.database.entities.User;
 import server.database.entities.UserBuilder;
 
 public class RegisterController implements CustomController{
@@ -22,9 +21,11 @@ public class RegisterController implements CustomController{
 	@FXML private TextField password;
 	@FXML private TextField firstName;
 	@FXML private TextField lastName;
-	@FXML private TextField address;
 	@FXML private TextField email;
 	@FXML private TextField phoneNumber;
+	@FXML private TextField street;
+	@FXML private TextField city;
+	@FXML private TextField country;
 
 	@FXML
 	private void gotoLogin() {
@@ -33,8 +34,8 @@ public class RegisterController implements CustomController{
 
 	@FXML
 	private void registerUser() {
-		User registeredUser = getUser();
-		ResponseData response = BookClient.getServer().addNewUser(registeredUser);
+		UserBuilder newUserBuilder = getUserBuilder();
+		ResponseData response = BookClient.getServer().addNewUser(newUserBuilder);
 		if(!response.isSuccessful()) {
 			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, ERROR_MESSAGE_HEADER, response.getError());
 		} else {
@@ -44,16 +45,18 @@ public class RegisterController implements CustomController{
 		}
 	}
 	
-	private User getUser() {
+	private UserBuilder getUserBuilder() {
 		UserBuilder userBuilder = new UserBuilder();
 		userBuilder.setUserName(userName.getText());
 		userBuilder.setFirstName(firstName.getText());
 		userBuilder.setLastName(lastName.getText());
 		userBuilder.setPassword(password.getText());
-		userBuilder.setAddress(address.getText());
 		userBuilder.setEmail(email.getText());
 		userBuilder.setPhoneNumber(phoneNumber.getText());
-		return userBuilder.buildUser();
+		userBuilder.setStreet(street.getText());
+		userBuilder.setCity(city.getText());
+		userBuilder.setCountry(country.getText());
+		return userBuilder;
 	}
 	
 
@@ -62,9 +65,11 @@ public class RegisterController implements CustomController{
 		firstName.clear();
 		lastName.clear();
 		password.clear();
-		address.clear();
 		email.clear();
 		phoneNumber.clear();
+		street.clear();
+		city.clear();
+		country.clear();
 	}
 
 	@Override

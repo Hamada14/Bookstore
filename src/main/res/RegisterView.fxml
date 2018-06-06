@@ -24,8 +24,8 @@
          </image>
       </ImageView>
    </top>
-   <center>
-      <Pane prefHeight="481.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+   <left>
+      <Pane minHeight="650.0" prefHeight="650.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="163.0" layoutY="136.0" text="First Name">
                <font>
@@ -47,25 +47,13 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label layoutX="162.0" layoutY="261.0" text="Address">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Label>
-            <TextField fx:id="userName" layoutX="341.0" layoutY="48.0" prefHeight="25.0" prefWidth="257.0" promptText="no more than 20 characters" />
-            <PasswordField fx:id="password" layoutX="341.0" layoutY="95.0" prefHeight="25.0" prefWidth="257.0" promptText="no more than 40 characters" />
-            <TextField fx:id="firstName" layoutX="341.0" layoutY="140.0" prefHeight="25.0" prefWidth="257.0" promptText="no more than 20 characters" />
-            <TextField fx:id="lastName" layoutX="341.0" layoutY="184.0" prefHeight="25.0" prefWidth="257.0" promptText="no more than 20 characters" />
+            <TextField fx:id="userName" layoutX="341.0" layoutY="48.0" prefHeight="25.0" prefWidth="257.0" promptText="User Name" />
+            <PasswordField fx:id="password" layoutX="341.0" layoutY="95.0" prefHeight="25.0" prefWidth="257.0" promptText="Password" />
+            <TextField fx:id="firstName" layoutX="341.0" layoutY="140.0" prefHeight="25.0" prefWidth="257.0" promptText="First Name" />
+            <TextField fx:id="lastName" layoutX="341.0" layoutY="184.0" prefHeight="25.0" prefWidth="257.0" promptText="Last Name" />
             <TextField fx:id="email" layoutX="341.0" layoutY="225.0" prefHeight="25.0" prefWidth="257.0" promptText="user@gmail.com" />
-            <TextField fx:id="address" layoutX="341.0" layoutY="266.0" prefHeight="25.0" prefWidth="257.0" promptText="building, street, district, city, country" />
-            <TextField fx:id="phoneNumber" layoutX="341.0" layoutY="307.0" prefHeight="25.0" prefWidth="257.0" promptText="phone number" />
-            <Hyperlink layoutX="469.0" layoutY="366.0" onAction="#gotoLogin" text="Go back to Sign in page" />
-            <Button layoutX="366.0" layoutY="361.0" mnemonicParsing="false" onAction="#registerUser" style="-fx-background-color: #926757;" text="Register" textFill="#f8f1f1">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Label layoutX="162.0" layoutY="305.0" text="Phone">
+            <TextField fx:id="phoneNumber" layoutX="341.0" layoutY="266.0" prefHeight="25.0" prefWidth="257.0" promptText="phone number" />
+            <Label layoutX="163.0" layoutY="259.0" text="Phone">
                <font>
                   <Font size="23.0" />
                </font>
@@ -75,7 +63,31 @@
                   <Font size="23.0" />
                </font>
             </Label>
+            <Label layoutX="163.0" layoutY="304.0" text="Street">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <TextField fx:id="street" layoutX="341.0" layoutY="308.0" prefHeight="25.0" prefWidth="257.0" promptText="Street" />
+            <Label layoutX="163.0" layoutY="345.0" text="City">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <TextField fx:id="city" layoutX="341.0" layoutY="349.0" prefHeight="25.0" prefWidth="257.0" promptText="City" />
+            <Label layoutX="163.0" layoutY="386.0" text="Country">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <TextField fx:id="country" layoutX="341.0" layoutY="390.0" prefHeight="25.0" prefWidth="257.0" promptText="Country" />
+            <Button layoutX="367.0" layoutY="558.0" mnemonicParsing="false" onAction="#registerUser" style="-fx-background-color: #926757;" text="Register" textFill="#f8f1f1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Hyperlink layoutX="470.0" layoutY="563.0" onAction="#gotoLogin" text="Go back to Sign in page" />
          </children>
       </Pane>
-   </center>
+   </left>
 </BorderPane>
