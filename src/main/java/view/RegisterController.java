@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import server.ResponseData;
 import server.database.entities.User;
@@ -22,6 +23,8 @@ public class RegisterController implements CustomController{
 	
     private static final String EDIT_BUTTON_TEXT = "Edit User";
     
+    //private static final String 
+    
 	private boolean firstTimeRegistered;
 	
 	@FXML private TextField userName;
@@ -31,6 +34,10 @@ public class RegisterController implements CustomController{
 	@FXML private TextField address;
 	@FXML private TextField email;
 	@FXML private TextField phoneNumber;
+	@FXML private TextField passwordValue1;
+	@FXML private TextField passwordValue2;
+	@FXML private Label newPassword1;
+	@FXML private Label newPassword2;
     @FXML private Button confirm;
 	@FXML private Hyperlink signLink;
 	
@@ -92,7 +99,10 @@ public class RegisterController implements CustomController{
 			email.setText(currentUser.getEmail());
 			address.setText(currentUser.getAddress());
 			phoneNumber.setText(currentUser.getEmail());
-			TextField newPassword = new TextField();
+			newPassword1.setVisible(true);
+			newPassword2.setVisible(true);
+			passwordValue1.setVisible(true);
+			passwordValue2.setVisible(true);
 		}
 		
 	}
