@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-
 import server.ResponseData;
 
 public class User implements Serializable {
@@ -26,7 +25,7 @@ public class User implements Serializable {
 	private static final int INSERT_PASSWORD_INDEX = 5;
 	private static final int INSERT_PHONE_NUMBER_INDEX = 6;
 	private static final int INSERT_ADDRESS_INDEX = 7;
-	
+
 	private static final String GET_USER_BY_EMAIL = "Select * from %s where EMAIL = ?;";
 	private static final String GET_USER_BY_USER_NAME = "Select * from %s where USER_NAME = ?";
 
@@ -47,7 +46,7 @@ public class User implements Serializable {
 		this.identity = new Identity();
 	}
 
-	public User(String userName,  String email, String firstName, String lastName, String password, String phoneNumber,
+	public User(String userName, String email, String firstName, String lastName, String password, String phoneNumber,
 			String address) {
 		this.identity = new Identity();
 		this.identity.setUserName(userName);
@@ -59,10 +58,23 @@ public class User implements Serializable {
 		this.phoneNumber = phoneNumber;
 	}
 
+	public User (ResultSet rs) throws SQLException {
+		this.identity = new Identity();
+		this.identity.setUserName(rs.getString(INSERT_USER_NAME_INDEX));
+		this.identity.setPassword(rs.getString(INSERT_USER_NAME_INDEX));
+		this.firstName = rs.getString(INSERT_FIRST_NAME_INDEX);
+		this.lastName = (rs.getString(INSERT_LAST_NAME_INDEX));
+		this.address = rs.getString(INSERT_ADDRESS_INDEX);
+		this.phoneNumber = rs.getString(INSERT_PHONE_NUMBER_INDEX);
+		this.email = rs.getString(INSERT_EMAIL_INDEX);
+		
+	}
 	@Override
 	public String toString() {
-		return "User [firstName=" + firstName + ", lastName=" + lastName +", userName=" + identity.getUserName() +  ", email=" + email + ", password=" + identity.getPassword()
-				+ ", address=" + address + ", phoneNumber=" + phoneNumber ;
+
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", userName=" + identity.getUserName()
+				+ ", email=" + email + ", password=" + identity.getPassword() + ", address=" + address
+				+ ", phoneNumber=" + phoneNumber;
 	}
 
 	public void registerUser(Connection connection, String tableName) throws SQLException {
@@ -74,7 +86,8 @@ public class User implements Serializable {
 		StringBuilder sb = new StringBuilder();
 		List<String> attributes = Arrays.asList("User Name", "First Name", "Last Name", "Email", "Password", "Address",
 				"Phone Number");
-		List<String> values = Arrays.asList(identity.getUserName(),email, firstName, lastName,  identity.getPassword(),  phoneNumber, address);
+		List<String> values = Arrays.asList(identity.getUserName(), email, firstName, lastName, identity.getPassword(),
+				phoneNumber, address);
 		List<Integer> maxLength = Arrays.asList(20, 20, 20, 20, 40, 15, 50);
 		List<Integer> minLength = Arrays.asList(5, 5, 5, 5, 8, 8, 5);
 		for (int i = 0; i < attributes.size(); i++) {

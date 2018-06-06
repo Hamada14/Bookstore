@@ -9,20 +9,19 @@ public class UserBuilder {
 	private String password;
 	private String address;
 	private String phoneNumber;
-	
 
 	public UserBuilder() {
-		
+
 	}
 
 	public User buildUser() {
-		return new User(userName, email, firstName, lastName,  password, phoneNumber, address);
+		return new User(userName, email, firstName, lastName, password, phoneNumber, address);
 	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}

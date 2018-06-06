@@ -2,6 +2,7 @@ package client.alphabit;
 
 import javafx.application.Application;
 
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -11,7 +12,7 @@ import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
 import server.database.entities.User;
 import view.CustomController;
-import view.Parameters;
+
 
 public class BookStoreApp extends Application {
 
@@ -40,7 +41,9 @@ public class BookStoreApp extends Application {
 		bookView = new Controller(primaryStage, BOOK_VIEW);
 		ordersView = new Controller(primaryStage, ORDERS_VIEW);	
 		showLogin();
-	};
+
+	}
+
 	
 	public static void showLogin() {
 		login.show();

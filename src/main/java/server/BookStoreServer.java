@@ -44,5 +44,8 @@ public interface BookStoreServer {
 
 	@WebMethod
 	boolean isManager(Identity identity);
+	
+	@WebMethod
+	byte[] generateReport(Identity identity, String reportType);
 
 }
