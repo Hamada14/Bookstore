@@ -42,5 +42,8 @@ public interface BookStoreServer {
 
 	@WebMethod
 	boolean isManager(Identity identity);
+	
+	@WebMethod
+	boolean placeOrder(String isbn, String quantity);
 
 }

@@ -36,10 +36,11 @@ public class BookStoreApp extends Application {
 		customer = new Controller(primaryStage, CUSTOMER_VIEW);
 		bookView = new Controller(primaryStage, BOOK_VIEW);
 		ordersView = new Controller(primaryStage, ORDERS_VIEW);
-		pushSomeOrders();
-		showOrdersView();
+//		pushSomeOrders();
+//		showOrdersView();
 
-		//showLogin();
+//		showLogin();
+		showManager();
 	}
 	
 	public static void showLogin() {
@@ -97,11 +98,11 @@ public class BookStoreApp extends Application {
 	}
 	
 	private static void pushSomeOrders() {
-		float x = 1f;
-		for (int i = 1; i <= 40; i++) {
-			Book book = new Book(Integer.toString(i), new String("boook" + i),"1960", x, "arts", true);
-			currentCart.addOrder(new Order(i, book));
-		}
+//		float x = 1f;
+//		for (int i = 1; i <= 40; i++) {
+//			Book book = new Book(Integer.toString(i), new String("boook" + i),"1960", x, "arts", true);
+//			currentCart.addOrder(new Order(i, book));
+//		}
 	}
 	
 	public static void main(String[] args) {

@@ -3,15 +3,20 @@ package server;
 import java.sql.Connection;
 
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.jws.WebService;
+
 
 import server.database.DBConfig;
 import server.database.entities.Book;
 import server.database.entities.Identity;
+import server.database.entities.Order;
 import server.database.entities.User;
 
 //Service Implementation
@@ -20,7 +25,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 
 	private Connection connection;
 	private DBConfig config;
-
+	
 	public BookStoreServerImpl(DBConfig config) {
 		this.config = config;
 		this.connection = connectToDatabase();
@@ -70,7 +75,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 			String dbName = config.getPropertyValue(DBConfig.DB_NAME);
 			String userName = config.getPropertyValue(DBConfig.DB_USER_NAME);
 			String password = config.getPropertyValue(DBConfig.DB_PASSWORD);
-
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dbName, userName, password);
 			Statement st = con.createStatement();
 			st.execute("use " + config.getPropertyValue(DBConfig.DB_NAME));
@@ -85,5 +89,18 @@ public class BookStoreServerImpl implements BookStoreServer {
 	public boolean promoteUser(HashMap<String, User> temp) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean placeOrder(String isbn, String quantity) {
+		int q = 0;
+		try {
+			q = Integer.valueOf(quantity);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		Book book = new Book();
+		book.setBookISBN(isbn);
+		return Order.addNewOrder(new Order(q, book), connection);
 	}
 }

@@ -9,7 +9,7 @@ repositories {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'alphabit.BookStoreUI'
+        attributes 'Main-Class': 'client.alphabit.BookStoreApp'
     }
 }
 
@@ -40,7 +40,8 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/javax.xml.ws/jaxws-api
     compile group: 'javax.xml.ws', name: 'jaxws-api', version: '2.2.1'
-
+    
+    compile group: 'com.sun.xml.ws', name: 'jaxws-rt', version: '2.1.4'
 
 } 
 
