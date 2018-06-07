@@ -8,7 +8,7 @@ import java.sql.Statement;
 import javax.xml.ws.Endpoint;
 
 import server.database.DBConfig;
-import server.database.JasperReporter;
+import server.database.report.JasperReportCreator;
 
 public class Publisher {
 
@@ -19,7 +19,7 @@ public class Publisher {
 		try {
 			DBConfig config = new DBConfig();
 			Connection connection = Publisher.connectToDatabase(config);
-			JasperReporter jasperReporter = new JasperReporter(connection);
+			JasperReportCreator jasperReporter = new JasperReportCreator(connection);
 			BookStoreServerImpl bookStoreServer = new BookStoreServerImpl(connection, jasperReporter);
 			Endpoint.publish(endPointURL, bookStoreServer);
 		} catch (IOException e) {

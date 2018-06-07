@@ -1,4 +1,4 @@
-package server.database;
+package server.database.report;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
@@ -12,21 +12,17 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 
-public class JasperReporter {
-	
-	public final static String TOP_TEN_BOOKS_REPORT = "jasperReports/TopTenBooks.jrxml";
-	public final static String TOP_FIVE_CUSTOMERS = "jasperReports/TopFiveUsers.jrxml";
-	public final static String SALES = "jasperReports/Sales.jrxml";
+public class JasperReportCreator {
 	
 	private final Connection connection;
 	
-	public JasperReporter(final Connection connection) {
+	public JasperReportCreator(final Connection connection) {
 		this.connection = connection;
 	}
 	
-	public byte[] generateReport(String reportType) throws JRException {
+	public byte[] generateReport(ReportType reportType) throws JRException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		JasperReport report = JasperCompileManager.compileReport(reportType);
+		JasperReport report = JasperCompileManager.compileReport(reportType.getPath());
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		JasperPrint print = JasperFillManager.fillReport(report, parameters, connection);
 		JasperExportManager.exportReportToPdfStream(print, out);

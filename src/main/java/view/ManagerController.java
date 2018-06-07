@@ -1,23 +1,14 @@
 package view;
 
+import client.BookClient;
 import client.alphabit.BookStoreApp;
-
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.control.ButtonBase;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.layout.GridPane;
-import javafx.util.Pair;
+import server.BookStoreServer;
+import server.database.report.ReportWriter;
+
 
 public class ManagerController implements CustomController {
-
+	
 	@FXML
 	private void showPlaceNewOrderPanel() {
 		PlaceOrderController placeBookOrder = new PlaceOrderController();
@@ -33,10 +24,15 @@ public class ManagerController implements CustomController {
 	private void showPromotePanel() {
 	}
 
+	@FXML
+	private void createReport() {
+		BookStoreServer server = BookClient.getServer();
+		ReportWriter writer = new ReportWriter(server);
+		writer.createReport();
+	}
+	
 	@Override
 	public void initData(Parameters parameters) {
 		// TODO Auto-generated method stub
-
 	}
-
 }

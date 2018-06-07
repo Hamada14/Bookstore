@@ -17,6 +17,7 @@ import server.database.entities.Identity;
 import server.database.entities.User;
 import server.UserResponseData;
 import server.database.entities.UserBuilder;
+import server.database.report.ReportType;
 
 
 @WebService
@@ -53,6 +54,6 @@ public interface BookStoreServer {
 	@WebMethod
 	boolean placeOrder(String isbn, String quantity);
 	
-	byte[] generateReport(Identity identity, String reportType);
+	byte[] generateReport(Identity identity, ReportType reportType);
 
 }
