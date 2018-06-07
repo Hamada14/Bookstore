@@ -6,12 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import lombok.Getter;
 import lombok.Setter;
 import server.ResponseData;
+import server.UserResponseData;
 
 @Getter
 @Setter
@@ -21,12 +24,16 @@ public class User implements Serializable {
 
 	public static final String USER_TABLE = "CUSTOMER";
 
-	private static final String NEW_USER_QUERY = "Insert into %s(USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD_SHA1, PHONE_NUMBER, STREET, CITY, COUNTRY)"
+	private static final String NEW_USER_QUERY = "Insert into %s(USER_NAME, EMAIL, FIRST_NAME, LAST_NAME,  PASSWORD_SHA1, PHONE_NUMBER, STREET, CITY, COUNTRY)"
 			+ "VALUES (?, ?, ?, ?, SHA1(?), ?, ?, ?, ?);";
+
+	private static final String UPDATE_USER_INFO_QUERY = "Update %s SET  FIRST_NAME = ?, LAST_NAME = ?, PHONE_NUMBER = ?, STREET = ?, CITY = ?, COUNTRY = ?"
+			+ "WHERE USER_NAME = ? AND PASSWORD_SHA1 = SHA1(?);";
+
 	private static final int USER_NAME_INDEX = 1;
-	private static final int FIRST_NAME_INDEX = 2;
-	private static final int LAST_NAME_INDEX = 3;
-	private static final int EMAIL_INDEX = 4;
+	private static final int EMAIL_INDEX = 2;
+	private static final int FIRST_NAME_INDEX = 3;
+	private static final int LAST_NAME_INDEX = 4;
 	private static final int PASSWORD_INDEX = 5;
 	private static final int PHONE_NUMBER_INDEX = 6;
 	private static final int STREET_INDEX = 7;
@@ -66,8 +73,8 @@ public class User implements Serializable {
 		this.country = country;
 	}
 
-	public User(ResultSet rs) throws SQLException {
-		this.identity = new Identity(rs.getString(USER_NAME_INDEX), rs.getString(USER_NAME_INDEX));
+	public User(ResultSet rs, Identity identity) throws SQLException {
+		this.identity = identity;
 		this.firstName = rs.getString(FIRST_NAME_INDEX);
 		this.lastName = rs.getString(LAST_NAME_INDEX);
 		this.phoneNumber = rs.getString(PHONE_NUMBER_INDEX);
@@ -112,7 +119,7 @@ public class User implements Serializable {
 				List<String> errors = new ArrayList<>();
 				if (user.isAlreadyRegisteredUserName(connection)) {
 					errors.add(DUPLICATE_USER_NAME_ERROR);
-				} 
+				}
 				if (user.isAlreadyRegisteredEmail(connection)) {
 					errors.add(DUPLICATE_EMAIL_ERROR);
 				}
@@ -124,6 +131,47 @@ public class User implements Serializable {
 			}
 		}
 		return rs;
+	}
+
+	private PreparedStatement createUpdatePersonalInfoQuery(Connection con, String tableName) throws SQLException {
+
+		String query = String.format(UPDATE_USER_INFO_QUERY, tableName);
+		PreparedStatement st = con.prepareStatement(query);
+		st.setString(FIRST_NAME_INDEX - 2, firstName);
+		st.setString(LAST_NAME_INDEX - 2, lastName);
+		st.setString(PHONE_NUMBER_INDEX - 3, phoneNumber);
+		st.setString(STREET_INDEX - 3, street);
+		st.setString(CITY_INDEX - 3, city);
+		st.setString(COUNTRY_INDEX - 3, country);
+		st.setString(USER_NAME_INDEX + 6, identity.getUserName());
+		st.setString(PASSWORD_INDEX + 3, identity.getPassword());
+		return st;
+	}
+
+	public static UserResponseData editPersonalInformation(User modifiedUser, Connection connection) {
+		UserResponseData rs = new UserResponseData();
+		try {
+			PreparedStatement ps = modifiedUser.createUpdatePersonalInfoQuery(connection, USER_TABLE);
+			ps.executeUpdate();
+			rs.setUser(modifiedUser);
+		} catch (SQLException e) {
+			rs.setError(e.getMessage());
+		}
+		return rs;
+	}
+
+
+	public static List<String> getValidCountries() {
+		Locale[] locales = Locale.getAvailableLocales();
+		List<String> countries = new ArrayList<>();
+		for (Locale locale : locales) {
+			String country = locale.getDisplayCountry();
+			if (country.trim().length() > 0 && !countries.contains(country)) {
+				countries.add(country);
+			}
+		}
+		Collections.sort(countries);
+		return countries;
 	}
 
 	private boolean isAlreadyRegisteredEmail(Connection connection) throws SQLException {

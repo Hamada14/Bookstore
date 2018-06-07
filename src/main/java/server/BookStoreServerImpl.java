@@ -2,6 +2,7 @@ package server;
 
 import java.sql.Connection;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -63,16 +64,34 @@ public class BookStoreServerImpl implements BookStoreServer {
 		return null;
 	}
 
+	
+	public UserResponseData editUserInformation(UserBuilder userBuilder) {
+		String errors = userBuilder.validatePersonalInformation();
+		UserResponseData rs = new UserResponseData();
+		if (errors != null) {
+			rs.setError(errors);
+			return rs;
+		}
+		return User.editPersonalInformation(userBuilder.buildUser(), connection);
+	
+	}
+
 	@Override
-	public boolean editUser(User user) {
-		// TODO Auto-generated method stub
-		return false;
+	public ResponseData editUserIdentity(Identity identity, String newPassword) {
+		UserBuilder builder = new UserBuilder();
+		builder.setPassword(newPassword);
+		String errors = builder.validateNewPassword();
+		ResponseData rs = new ResponseData();
+		if (errors != null) {
+			rs.setError(errors);
+			return rs;
+		}
+		return identity.editUserIdentity(newPassword, connection);
 	}
 
 	@Override
 	public ArrayList<Book> searchBook(String filter, String valueFilter) {
-		// TODO Auto-generated method stub
-		return null;
+	 return null;
 	}
 
 	@Override

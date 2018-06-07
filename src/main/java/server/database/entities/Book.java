@@ -15,15 +15,16 @@ import lombok.Setter;
 @Setter
 public class Book {
 
-	private static final String ISBN_REGEX = "^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})\r\n"
-			+ "[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)\r\n"
-			+ "(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$";
+	private static final String ISBN_REGEX = "^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$";
 	private static final String INSERT_BOOK = "INSERT INTO BOOK(ISBN, TITLE, PUBLISHER_ID, PUBLICATION_YEAR,"
 			+ " SELLING_PRICE, CATEGORY, MIN_THRESHOLD, QUANTITY)" + " VALUES(?,?,?,?,?,?,?,?);";
 	private static final String SELECT_BOOK = "SELECT * FROM %s WHERE ISBN=?";
 	private static final String INSERT_AUTHOR_REF = "INSERT INTO %s (BOOK_ISBN, AUTHOR_ID) VALUES (?, ?)";
+	private static final String SELECT_CATEGORY = "SELECT ID FROM %s WHERE CATEGORY=?";
+	private static final String BOOK_CATEGORY_TABLE = "BOOK_CATEGORY";
 	private static final String BOOK_AUTHOR = "BOOK_AUTHOR";
 	private static final String BOOK_TABLE = "BOOK";
+	private static final String ID_COL = "ID";
 	private static final int ISBN_INDEX = 1;
 	private static final int BOOK_TITLE_INDEX = 2;
 	private static final int PUBLISHER_ID_INDEX = 3;
@@ -37,6 +38,8 @@ public class Book {
 	private static final int BOOK_AUTHORS_ID_INDEX = 2;
 
 	private static final int ORIGINAL_QUANTITY = 0;
+	
+	private static final int CATEGORY_NOT_FOUND = -1;
 
 	private static final float MAX_SELLING_PRICE = 999999.99f;
 	private static final float MIN_SELLING_PRICE = 0.00f;
@@ -99,22 +102,44 @@ public class Book {
 		if(isBookExisting) {
 			return false;
 		}
+		int categoryId = getCategoryId(book.getCategory(), connection);
+		if(categoryId == CATEGORY_NOT_FOUND) {
+			return false;
+		}
 		try {
 			int pubYear = Integer.valueOf(book.getPublicationYear());
 			String query = String.format(INSERT_BOOK, BOOK_TABLE);
 			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
 			st.setString(ISBN_INDEX, book.getBookISBN());
-			st.setString(CATEGORY_INDEX, book.getCategory());
+			st.setInt(CATEGORY_INDEX, categoryId);
 			st.setString(BOOK_TITLE_INDEX, book.getBookTitle());
 			st.setInt(PUBLISHER_ID_INDEX, book.getPublisherId());
 			st.setInt(PUBLICATION_YEAR_INDEX, pubYear);
 			st.setInt(QUANTITY_INDEX, ORIGINAL_QUANTITY);
 			st.setInt(MIN_THRESHOLD_INDEX, book.getMinimumThreshold());
 			st.setFloat(SELLING_PRICE_INDEX, book.getSellingPrice());
+			System.out.println("HEREEEEEEE1" + st);
 			int rowsAffected = st.executeUpdate();
+			System.out.println("HEREEEEEEE1");
 			return rowsAffected == 1;
 		} catch (SQLException | NumberFormatException e) {
 			return false;
+		}
+	}
+	
+	private static final int getCategoryId(String category, Connection connection) {
+		try {
+			String query = String.format(SELECT_CATEGORY, BOOK_CATEGORY_TABLE);
+			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
+			st.setString(1, category);
+			ResultSet rs = st.executeQuery();
+			int id = CATEGORY_NOT_FOUND;
+			while(rs.next()) {
+				id = rs.getInt(ID_COL);
+			}
+			return id;
+		} catch(SQLException e) {
+			return CATEGORY_NOT_FOUND;
 		}
 	}
 	

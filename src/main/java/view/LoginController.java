@@ -19,7 +19,7 @@ public class LoginController implements CustomController {
 
 	@FXML
 	private void goToRegister() {
-		BookStoreApp.showRegister(true);
+		BookStoreApp.showRegister();
 	}
 
 	@FXML

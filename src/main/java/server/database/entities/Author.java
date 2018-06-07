@@ -17,7 +17,7 @@ public class Author extends Person {
 
 	public static final int ERROR_AUTHOR_ADDITION = -1;
 	private static final int AUTHOR_NOT_FOUND = -2;
-	private static final String SELECT_WITH_COND = "SELECT ID FROM %s WHERE FIRST_NAME=?, LAST_NAME=?";
+	private static final String SELECT_WITH_COND = "SELECT ID FROM %s WHERE FIRST_NAME=? AND LAST_NAME=?";
 	private static final String ADD_AUTHOR = "INSERT INTO %s(FIRST_NAME, LAST_NAME) VALUES(?, ?)";
 	private static final String AUTHOR_TABLE = "AUTHOR";
 	private static final int AUTHOR_FIRST_NAME = 1;
@@ -78,7 +78,7 @@ public class Author extends Person {
 			st.setString(AUTHOR_FIRST_NAME, author.getName());
 			st.setString(AUTHOR_LAST_NAME, author.getLastName());
 			ResultSet rs = st.executeQuery();
-			int id = -1;
+			int id = AUTHOR_NOT_FOUND;
 			while (rs.next()) {
 				id = rs.getInt(ID_COL);
 			}

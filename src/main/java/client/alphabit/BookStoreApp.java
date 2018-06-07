@@ -21,9 +21,10 @@ public class BookStoreApp extends Application {
 	private static final String CUSTOMER_VIEW = "/CustomerView.fxml";
     private static final String BOOK_VIEW = "/BookView.fxml";
     private static final String ORDERS_VIEW = "/OrdersView.fxml";
-    private static final String ADD_BOOK_VIEW = "/AddBook.fxml";
+    private static final String EDIT_PROFILE_VIEW = "/EditProfileView.fxml";
+	private static final String ADD_BOOK_VIEW = "/AddBook.fxml";
 	private Stage primaryStage;
-	private static ControlForm login, register, manager, customer, bookView, ordersView, addBookView;
+	private static ControlForm login, register, manager, customer, bookView, ordersView, editProfileView, addBookView;
 	private static ShoppingCart currentCart;
 	private static User currentUser;
 
@@ -40,8 +41,10 @@ public class BookStoreApp extends Application {
 		bookView = new Controller(primaryStage, BOOK_VIEW);
 		addBookView = new Controller(primaryStage, ADD_BOOK_VIEW);
 		ordersView = new Controller(primaryStage, ORDERS_VIEW);	
+		editProfileView = new Controller(primaryStage, EDIT_PROFILE_VIEW);
 //		showLogin();
 		showManager();
+		
 	}
 
 	
@@ -53,13 +56,15 @@ public class BookStoreApp extends Application {
 		addBookView.show();
 	}
 	
-	public static void showRegister(boolean firstTimeRegistered) {
+	public static void showRegister() {
 		register.show();
-		view.Parameters params = new view.Parameters();
-		params.setRegisterationMode(firstTimeRegistered);
-		register.getController().initData(params);
+		register.getController().initData(null);
 	}
-
+    
+	public static void showEditProfile() {
+		editProfileView.show();
+		editProfileView.getController().initData(null);
+	}
 	public static void showBookView(Book book) {
 		bookView.show();
 		view.Parameters params = new view.Parameters();

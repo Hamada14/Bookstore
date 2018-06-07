@@ -71,8 +71,7 @@ CREATE TABLE IF NOT EXISTS BOOK (
     SELLING_PRICE       DECIMAL(6, 2) NOT NULL,
     CATEGORY            TINYINT NOT NULL,
     MIN_THRESHOLD       INT UNSIGNED NOT NULL,
-    QUANTITY            INT UNSIGNED NOT NULL,
-    ORDER_QUANTITY      INT UNSIGNED NOT NULL,
+    QUANTITY            INT UNSIGNED NOT NULL DEFAULT 0,
 
     PRIMARY KEY (ISBN),
     FOREIGN KEY(PUBLISHER_ID) REFERENCES PUBLISHER(ID),
@@ -81,7 +80,6 @@ CREATE TABLE IF NOT EXISTS BOOK (
     INDEX (CATEGORY),
     INDEX (PUBLISHER_ID)
 );
-
 
 #INSERT INTO BOOKS VALUES("ISBN1", "TITLE1", 1, 2017, 50, "Art", 20, 20, 20);
 
@@ -110,8 +108,18 @@ create trigger BOOK_ORDER_BELOW_THRESHOLD after update on BOOK
 for each row
 begin
   if new.QUANTITY < new.MIN_THRESHOLD AND old.QUANTITY >= new.MIN_THRESHOLD then
-    INSERT into BOOK_ORDER(BOOK_ISBN, QUANTITY) VALUES(new.ISBN, new.ORDER_QUANTITY);
-    end if;
+    INSERT into BOOK_ORDER(BOOK_ISBN, QUANTITY) VALUES(new.ISBN, new.MIN_THRESHOLD);
+  end if;
+end;$$
+delimiter ;
+
+delimiter $$
+create trigger BOOK_ORDER_BELOW_THRESHOLD_INSERT after insert on BOOK
+for each row
+begin
+  if new.QUANTITY < new.MIN_THRESHOLD then
+    INSERT into BOOK_ORDER(BOOK_ISBN, QUANTITY) VALUES(new.ISBN, new.MIN_THRESHOLD);
+  end if;
 end;$$
 delimiter ;
 #############################################################################
@@ -182,7 +190,8 @@ CREATE TABLE IF NOT EXISTS CUSTOMER (
     PRIMARY KEY(USER_NAME),
     UNIQUE(EMAIL)
 );
-
+use bookstore;
+insert into customer values("usernamee", "email", "first", "last", "password", "phone", "street", "city", "country");
 CREATE TABLE IF NOT EXISTS MANAGER (
     USER_NAME        VARCHAR(20) NOT NULL,
 
@@ -215,7 +224,7 @@ ON SCHEDULE EVERY 1 DAY
 DO
   DELETE FROM SHOPPING_ORDER WHERE CHECKOUT_TIME < NOW() - interval 3 MONTH;
 
-
+use bookstore;
 CREATE TABLE IF NOT EXISTS SHOPPING_ORDER_ITEM (
     SHOPPING_ORDER_ID    INT NOT NULL,
     BOOK_ISBN            VARCHAR(20) NOT NULL,
