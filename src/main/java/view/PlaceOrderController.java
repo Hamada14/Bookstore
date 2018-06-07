@@ -16,13 +16,13 @@ import javafx.scene.control.TextField;
 
 public class PlaceOrderController extends Dialog<Object> {
 	
-	private static String PLACE_ORDER = "Place Order";
-	private static String TITLE = "Place new Order";
-	private static String SECTION_MESSAGE = "PLease Enter the following information";
-	private static String BOOK_NAME_EXAMPLE = "EX: CS1234";
-	private static String QUANTITY_EXAMPLE = "EX: 5";
-	private static String ISBN = "ISBN";
-	private static String QUANTITY = "Quantity";
+	private static final String PLACE_ORDER = "Place Order";
+	private static final String TITLE = "Place new Order";
+	private static final String SECTION_MESSAGE = "PLease Enter the following information";
+	private static final String BOOK_NAME_EXAMPLE = "ISBN-10: 0-596-52068-9";
+	private static final String QUANTITY_EXAMPLE = "EX: 5";
+	private static final String ISBN = "ISBN";
+	private static final String QUANTITY = "Quantity";
 	
 	private TextField isbn;
 	private TextField quantity;

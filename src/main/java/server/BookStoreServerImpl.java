@@ -113,12 +113,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public boolean promoteUser(HashMap<String, User> temp) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean placeOrder(String isbn, String quantity) {
 		int q = 0;
 		try {
@@ -129,5 +123,10 @@ public class BookStoreServerImpl implements BookStoreServer {
 		Book book = new Book();
 		book.setBookISBN(isbn);
 		return Order.addNewOrder(new Order(q, book), connection);
+	}
+	
+	@Override
+	public boolean promoteUser(String userName) {
+		return User.promoteUser(userName, connection);
 	}
 }

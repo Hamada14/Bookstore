@@ -40,9 +40,6 @@ public interface BookStoreServer {
 
 	@WebMethod
 	boolean editBook(Book modifiedBook);
-
-	@WebMethod
-	boolean promoteUser(HashMap<String, User> temp);
 	
 	@WebMethod
 	UserResponseData loginUser(Identity identity);
@@ -52,6 +49,9 @@ public interface BookStoreServer {
 	
 	@WebMethod
 	boolean placeOrder(String isbn, String quantity);
+	
+	@WebMethod
+	boolean promoteUser(String userName);
 	
 	byte[] generateReport(Identity identity, String reportType);
 

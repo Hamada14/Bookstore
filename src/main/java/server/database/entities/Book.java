@@ -118,9 +118,7 @@ public class Book {
 			st.setInt(QUANTITY_INDEX, ORIGINAL_QUANTITY);
 			st.setInt(MIN_THRESHOLD_INDEX, book.getMinimumThreshold());
 			st.setFloat(SELLING_PRICE_INDEX, book.getSellingPrice());
-			System.out.println("HEREEEEEEE1" + st);
 			int rowsAffected = st.executeUpdate();
-			System.out.println("HEREEEEEEE1");
 			return rowsAffected == 1;
 		} catch (SQLException | NumberFormatException e) {
 			return false;

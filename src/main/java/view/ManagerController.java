@@ -30,7 +30,9 @@ public class ManagerController implements CustomController {
 	}
 
 	@FXML
-	private void showPromotePanel() {
+	private void showPromoteUser() {
+		PromoteUserController promoteUserController = new PromoteUserController();
+		promoteUserController.showAndWait();
 	}
 
 	@Override

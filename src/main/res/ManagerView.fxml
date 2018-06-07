@@ -57,7 +57,7 @@
    </top>
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-      	<Button layoutX="30.0" layoutY="26.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="208.0" prefWidth="228.0" style="-fx-background-color: transparent;">
+      	<Button layoutX="30.0" layoutY="26.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#showPromoteUser" prefHeight="208.0" prefWidth="228.0" style="-fx-background-color: transparent;">
 			<graphic>
     			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
                   <image>

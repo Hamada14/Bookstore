@@ -30,6 +30,12 @@ public class User implements Serializable {
 	private static final String UPDATE_USER_INFO_QUERY = "Update %s SET  FIRST_NAME = ?, LAST_NAME = ?, PHONE_NUMBER = ?, STREET = ?, CITY = ?, COUNTRY = ?"
 			+ "WHERE USER_NAME = ? AND PASSWORD_SHA1 = SHA1(?);";
 
+	private static final String SELECT_USER_NAME = "SELECT * FROM %s WHERE USER_NAME = ?";
+
+	private static final String INSERT_MANAGER = "INSERT INTO %s (USER_NAME) VALUES (?)";
+
+	private static final String MANAGER_TABLE = "MANAGER";
+
 	private static final int USER_NAME_INDEX = 1;
 	private static final int EMAIL_INDEX = 2;
 	private static final int FIRST_NAME_INDEX = 3;
@@ -160,7 +166,6 @@ public class User implements Serializable {
 		return rs;
 	}
 
-
 	public static List<String> getValidCountries() {
 		Locale[] locales = Locale.getAvailableLocales();
 		List<String> countries = new ArrayList<>();
@@ -189,5 +194,33 @@ public class User implements Serializable {
 		st.setString(1, attribute);
 		ResultSet rs = st.executeQuery();
 		return rs.next();
+	}
+
+	public static boolean promoteUser(String userName, Connection connection) {
+		boolean validUserName = isExistingUserName(userName, connection);
+		if (!validUserName) {
+			return false;
+		}
+		try {
+			String query = String.format(INSERT_MANAGER, MANAGER_TABLE);
+			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
+			st.setString(1, userName);
+			int rowsAffected = st.executeUpdate();
+			return rowsAffected == 1;
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+
+	private static boolean isExistingUserName(String userName, Connection connection) {
+		try {
+			String query = String.format(SELECT_USER_NAME, USER_TABLE);
+			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
+			st.setString(1, userName);
+			ResultSet rs = st.executeQuery();
+			return rs != null && rs.next();
+		} catch (SQLException e) {
+			return false;
+		}
 	}
 }
