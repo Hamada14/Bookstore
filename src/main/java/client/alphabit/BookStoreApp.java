@@ -43,8 +43,7 @@ public class BookStoreApp extends Application {
 		ordersView = new Controller(primaryStage, ORDERS_VIEW);	
 		editProfileView = new Controller(primaryStage, EDIT_PROFILE_VIEW);
 //		showLogin();
-		showManager();
-		
+		showManager();		
 	}
 
 	

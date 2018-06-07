@@ -1,32 +1,29 @@
 package server;
 
 import java.sql.Connection;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.jws.WebService;
 
 import net.sf.jasperreports.engine.JRException;
-import server.database.JasperReporter;
 import server.database.entities.Author;
 import server.database.entities.Book;
 import server.database.entities.Identity;
 import server.database.entities.Order;
 import server.database.entities.User;
 import server.database.entities.UserBuilder;
+import server.database.report.JasperReportCreator;
+import server.database.report.ReportType;
 
 //Service Implementation
 @WebService(endpointInterface = "server.BookStoreServer")
 public class BookStoreServerImpl implements BookStoreServer {
 
 	private final Connection connection;
-	private final JasperReporter jasperReporter;
+	private final JasperReportCreator jasperReporter;
 
-	public BookStoreServerImpl(Connection connection, JasperReporter jasperReporter) {
+	public BookStoreServerImpl(Connection connection, JasperReportCreator jasperReporter) {
 		this.connection = connection;
 		this.jasperReporter = jasperReporter;
 	};
@@ -53,7 +50,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public byte[] generateReport(Identity identity, String reportType) {
+	public byte[] generateReport(Identity identity, ReportType reportType) {
 		try {
 			if (identity.isManager(connection)) {
 				return jasperReporter.generateReport(reportType);

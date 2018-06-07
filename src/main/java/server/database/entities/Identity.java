@@ -62,15 +62,13 @@ public class Identity implements Serializable {
 		return rd;
 	}
 	
-	
-	
-	public  ResponseData editUserIdentity( String newPassword, Connection connection) {
+	public  ResponseData editUserIdentity(String newPassword, Connection connection) {
 		ResponseData rs = new ResponseData();
 		String query = String.format(UPDATE_PASSWORD, User.USER_TABLE);
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString( NEWPASSWORD_INDEX_IN_UPDATE, newPassword);
+			ps.setString(NEWPASSWORD_INDEX_IN_UPDATE, newPassword);
 			ps.setString(USER_NAME_INDEX_IN_UPDATE, this.userName);
 			ps.setString(PASSWORD_INDEX_IN_UPDATE, this.password);
 			ps.executeUpdate();
@@ -117,10 +115,6 @@ public class Identity implements Serializable {
 			urs.setUser(currentUser);
 		}catch (SQLException e) {
 		   urs.setError(e.getMessage());
-		}
-		
+		}	
 	}
-	
-	
-	
 }
