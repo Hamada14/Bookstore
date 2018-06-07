@@ -66,7 +66,7 @@
                </ImageView>
 			</graphic>
 		</Button>
-		<Button layoutX="321.0" layoutY="26.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#showPlaceNewOrderPanel" prefHeight="208.0" prefWidth="55.0" style="-fx-background-color: transparent;">
+		<Button layoutX="321.0" layoutY="26.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#showAddNewBookPanel" prefHeight="208.0" prefWidth="55.0" style="-fx-background-color: transparent;">
 			<graphic>
       			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -84,7 +84,7 @@
                </ImageView>
 			</graphic>
 		</Button>
-		<Button layoutX="30.0" layoutY="296.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="208.0" prefWidth="55.0" style="-fx-background-color: transparent;">
+		<Button layoutX="30.0" layoutY="296.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#showPlaceNewOrderPanel" prefHeight="208.0" prefWidth="55.0" style="-fx-background-color: transparent;">
 			<graphic>
       			<ImageView fitHeight="189.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
                   <image>

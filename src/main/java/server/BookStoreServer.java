@@ -11,6 +11,7 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
+import server.database.entities.Author;
 import server.database.entities.Book;
 import server.database.entities.Identity;
 import server.database.entities.User;
@@ -32,7 +33,7 @@ public interface BookStoreServer {
 	ArrayList<Book> searchBook(String filter, String valueFilter);
 
 	@WebMethod
-	boolean addNewBook(Book newBook);
+	boolean addNewBook(Book newBook, Author author, server.database.entities.Publisher publisher);
 
 	@WebMethod
 	boolean editBook(Book modifiedBook);

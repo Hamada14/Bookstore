@@ -23,6 +23,11 @@ public class ManagerController implements CustomController {
 		PlaceOrderController placeBookOrder = new PlaceOrderController();
 		placeBookOrder.showAndWait();
 	}
+	
+	@FXML
+	private void showAddNewBookPanel() {
+		BookStoreApp.showAddNewBook();
+	}
 
 	@FXML
 	private void showPromotePanel() {

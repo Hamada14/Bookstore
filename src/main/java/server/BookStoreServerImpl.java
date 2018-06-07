@@ -2,7 +2,6 @@ package server;
 
 import java.sql.Connection;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -10,20 +9,18 @@ import java.util.regex.Pattern;
 
 import javax.jws.WebService;
 
-
 import net.sf.jasperreports.engine.JRException;
 import server.database.JasperReporter;
+import server.database.entities.Author;
 import server.database.entities.Book;
 import server.database.entities.Identity;
 import server.database.entities.Order;
 import server.database.entities.User;
 import server.database.entities.UserBuilder;
 
-
 //Service Implementation
 @WebService(endpointInterface = "server.BookStoreServer")
 public class BookStoreServerImpl implements BookStoreServer {
-
 
 	private final Connection connection;
 	private final JasperReporter jasperReporter;
@@ -36,7 +33,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 	@Override
 	public ResponseData addNewUser(UserBuilder userBuilder) {
 		String errors = userBuilder.validateData();
-		if(errors != null) {
+		if (errors != null) {
 			ResponseData rs = new ResponseData();
 			rs.setError(errors);
 			return rs;
@@ -79,8 +76,15 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public boolean addNewBook(Book newBook) {
-		return false;
+	public boolean addNewBook(Book newBook, Author author, server.database.entities.Publisher publisher) {
+		int authorId = Author.addAuthor(author, connection);
+		int publisherId = server.database.entities.Publisher.addPublisher(publisher, connection);
+		if (authorId == Author.ERROR_AUTHOR_ADDITION
+				|| publisherId == server.database.entities.Publisher.ERROR_PUBLISHER_ADDITION) {
+			return false;
+		}
+		newBook.setPublisherId(publisherId);
+		return Book.addBook(newBook, authorId, connection);
 	}
 
 	@Override

@@ -1,66 +1,163 @@
 package server.database.entities;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Book {
+
+	private static final String ISBN_REGEX = "^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})\r\n"
+			+ "[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)\r\n"
+			+ "(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$";
+	private static final String INSERT_BOOK = "INSERT INTO BOOK(ISBN, TITLE, PUBLISHER_ID, PUBLICATION_YEAR,"
+			+ " SELLING_PRICE, CATEGORY, MIN_THRESHOLD, QUANTITY)" + " VALUES(?,?,?,?,?,?,?,?);";
+	private static final String SELECT_BOOK = "SELECT * FROM %s WHERE ISBN=?";
+	private static final String INSERT_AUTHOR_REF = "INSERT INTO %s (BOOK_ISBN, AUTHOR_ID) VALUES (?, ?)";
+	private static final String BOOK_AUTHOR = "BOOK_AUTHOR";
+	private static final String BOOK_TABLE = "BOOK";
+	private static final int ISBN_INDEX = 1;
+	private static final int BOOK_TITLE_INDEX = 2;
+	private static final int PUBLISHER_ID_INDEX = 3;
+	private static final int PUBLICATION_YEAR_INDEX = 4;
+	private static final int SELLING_PRICE_INDEX = 5;
+	private static final int CATEGORY_INDEX = 6;
+	private static final int MIN_THRESHOLD_INDEX = 7;
+	private static final int QUANTITY_INDEX = 8;
 	
+	private static final int BOOK_AUTHORS_ISBN_INDEX = 1;
+	private static final int BOOK_AUTHORS_ID_INDEX = 2;
+
+	private static final int ORIGINAL_QUANTITY = 0;
+
+	private static final float MAX_SELLING_PRICE = 999999.99f;
+	private static final float MIN_SELLING_PRICE = 0.00f;
+
+	private String bookISBN;
+	private String bookTitle;
+	private String publicationYear;
+	private float sellingPrice;
+	private String category;
+	private boolean inStock;
+	private int publisherId;
+	private int minimumThreshold;
+
 	public Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
-			boolean inStock) {
+			boolean inStock, String publisherName) {
 		super();
 		this.bookISBN = bookISBN;
 		this.bookTitle = bookTitle;
 		this.publicationYear = publicationYear;
 		this.sellingPrice = sellingPrice;
-		Category = category;
+		this.category = category;
 		this.inStock = inStock;
 	}
-	private String bookISBN;
-    private String bookTitle;
-    private String publicationYear;
-    private float sellingPrice;
-    private String Category;
-    private boolean inStock;
-    
-    public Book() {
-    	
-    }
-    public Book(String title) {
-    	this.bookTitle = title;
-    }
-    
-	public boolean isInStock() {
-		return inStock;
+
+	public Book() {
+
 	}
-	public void setInStock(boolean inStock) {
-		this.inStock = inStock;
+
+	public Book(String title) {
+		this.bookTitle = title;
 	}
-	public String getBookISBN() {
-		return bookISBN;
+
+	public static final boolean addBook(Book book, int authorId, Connection connection) {
+		boolean validBook = validateBookAttributes(book);
+		if(!validBook) {
+			return false;
+		}
+		boolean bookAdded = bookAddition(book, authorId, connection);
+		if(bookAdded) {
+			return authorRefAddition(book.getBookISBN(), authorId, connection);
+		}
+		return false;
 	}
-	public void setBookISBN(String bookISBN) {
-		this.bookISBN = bookISBN;
+	
+	private static boolean authorRefAddition(String isbn, int authorId, Connection connection) {
+		try {
+			String query = String.format(INSERT_AUTHOR_REF, BOOK_AUTHOR);
+			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
+			st.setString(BOOK_AUTHORS_ISBN_INDEX, isbn);
+			st.setInt(BOOK_AUTHORS_ID_INDEX, authorId);
+			int rowsAffected = st.executeUpdate();
+			return rowsAffected != 0;
+		} catch(SQLException e) {
+			return false;
+		}
 	}
-	public String getBookTitle() {
-		return bookTitle;
+	
+	private static boolean bookAddition(Book book, int authorId, Connection connection) {
+		boolean isBookExisting = selectBookByISBN(book.getBookISBN(), connection);
+		if(isBookExisting) {
+			return false;
+		}
+		try {
+			int pubYear = Integer.valueOf(book.getPublicationYear());
+			String query = String.format(INSERT_BOOK, BOOK_TABLE);
+			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
+			st.setString(ISBN_INDEX, book.getBookISBN());
+			st.setString(CATEGORY_INDEX, book.getCategory());
+			st.setString(BOOK_TITLE_INDEX, book.getBookTitle());
+			st.setInt(PUBLISHER_ID_INDEX, book.getPublisherId());
+			st.setInt(PUBLICATION_YEAR_INDEX, pubYear);
+			st.setInt(QUANTITY_INDEX, ORIGINAL_QUANTITY);
+			st.setInt(MIN_THRESHOLD_INDEX, book.getMinimumThreshold());
+			st.setFloat(SELLING_PRICE_INDEX, book.getSellingPrice());
+			int rowsAffected = st.executeUpdate();
+			return rowsAffected == 1;
+		} catch (SQLException | NumberFormatException e) {
+			return false;
+		}
 	}
-	public void setBookTitle(String bookTitle) {
-		this.bookTitle = bookTitle;
+	
+	private static boolean selectBookByISBN(String isbn, Connection connection) {
+		try {
+			String query = String.format(SELECT_BOOK, BOOK_TABLE);
+			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
+			st.setString(ISBN_INDEX, isbn);
+			ResultSet rs = st.executeQuery();
+			return rs != null && rs.next();
+		} catch(SQLException e) {
+			return false;
+		}
 	}
-	public String getPublicationYear() {
-		return publicationYear;
+
+	private static boolean validateBookAttributes(Book book) {
+		return isValidISBN(book.getBookISBN()) && isValidPublicationYear(book.getPublicationYear())
+				&& isValidSellingPrice(book.getSellingPrice()) && isValidMinimumThreshold(book.getMinimumThreshold());
 	}
-	public void setPublicationYear(String publicationYear) {
-		this.publicationYear = publicationYear;
+
+	private static boolean isValidMinimumThreshold(int val) {
+		return val >= 0;
 	}
-	public float getSellingPrice() {
-		return sellingPrice;
+
+	private static boolean isValidSellingPrice(float value) {
+		return value >= MIN_SELLING_PRICE && value <= MAX_SELLING_PRICE;
 	}
-	public void setSellingPrice(float sellingPrice) {
-		this.sellingPrice = sellingPrice;
+
+	private static boolean isValidPublicationYear(String strValue) {
+		int value;
+		try {
+			value = Integer.valueOf(strValue);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		Calendar now = Calendar.getInstance();
+		return value >= 0 && value <= now.get(Calendar.YEAR);
 	}
-	public String getCategory() {
-		return Category;
-	}
-	public void setCategory(String category) {
-		Category = category;
+
+	private static boolean isValidISBN(String isbn) {
+		Pattern pattern = Pattern.compile(ISBN_REGEX);
+		Matcher matcher = pattern.matcher(isbn);
+		return matcher.matches();
 	}
 
 }

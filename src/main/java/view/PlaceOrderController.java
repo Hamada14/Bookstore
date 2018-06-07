@@ -51,19 +51,6 @@ public class PlaceOrderController extends Dialog<Object> {
 		return BookClient.getServer().placeOrder(isbn.getText(), quantity.getText());
 	}
 	
-	private boolean validateQuantity(String quantity) {
-		try {
-			Integer val = Integer.valueOf(quantity);
-			if(val <= 0) {
-				throw new NumberFormatException();
-			}
-		} catch(NumberFormatException e) {
-			return false;
-		}
-		return true;
-	}
-
-	
 	private void initializeGrid() {
 		isbn = new TextField();
 		quantity = new TextField();
