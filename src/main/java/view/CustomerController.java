@@ -91,7 +91,6 @@ public class CustomerController implements Initializable, CustomController {
 
 	@FXML
 	private void goToInformationForm() {
-		System.out.println("Zzzz");
-		BookStoreApp.showRegister(false);
+		BookStoreApp.showEditProfile();
 	}
 }

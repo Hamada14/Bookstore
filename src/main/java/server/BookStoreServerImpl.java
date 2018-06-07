@@ -1,15 +1,13 @@
 package server;
 
 import java.sql.Connection;
-
-
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.jws.WebService;
-
 
 import net.sf.jasperreports.engine.JRException;
 import server.database.JasperReporter;
@@ -19,11 +17,9 @@ import server.database.entities.Order;
 import server.database.entities.User;
 import server.database.entities.UserBuilder;
 
-
 //Service Implementation
 @WebService(endpointInterface = "server.BookStoreServer")
 public class BookStoreServerImpl implements BookStoreServer {
-
 
 	private final Connection connection;
 	private final JasperReporter jasperReporter;
@@ -36,7 +32,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 	@Override
 	public ResponseData addNewUser(UserBuilder userBuilder) {
 		String errors = userBuilder.validateData();
-		if(errors != null) {
+		if (errors != null) {
 			ResponseData rs = new ResponseData();
 			rs.setError(errors);
 			return rs;
@@ -66,16 +62,34 @@ public class BookStoreServerImpl implements BookStoreServer {
 		return null;
 	}
 
+	
+	public UserResponseData editUserInformation(UserBuilder userBuilder) {
+		String errors = userBuilder.validatePersonalInformation();
+		UserResponseData rs = new UserResponseData();
+		if (errors != null) {
+			rs.setError(errors);
+			return rs;
+		}
+		return User.editPersonalInformation(userBuilder.buildUser(), connection);
+	
+	}
+
 	@Override
-	public boolean editUser(User user) {
-		// TODO Auto-generated method stub
-		return false;
+	public ResponseData editUserIdentity(Identity identity, String newPassword) {
+		UserBuilder builder = new UserBuilder();
+		builder.setPassword(newPassword);
+		String errors = builder.validateNewPassword();
+		ResponseData rs = new ResponseData();
+		if (errors != null) {
+			rs.setError(errors);
+			return rs;
+		}
+		return identity.editUserIdentity(newPassword, connection);
 	}
 
 	@Override
 	public ArrayList<Book> searchBook(String filter, String valueFilter) {
-		// TODO Auto-generated method stub
-		return null;
+	 return null;
 	}
 
 	@Override

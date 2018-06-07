@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import server.ResponseData;
 import server.UserResponseData;
 
 import lombok.Getter;
@@ -22,6 +23,11 @@ public class Identity implements Serializable {
 	private static final String GET_USER_BY_EMAIL_PASSWORD = "Select * from %s where USER_NAME = ? AND PASSWORD_SHA1 = SHA1(?);";
 	private static final int USER_NAME_INDEX_IN_USER = 1;
 	private static final int PASSWORD_INDEX_IN_USER = 2;
+	
+	private static final String UPDATE_PASSWORD = "UPDATE %s SET PASSWORD_SHA1 = SHA1(?) where USER_NAME = ? AND PASSWORD_SHA1 = SHA1(?);";
+	private static final int NEWPASSWORD_INDEX_IN_UPDATE = 1;
+	private static final int USER_NAME_INDEX_IN_UPDATE = 2;
+	private static final int PASSWORD_INDEX_IN_UPDATE  = 3;
 	
 	private static final String GET_MANAGER_BY_USER_NAME = "Select * from %s where USER_NAME = ?;";
 	private static final int USER_NAME_INDEX_IN_MANAGER = 1;
@@ -55,7 +61,27 @@ public class Identity implements Serializable {
 		}
 		return rd;
 	}
+	
+	
+	
+	public  ResponseData editUserIdentity( String newPassword, Connection connection) {
+		ResponseData rs = new ResponseData();
+		String query = String.format(UPDATE_PASSWORD, User.USER_TABLE);
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString( NEWPASSWORD_INDEX_IN_UPDATE, newPassword);
+			ps.setString(USER_NAME_INDEX_IN_UPDATE, this.userName);
+			ps.setString(PASSWORD_INDEX_IN_UPDATE, this.password);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			rs.setError(e.getMessage());
+			e.printStackTrace();
+		}
+		return rs;
+	}
 
+	
 	private boolean isValidUser(ResultSet rs) throws SQLException {
 		return rs.next();
 	}
@@ -87,11 +113,14 @@ public class Identity implements Serializable {
 
 	private void constructUser(ResultSet rs, UserResponseData urs) {		
 		try {
-			User currentUser = new User(rs);
+			User currentUser = new User(rs, this);
 			urs.setUser(currentUser);
 		}catch (SQLException e) {
 		   urs.setError(e.getMessage());
 		}
 		
 	}
+	
+	
+	
 }

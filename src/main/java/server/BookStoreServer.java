@@ -26,7 +26,10 @@ public interface BookStoreServer {
 	ResponseData addNewUser(UserBuilder newUserBuilder);
 
 	@WebMethod
-	boolean editUser(User modifiedUser);
+	UserResponseData editUserInformation(UserBuilder modifiedUser);
+
+	@WebMethod
+	ResponseData editUserIdentity(Identity identity, String newPassword);
 
 	@WebMethod
 	ArrayList<Book> searchBook(String filter, String valueFilter);

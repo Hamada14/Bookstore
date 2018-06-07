@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginController">
+<BorderPane prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginController">
    <top>
       <ImageView fitHeight="225.0" fitWidth="415.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
@@ -27,7 +27,7 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label layoutX="202.0" layoutY="136.0" text="Password">
+            <Label layoutX="202.0" layoutY="108.0" text="Password">
                <font>
                   <Font size="23.0" />
                </font>
@@ -39,7 +39,7 @@
             </Button>
             <Hyperlink layoutX="436.0" layoutY="236.0" onAction="#goToRegister" text="Don't have an account?" />
             <TextField fx:id="userName" layoutX="367.0" layoutY="79.0" prefHeight="25.0" prefWidth="201.0" promptText="email" />
-            <PasswordField fx:id="password" layoutX="367.0" layoutY="141.0" prefHeight="25.0" prefWidth="201.0" promptText="password" />
+            <PasswordField fx:id="password" layoutX="367.0" layoutY="113.0" prefHeight="25.0" prefWidth="201.0" promptText="password" />
          </children>
       </Pane>
    </center>

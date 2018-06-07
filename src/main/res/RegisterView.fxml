@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RegisterController">
+<BorderPane prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RegisterController">
    <top>
       <ImageView fitHeight="250.0" fitWidth="415.0" onDragDetected="#gotoLogin" onDragDone="#gotoLogin" onDragDropped="#gotoLogin" onDragEntered="#gotoLogin" onDragExited="#gotoLogin" onDragOver="#gotoLogin" onMouseDragEntered="#gotoLogin" onMouseDragExited="#gotoLogin" onMouseDragOver="#gotoLogin" onMouseDragReleased="#gotoLogin" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>

@@ -41,13 +41,9 @@ public class UserBuilder implements Serializable {
 	private static final int NAME_MIN_LENGTH = 3;
 	private static final int NAME_MAX_LENGTH = 50;
 
-	private static final String PASSWORD_FORMAT = "^.*";
-	private static final int PASSWORD_MIN_LEN = 5;
-	private static final int PASSWORD_MAX_LEN = 50;
-
 	private static final String PHONE_NUMBER_FORMAT = "(\\d{14,14})|\\d{12,12}";
-	private static final int PHONE_NUMBER_MIN_LEN = 9;
-	private static final int PHONE_NUMBER_MAX_LEN = 11;
+	private static final int PHONE_NUMBER_MIN_LEN = 12;
+	private static final int PHONE_NUMBER_MAX_LEN = 14;
 
 	private static final String EMAIL_FORMAT = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 	private static final int EMAIL_MIN_LEN = 5;
@@ -60,6 +56,11 @@ public class UserBuilder implements Serializable {
 	private static final String CITY_FORMAT = "^([a-zA-Z]+\\s)*([a-zA-Z]+)";
 	private static final int CITY_MIN_LEN = 5;
 	private static final int CITY_MAX_LEN = 50;
+	
+	private static final String PASSWORD_FORMAT = "^.*";
+	private static final int PASSWORD_MIN_LEN = 5;
+	private static final int PASSWORD_MAX_LEN = 50;
+
 
 	private String userName;
 	private String firstName;
@@ -94,6 +95,27 @@ public class UserBuilder implements Serializable {
 		return combinedErrors.length() == 0 ? null : combinedErrors;
 	}
 
+	public String validatePersonalInformation() {
+		List<String> errors = new ArrayList<>();
+		errors.addAll(validateFirstName());
+		errors.addAll(validateLastName());
+		errors.addAll(validatePhoneNumber());
+		errors.addAll(validateStreet());
+		errors.addAll(validateCity());
+		errors.addAll(validateCountry());
+		String combinedErrors = errors.stream().filter(error -> error != null).map(msg -> "* " + msg)
+				.collect(Collectors.joining(System.lineSeparator()));
+		return combinedErrors.length() == 0 ? null : combinedErrors;
+	}
+	
+	public  String validateNewPassword(){
+		List<String> errors = new ArrayList<>();
+		errors.addAll(evaluateDataChecks(password, PASSWORD, PASSWORD_MIN_LEN, PASSWORD_MAX_LEN, PASSWORD_FORMAT));
+		String combinedErrors = errors.stream().filter(error -> error != null).map(msg -> "* " + msg)
+				.collect(Collectors.joining(System.lineSeparator()));
+		return combinedErrors.length() == 0 ? null : combinedErrors;
+	}
+	
 	private List<String> validateUserName() {
 		return evaluateDataChecks(userName, USER_NAME, USER_NAME_MIN_LEN, USER_NAME_MAX_LEN, USER_NAME_FORMAT);
 	}
@@ -138,6 +160,7 @@ public class UserBuilder implements Serializable {
 		return evaluateDataChecks(email, EMAIL, EMAIL_MIN_LEN, EMAIL_MAX_LEN, EMAIL_FORMAT);
 	}
 
+	
 	private List<String> evaluateDataChecks(String val, String attribute, int minLen, int maxLen, String format) {
 		String lengthError = checkAttributeLength(val, attribute, minLen, maxLen);
 		String formatError = checkAttributeFormat(val, attribute, format);
