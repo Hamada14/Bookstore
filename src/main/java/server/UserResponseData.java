@@ -2,7 +2,7 @@ package server;
 
 import lombok.Getter;
 import lombok.Setter;
-import server.database.entities.User;
+import server.database.entities.user.User;
 
 @Getter
 @Setter

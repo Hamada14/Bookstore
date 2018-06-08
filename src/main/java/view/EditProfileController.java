@@ -11,9 +11,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import server.ResponseData;
 import server.UserResponseData;
-import server.database.entities.Identity;
-import server.database.entities.User;
-import server.database.entities.UserBuilder;
+import server.database.entities.user.Identity;
+import server.database.entities.user.User;
+import server.database.entities.user.UserBuilder;
+import server.database.entities.user.UserModel;
 
 public class EditProfileController implements CustomController {
 
@@ -54,7 +55,7 @@ public class EditProfileController implements CustomController {
 		street.setText(currentUser.getStreet());
 		city.setText(currentUser.getCity());
 		phoneNumber.setText(currentUser.getPhoneNumber());
-		ObservableList<String> countriesList = FXCollections.observableList(User.getValidCountries());
+		ObservableList<String> countriesList = FXCollections.observableList(UserModel.getValidCountries());
 		country.setItems(countriesList);
 		country.setValue(currentUser.getCountry());
 	}

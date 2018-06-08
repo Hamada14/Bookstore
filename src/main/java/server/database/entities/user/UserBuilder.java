@@ -1,4 +1,4 @@
-package server.database.entities;
+package server.database.entities.user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -150,7 +150,7 @@ public class UserBuilder implements Serializable {
 	}
 
 	private List<String> validateCountry() {
-		if(country.length() == 0 || !User.getValidCountries().contains(country)) {
+		if(country.length() == 0 || !UserModel.getValidCountries().contains(country)) {
 			return Arrays.asList(COUNTRY + " " + CANNOT_BE_EMPTY_ERROR);
 		}
 		return Arrays.asList();

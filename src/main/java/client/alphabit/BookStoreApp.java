@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import server.database.entities.Book;
 import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
-import server.database.entities.User;
+import server.database.entities.user.User;
 
 public class BookStoreApp extends Application {
 

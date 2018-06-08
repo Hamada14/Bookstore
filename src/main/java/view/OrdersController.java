@@ -28,7 +28,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 import server.ResponseData;
-import server.database.entities.Identity;
+import server.database.entities.user.Identity;
 import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
 

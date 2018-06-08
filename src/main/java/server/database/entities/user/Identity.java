@@ -1,15 +1,16 @@
-package server.database.entities;
+package server.database.entities.user;
 
 import java.io.Serializable;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import server.ResponseData;
 import server.UserResponseData;
-
+import server.database.entities.user.query.ManagerByUserName;
+import server.database.entities.user.query.UpdatePassword;
+import server.database.entities.user.query.UserByUserNameAndPassword;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,20 +18,6 @@ import lombok.Setter;
 public class Identity implements Serializable {
 
 	private static final long serialVersionUID = -8050350344524286767L;
-
-	private static final String MANAGER_TABLE = "MANAGER";
-	
-	private static final String GET_USER_BY_EMAIL_PASSWORD = "Select * from %s where USER_NAME = ? AND PASSWORD_SHA1 = SHA1(?);";
-	private static final int USER_NAME_INDEX_IN_USER = 1;
-	private static final int PASSWORD_INDEX_IN_USER = 2;
-	
-	private static final String UPDATE_PASSWORD = "UPDATE %s SET PASSWORD_SHA1 = SHA1(?) where USER_NAME = ? AND PASSWORD_SHA1 = SHA1(?);";
-	private static final int NEWPASSWORD_INDEX_IN_UPDATE = 1;
-	private static final int USER_NAME_INDEX_IN_UPDATE = 2;
-	private static final int PASSWORD_INDEX_IN_UPDATE  = 3;
-	
-	private static final String GET_MANAGER_BY_USER_NAME = "Select * from %s where USER_NAME = ?;";
-	private static final int USER_NAME_INDEX_IN_MANAGER = 1;
 	
 	private static final String INVALID_CREDENTIALS = "Invalid credentials specified.";
 
@@ -45,8 +32,7 @@ public class Identity implements Serializable {
 		this.password = password;
 	}
 
-
-	public UserResponseData isValidIdentity(Connection connection) {
+	public UserResponseData isUser(Connection connection) {
 		UserResponseData rd = new UserResponseData();
 		try {
 			ResultSet rs = getUser(connection);
@@ -62,26 +48,20 @@ public class Identity implements Serializable {
 		return rd;
 	}
 	
-
-	
-	
 	public  ResponseData editUserIdentity( String newPassword, Connection connection) {
 		ResponseData rs = new ResponseData();
-		String query = String.format(UPDATE_PASSWORD, User.USER_TABLE);
-		PreparedStatement ps;
 		try {
-			ps = connection.prepareStatement(query);
-			ps.setString(NEWPASSWORD_INDEX_IN_UPDATE, newPassword);
-			ps.setString(USER_NAME_INDEX_IN_UPDATE, this.userName);
-			ps.setString(PASSWORD_INDEX_IN_UPDATE, this.password);
-			ps.executeUpdate();
+			UpdatePassword query = new UpdatePassword();
+			query.setUserName(userName);
+			query.setPassword(password);
+			query.setNewPassword(newPassword);
+			query.executeQuery(connection);
 		} catch (SQLException e) {
 			rs.setError(e.getMessage());
 			e.printStackTrace();
 		}
 		return rs;
 	}
-
 	
 	private boolean isValidUser(ResultSet rs) throws SQLException {
 		return rs.next();
@@ -98,18 +78,18 @@ public class Identity implements Serializable {
 	}
 	
 	private boolean isValidManager(Connection connection) throws SQLException {
-		String query = String.format(GET_MANAGER_BY_USER_NAME, Identity.MANAGER_TABLE);
-		PreparedStatement st = connection.prepareStatement(query);
-		st.setString(USER_NAME_INDEX_IN_MANAGER, userName);
-		return st.executeQuery().next();
+		ManagerByUserName query = new ManagerByUserName();
+		query.setUserName(userName);
+		query.executeQuery(connection);
+		return query.getResultSet().next();
 	}
 
 	private ResultSet getUser(Connection connection) throws SQLException {
-		String query = String.format(GET_USER_BY_EMAIL_PASSWORD, User.USER_TABLE);
-		PreparedStatement st = connection.prepareStatement(query);
-		st.setString(USER_NAME_INDEX_IN_USER, userName);
-		st.setString(PASSWORD_INDEX_IN_USER, password);
-		return st.executeQuery();
+		UserByUserNameAndPassword query = new UserByUserNameAndPassword();
+		query.setUserName(userName);
+		query.setPassword(password);
+		query.executeQuery(connection);
+		return query.getResultSet();
 	}
 
 	private void constructUser(ResultSet rs, UserResponseData urs) {		
@@ -120,7 +100,4 @@ public class Identity implements Serializable {
 		   urs.setError(e.getMessage());
 		}	
 	}
-	
-	
-	
 }

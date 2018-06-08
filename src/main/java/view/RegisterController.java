@@ -11,8 +11,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import server.ResponseData;
-import server.database.entities.User;
-import server.database.entities.UserBuilder;
+import server.database.entities.user.UserBuilder;
+import server.database.entities.user.UserModel;
 
 public class RegisterController implements CustomController {
 
@@ -82,7 +82,7 @@ public class RegisterController implements CustomController {
 
 	@Override
 	public void initData(Parameters parameters) {
-		ObservableList<String> countriesList = FXCollections.observableList(User.getValidCountries());
+		ObservableList<String> countriesList = FXCollections.observableList(UserModel.getValidCountries());
 		country.setItems(countriesList);
 	}
 }

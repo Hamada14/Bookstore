@@ -1,11 +1,5 @@
 package server;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-
-
-import java.util.HashMap;
-
 import javax.jws.WebMethod;
 
 import javax.jws.WebService;
@@ -14,11 +8,10 @@ import javax.jws.soap.SOAPBinding.Style;
 
 import server.database.entities.Author;
 import server.database.entities.Book;
-import server.database.entities.Identity;
+import server.database.entities.user.Identity;
 import server.database.entities.ShoppingCart;
-import server.database.entities.User;
 import server.UserResponseData;
-import server.database.entities.UserBuilder;
+import server.database.entities.user.UserBuilder;
 import server.database.report.ReportType;
 
 
@@ -67,7 +60,4 @@ public interface BookStoreServer {
 
 	@WebMethod
 	ResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart);
-		
-	
-
 }

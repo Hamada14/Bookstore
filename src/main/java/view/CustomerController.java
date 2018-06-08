@@ -21,7 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import server.BooksResponseData;
 import server.database.entities.Book;
-import server.database.entities.Identity;
+import server.database.entities.user.Identity;
 
 public class CustomerController implements Initializable, CustomController {
 

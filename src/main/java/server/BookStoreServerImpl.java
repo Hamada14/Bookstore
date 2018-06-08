@@ -1,20 +1,17 @@
 package server;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.jws.WebService;
 
 import net.sf.jasperreports.engine.JRException;
 import server.database.entities.Author;
 import server.database.entities.Book;
-import server.database.entities.Identity;
+import server.database.entities.user.Identity;
 import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
-import server.database.entities.User;
-import server.database.entities.UserBuilder;
+import server.database.entities.user.UserBuilder;
+import server.database.entities.user.UserModel;
 import server.database.report.JasperReportCreator;
 import server.database.report.ReportType;
 
@@ -38,12 +35,12 @@ public class BookStoreServerImpl implements BookStoreServer {
 			rs.setError(errors);
 			return rs;
 		}
-		return User.addNewUser(userBuilder.buildUser(), connection);
+		return UserModel.addNewUser(userBuilder.buildUser(), connection);
 	}
 
 	@Override
 	public UserResponseData loginUser(Identity identity) {
-		return identity.isValidIdentity(connection);
+		return identity.isUser(connection);
 	}
 
 	@Override
@@ -71,7 +68,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 			rs.setError(errors);
 			return rs;
 		}
-		return User.editPersonalInformation(userBuilder.buildUser(), connection);
+		return UserModel.editPersonalInformation(userBuilder.buildUser(), connection);
 	
 	}
 
@@ -91,7 +88,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 	@Override
 	public BooksResponseData searchBook(Identity identity, String filter, String valueFilter) {
 		BooksResponseData booksResponse = new BooksResponseData();
-		UserResponseData validUser = identity.isValidIdentity(connection);
+		UserResponseData validUser = identity.isUser(connection);
 		if (validUser.isSuccessful()) {
 			BooksResponseData booksResponse2 = Book.searchBooks(filter, valueFilter, connection);
 //			System.out.println("in impl" + booksResponse2.getBooks().size());
@@ -136,7 +133,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 
 	@Override
 	public boolean promoteUser(String userName) {
-		return User.promoteUser(userName, connection);
+		return UserModel.promoteUser(userName, connection);
 	}
 	
 //	@Override
@@ -151,7 +148,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 	@Override
 	public ResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart) {
 		ResponseData rs = new ResponseData();
-		UserResponseData validUser = identity.isValidIdentity(connection);
+		UserResponseData validUser = identity.isUser(connection);
 		if (validUser.isSuccessful()) {
 			return cart.checkOut(identity.getUserName(), connection);
 		} else {
