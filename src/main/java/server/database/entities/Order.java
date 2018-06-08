@@ -2,37 +2,28 @@ package server.database.entities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import lombok.Getter;
+import lombok.Setter;
 
-import server.ResponseData;
-
+@Setter
+@Getter
 public class Order {
 
 	private static final String PLACE_ORDER_QUERY = "insert into %s(BOOK_ISBN, QUANTITY) values(?, ?)";
+	private static final String SELECT_ALL_ORDERS = "SELECT * FROM %s";
+	private static final String DELETE_BY_ID = "DELETE FRORM %s WHERE ORDER_ID = ?";
 	private static final String BOOK_ORDER_TABLE = "BOOK_ORDER";
 	
 	private int quantity;
 	private Book book;
+	private int orderId;
 	
 	public Order (int quantity, Book book) {
 		this.quantity = quantity;
 		this.book = book;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public Book getBook() {
-		return book;
 	}
 	
 	public static boolean addNewOrder(Order order, Connection connection) {
@@ -47,5 +38,28 @@ public class Order {
 		}
 		return true;
 	}
+	
+//	public static ResultSet selectAllOrders(Connection connection) {
+//		try {
+//			String query = String.format(SELECT_ALL_ORDERS, BOOK_ORDER_TABLE);
+//			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
+//			st.setFetchSize(20);
+//			ResultSet rs = st.executeQuery();
+//			return rs;
+//		} catch(SQLException e) {
+//			return null;
+//		}
+//	}
+//	
+//	public static boolean deleteOrderById(int id, Connection connection) {
+//		try {
+//			String query = String.format(DELETE_BY_ID, BOOK_ORDER_TABLE);
+//			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
+//			st.setInt(1, id);
+//			return true;
+//		} catch(SQLException e) {
+//			return false;
+//		}
+//	}
 
 }

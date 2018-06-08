@@ -40,7 +40,6 @@ public class AddBookController implements CustomController {
 			if(bookAdded) {
 				BookStoreApp.showManager();
 			}
-			backToManagerView();
 		} catch(NumberFormatException e) {
 			
 		}

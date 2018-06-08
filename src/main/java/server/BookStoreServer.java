@@ -1,5 +1,6 @@
 package server;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 
@@ -54,6 +55,12 @@ public interface BookStoreServer {
 	@WebMethod
 	boolean promoteUser(String userName);
 
+//	@WebMethod
+//	ResultSet getAllOrders();
+//	
+//	@WebMethod
+//	boolean deleteOrder(int orderId);
+	
 	byte[] generateReport(Identity identity, ReportType reportType);
 
 }

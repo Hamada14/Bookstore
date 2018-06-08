@@ -52,6 +52,9 @@ public class Book {
 	private boolean inStock;
 	private int publisherId;
 	private int minimumThreshold;
+	private Author author;
+	private Publisher publisher;
+	private int quantity;
 
 	public Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
 			boolean inStock, String publisherName) {

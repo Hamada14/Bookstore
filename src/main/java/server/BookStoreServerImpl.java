@@ -1,6 +1,7 @@
 package server;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -126,4 +127,14 @@ public class BookStoreServerImpl implements BookStoreServer {
 	public boolean promoteUser(String userName) {
 		return User.promoteUser(userName, connection);
 	}
+	
+//	@Override
+//	public ResultSet getAllOrders() {
+//		return Order.selectAllOrders(connection);
+//	}
+//	
+//	@Override
+//	public boolean deleteOrder(int orderId) {
+//		return Order.deleteOrderById(orderId, connection);
+//	}
 }

@@ -1,27 +1,16 @@
 package view;
 
+import lombok.Getter;
+import lombok.Setter;
 import server.database.entities.Book;
 
+@Getter
+@Setter
 public class Parameters {
     private Book book;
     private boolean firstTimeRegistered;
     
     public Parameters() {
-    }
-    
-    public void setRegisterationMode(boolean registerationMode) {
-    	firstTimeRegistered = registerationMode;
-    }
-    
-    public boolean getRegisterationMode() {
-    	return firstTimeRegistered;
-    }
-    public void setBook (Book book) {
-    	this.book = book;
-    }
-    
-    public Book getBook() {
-    	return book;
     }
     
 }
