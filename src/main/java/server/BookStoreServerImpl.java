@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.jws.WebService;
 
@@ -139,15 +140,15 @@ public class BookStoreServerImpl implements BookStoreServer {
 		return User.promoteUser(userName, connection);
 	}
 	
-//	@Override
-//	public ResultSet getAllOrders() {
-//		return Order.selectAllOrders(connection);
-//	}
-//	
-//	@Override
-//	public boolean deleteOrder(int orderId) {
-//		return Order.deleteOrderById(orderId, connection);
-//	}
+	@Override
+	public List<Order> getOrders(int offset, int limit) {
+		return Order.selectAllOrders(offset, limit, connection);
+	}
+	
+	@Override
+	public boolean deleteOrder(int orderId) {
+		return Order.deleteOrderById(orderId, connection);
+	}
 	@Override
 	public ResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart) {
 		ResponseData rs = new ResponseData();

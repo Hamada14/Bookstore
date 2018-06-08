@@ -41,26 +41,26 @@
                   <Font name="Book Antiqua Bold" size="30.0" />
                </font>
             </Label>
-            <Button fx:id="loadMore" alignment="CENTER" contentDisplay="CENTER" layoutX="671.0" layoutY="569.0" mnemonicParsing="false" onAction="#checkOut" text="Load more">
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="671.0" layoutY="569.0" mnemonicParsing="false" onAction="#loadMore" text="Load more">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="loadMore1" alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="569.0" mnemonicParsing="false" onAction="#checkOut" text="Back ">
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="569.0" mnemonicParsing="false" onAction="#backToManagerView" text="Back ">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="loadMore2" alignment="CENTER" contentDisplay="CENTER" layoutX="358.0" layoutY="569.0" mnemonicParsing="false" onAction="#checkOut" text="Refresh">
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="358.0" layoutY="569.0" mnemonicParsing="false" onAction="#refresh" text="Refresh">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                </font>
             </Button>
-            <TableView layoutX="103.0" layoutY="76.0" prefHeight="477.0" prefWidth="594.0">
+            <TableView fx:id="ordersTable" layoutX="103.0" layoutY="76.0" prefHeight="477.0" prefWidth="594.0">
               <columns>
-                <TableColumn prefWidth="233.6000213623047" text="Book ISBN" />
-                <TableColumn prefWidth="202.4000244140625" text="Quantity" />
-                  <TableColumn prefWidth="157.5999755859375" text="Confirmation" />
+                <TableColumn fx:id="bookISBNCol" prefWidth="233.6000213623047" text="Book ISBN" />
+                <TableColumn fx:id="quantityCol" prefWidth="202.4000244140625" text="Quantity" />
+                  <TableColumn fx:id="confirmation" prefWidth="157.5999755859375" text="Confirmation" />
               </columns>
             </TableView>
          </children>

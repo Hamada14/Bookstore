@@ -1,5 +1,6 @@
 package server.database.entities;
 
+import java.io.Serializable;
 import java.sql.Connection;
 
 import java.sql.PreparedStatement;
@@ -15,8 +16,12 @@ import server.BooksResponseData;
 
 @Getter
 @Setter
-public class Book {
+public class Book implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7418014002918381057L;
 	/* should be changed to be loaded from database at start of system */
 	public static final String[] BOOK_CATEGORIES = new String[] {"ALL", "Art", "Geography", "History", "Religion",
 			"Science" };

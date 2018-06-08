@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.jws.WebMethod;
 
@@ -17,6 +18,7 @@ import server.database.entities.Book;
 import server.database.entities.Identity;
 import server.database.entities.ShoppingCart;
 import server.database.entities.User;
+import server.database.entities.Order;
 import server.UserResponseData;
 import server.database.entities.UserBuilder;
 import server.database.report.ReportType;
@@ -56,11 +58,11 @@ public interface BookStoreServer {
 	@WebMethod
 	boolean promoteUser(String userName);
 
-//	@WebMethod
-//	ResultSet getAllOrders();
-//	
-//	@WebMethod
-//	boolean deleteOrder(int orderId);
+	@WebMethod
+	List<Order> getOrders(int offset, int limit);
+	
+	@WebMethod
+	boolean deleteOrder(int orderId);
 	
 	@WebMethod
 	byte[] generateReport(Identity identity, ReportType reportType);
