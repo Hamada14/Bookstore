@@ -3,6 +3,7 @@ package view;
 import java.net.URL;
 
 
+
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -20,7 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import server.BooksResponseData;
-import server.database.entities.Book;
+import server.database.entities.book.Book;
 import server.database.entities.user.Identity;
 
 public class CustomerController implements Initializable, CustomController {

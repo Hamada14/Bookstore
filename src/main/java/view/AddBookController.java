@@ -1,12 +1,13 @@
 package view;
 
 import client.BookClient;
+
 import client.alphabit.BookStoreApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import server.database.entities.Author;
-import server.database.entities.Book;
-import server.database.entities.Publisher;
+import server.database.entities.book.Author;
+import server.database.entities.book.Book;
+import server.database.entities.book.Publisher;
 
 
 public class AddBookController implements CustomController {

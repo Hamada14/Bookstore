@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import lombok.Getter;
 import lombok.Setter;
+import server.database.entities.book.Book;
 
 @Getter
 @Setter
@@ -21,6 +22,10 @@ public class Order {
 	private int quantity;
 	private Book book;
 	private int orderId;
+	
+	public Order () {
+		
+	}
 	
 	public Order (int quantity, Book book) {
 		this.quantity = quantity;
@@ -65,7 +70,7 @@ public class Order {
 
 	 @Override
      public int hashCode() {
-		 return book.hashCode();
+		 return book.getBookISBN().hashCode();
 	 }
 	 
 	 @Override

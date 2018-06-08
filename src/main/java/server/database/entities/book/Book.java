@@ -1,4 +1,4 @@
-package server.database.entities;
+package server.database.entities.book;
 
 import java.sql.Connection;
 
@@ -161,6 +161,7 @@ public class Book {
 			int rowsAffected = st.executeUpdate();
 			return rowsAffected == 1;
 		} catch (SQLException | NumberFormatException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

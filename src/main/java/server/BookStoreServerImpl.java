@@ -5,11 +5,12 @@ import java.sql.Connection;
 import javax.jws.WebService;
 
 import net.sf.jasperreports.engine.JRException;
-import server.database.entities.Author;
-import server.database.entities.Book;
+
 import server.database.entities.user.Identity;
+import server.database.entities.book.Author;
 import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
+import server.database.entities.book.Book;
 import server.database.entities.user.UserBuilder;
 import server.database.entities.user.UserModel;
 import server.database.report.JasperReportCreator;
@@ -100,11 +101,11 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public boolean addNewBook(Book newBook, Author author, server.database.entities.Publisher publisher) {
+	public boolean addNewBook(Book newBook, Author author, server.database.entities.book.Publisher publisher) {
 		int authorId = Author.addAuthor(author, connection);
-		int publisherId = server.database.entities.Publisher.addPublisher(publisher, connection);
+		int publisherId = server.database.entities.book.Publisher.addPublisher(publisher, connection);
 		if (authorId == Author.ERROR_AUTHOR_ADDITION
-				|| publisherId == server.database.entities.Publisher.ERROR_PUBLISHER_ADDITION) {
+				|| publisherId == server.database.entities.book.Publisher.ERROR_PUBLISHER_ADDITION) {
 			return false;
 		}
 		newBook.setPublisherId(publisherId);
@@ -146,8 +147,9 @@ public class BookStoreServerImpl implements BookStoreServer {
 //		return Order.deleteOrderById(orderId, connection);
 //	}
 	@Override
-	public ResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart) {
-		ResponseData rs = new ResponseData();
+
+	public OrderResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart) {
+		OrderResponseData rs = new OrderResponseData();
 		UserResponseData validUser = identity.isUser(connection);
 		if (validUser.isSuccessful()) {
 			return cart.checkOut(identity.getUserName(), connection);

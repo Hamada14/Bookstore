@@ -6,7 +6,7 @@ import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import server.database.entities.Book;
+import server.database.entities.book.Book;
 import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
 import server.database.entities.user.User;
@@ -42,12 +42,13 @@ public class BookStoreApp extends Application {
 		addBookView = new Controller(primaryStage, ADD_BOOK_VIEW);
 		ordersView = new Controller(primaryStage, ORDERS_VIEW);	
 		editProfileView = new Controller(primaryStage, EDIT_PROFILE_VIEW);
-//		showLogin();
-		showManager();
+		showLogin();
+//		showManager();
 	}
 
 	public static void showLogin() {
 		login.show();
+		login.getController().initData(null);
 	}
 	
 	public static void showAddNewBook() {
@@ -110,14 +111,7 @@ public class BookStoreApp extends Application {
 		alert.showAndWait();
 	}
 
-	private static void pushSomeOrders() {
-		// float x = 1f;
-		// for (int i = 1; i <= 40; i++) {
-		// Book book = new Book(Integer.toString(i), new String("boook" + i),"1960", x,
-		// "arts", true);
-		// currentCart.addOrder(new Order(i, book));
-		// }
-	}
+
 
 	public static void main(String[] args) {
 		launch(args);
