@@ -10,12 +10,16 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import lombok.Getter;
+import lombok.Setter;
+import server.OrderResponseData;
 import server.ResponseData;
 
+@Setter
+@Getter
 public class ShoppingCart implements Iterable<Order> {
 
-	private Set<Order> orders;
-
+	private static final String BOOK_REMOVED = "Book is no longer on database";
 	private static final String INSERT_NEW_ORDER = "INSERT INTO  %s (USER_NAME) VALUES (?);";
 	private static final String ORDERS_TABLE = "SHOPPING_ORDER";
 	private static final int USERNAME_INDEX = 1;
@@ -23,6 +27,11 @@ public class ShoppingCart implements Iterable<Order> {
 	private static final String INSERT_NEW_ITEM = "INSERT INTO  %s (SHOPPING_ORDER_ID, BOOK_ISBN, QUANTITY, SELLING_PRICE) "
 			+ " VALUES (?, ?, ?, ?)";
 	private static final String ITEMS_TABLE = "SHOPPING_ORDER_ITEM";
+	
+	private static final String SELECT_QUANTITY = "SELECT QUANTITY from %s WHERE ISBN = ?;";
+	private static final String BOOKS_TABLE = "BOOK";
+	
+	public static final int NO_BOOK_CODE = 1216;
 	public static final String SHORTAGE_CODE = "45000";
 	public static final String ERROR_CONNECTION_CODE = "00000";
 	private static final int ORDER_INDEX = 1;
@@ -31,6 +40,8 @@ public class ShoppingCart implements Iterable<Order> {
 	private static final int SELLING_PRICE_INDEX = 4;
 	private static final int TRY_ROLLBACK = 10;
 	private static final int TRY_TURN_ON_COMMIT = 10;
+	
+	private Set<Order> orders;
 	
 	public ShoppingCart() {
 		orders = new HashSet<>();
@@ -70,7 +81,6 @@ public class ShoppingCart implements Iterable<Order> {
 		ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(USERNAME_INDEX, userName);
 		ps.executeUpdate();
-
 		return ps;
 	}
 
@@ -85,9 +95,10 @@ public class ShoppingCart implements Iterable<Order> {
 		return ps;
 	}
 
-	public ResponseData checkOut(String userName, Connection connection) {
-		ResponseData rs = new ResponseData();
+	public OrderResponseData checkOut(String userName, Connection connection) {
+		OrderResponseData rs = new OrderResponseData();
 		ArrayList<PreparedStatement> curStmts = new ArrayList<>();
+		Order order = null;
 		try {
 			connection.setAutoCommit(false);
 			PreparedStatement insertOrderStmt = insertNewOrder(userName, connection);
@@ -97,23 +108,20 @@ public class ShoppingCart implements Iterable<Order> {
 			if (generatedKeys.next()) {
 				orderID = generatedKeys.getInt(1);
 			}
-			Iterator<Order> iter = this.iterator();
+			Iterator<Order> iter = orders.iterator();
 			while (iter.hasNext()) {
-				Order order = (Order) iter.next();
+				order = (Order) iter.next();
 				PreparedStatement insertItemStmt = insertShoppingItem(order, orderID, connection);
 				curStmts.add(insertItemStmt);
 			}
 			connection.commit();
-		} catch (SQLException e) {
-			if (e.getSQLState().equals(SHORTAGE_CODE)) {
-				rs.setError(SHORTAGE_CODE);
-			} else {
-				rs.setError(e.getMessage());
-			}
+		} catch (SQLException e) {			
+			rs =  handleError(order, e, connection);
+//			e.printStackTrace();	
 			if (!rollBackTransaction(connection)) {
 				rs.setError(ERROR_CONNECTION_CODE);
 			}
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		
 		if(!turnAutoCommit(connection)) {
@@ -122,6 +130,42 @@ public class ShoppingCart implements Iterable<Order> {
 		String error = closeStatements(curStmts);
 		if (!error.equals("")) {
 			rs.setError(error);
+		}
+		return rs;
+	}
+	
+	private OrderResponseData handleError (Order order, SQLException sql, Connection connection) {
+		OrderResponseData rs = new OrderResponseData();
+		if (sql.getSQLState().equals(SHORTAGE_CODE)) {
+			return selectQuantity(order, connection);
+		} else if (sql.getErrorCode() == NO_BOOK_CODE) {
+			rs.setOrder(order);
+			rs.setError(BOOK_REMOVED);
+		}else {
+			rs.setError(sql.getMessage());
+		}
+		return null;
+		
+	}
+	
+	private OrderResponseData selectQuantity (Order order, Connection connection) {
+		OrderResponseData rs = new OrderResponseData();
+		String query = String.format(SELECT_QUANTITY, BOOKS_TABLE);
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			String isbn = order.getBook().getBookISBN();
+			ps.setString(1, isbn);
+			ResultSet result = ps.executeQuery();
+			if (!result.next()) {
+				rs.setOrder(order);
+				rs.setError(BOOK_REMOVED);
+			} else {
+				rs.setOldQuantity(result.getInt(1));
+				rs.setOrder(order);
+				rs.setError(SHORTAGE_CODE);
+			}
+		} catch (SQLException e) {
+			rs.setError(e.getMessage());
 		}
 		return rs;
 	}
@@ -162,4 +206,5 @@ public class ShoppingCart implements Iterable<Order> {
 		}
 		return false;
 	}
+	
 }

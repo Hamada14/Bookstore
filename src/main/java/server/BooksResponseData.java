@@ -1,11 +1,12 @@
 package server;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import server.database.entities.Book;
+import server.database.entities.book.Book;
 
 @Getter
 @Setter

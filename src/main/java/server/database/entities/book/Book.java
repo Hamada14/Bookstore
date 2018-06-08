@@ -1,4 +1,4 @@
-package server.database.entities;
+package server.database.entities.book;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -166,6 +166,7 @@ public class Book implements Serializable {
 			int rowsAffected = st.executeUpdate();
 			return rowsAffected == 1;
 		} catch (SQLException | NumberFormatException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

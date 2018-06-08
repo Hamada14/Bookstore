@@ -11,6 +11,7 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import server.database.entities.book.Book;
 
 @Getter
 @Setter
@@ -94,7 +95,7 @@ public class Order implements Serializable {
 
 	 @Override
      public int hashCode() {
-		 return book.hashCode();
+		 return book.getBookISBN().hashCode();
 	 }
 	 
 	 @Override

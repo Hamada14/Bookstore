@@ -1,14 +1,16 @@
 package server;
 
-import java.sql.PreparedStatement;
+
 
 import lombok.Getter;
 import lombok.Setter;
+import server.database.entities.Order;
 
 @Setter
 @Getter
 public class OrderResponseData extends ResponseData{
-	private int orderID;
-	private PreparedStatement preparedStatement;
+	private int oldQuantity;
+	private Order order;
+	
 	
 }

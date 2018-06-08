@@ -1,6 +1,7 @@
-package server.database.entities;
+package server.database.entities.book;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.regex.Pattern;
 
 import lombok.Getter;
 import lombok.Setter;
+import server.database.entities.Person;
 
 @Getter
 @Setter

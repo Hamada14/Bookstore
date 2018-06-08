@@ -1,7 +1,8 @@
 package view;
 
 import javafx.scene.control.Hyperlink;
-import server.database.entities.Book;
+
+import server.database.entities.book.Book;
 
 public class BookHyperLink extends Hyperlink{
     private Book book;

@@ -25,20 +25,12 @@
     			</graphic>
 			</Button>
             <Pane prefHeight="6.0" prefWidth="374.0" />
-            <Label alignment="CENTER" text=" User Name " textFill="#f8f3f3">
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="126.0" text=" User Name " textFill="#f8f3f3">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="72.0" style="-fx-background-color: transparent;">
-    			<graphic>
-        			<ImageView fitHeight="51.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-                      <image>
-                        <Image url="@images/shoppingCart.png" />
-                     </image>
-                   </ImageView>
-    			</graphic>
-			</Button>
+            <Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="46.0" style="-fx-background-color: transparent;" />
 			<MenuButton lineSpacing="10.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="62.0" style="-fx-background-color: transparent;">
     			<graphic>
         			<ImageView fitHeight="39.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
@@ -48,7 +40,7 @@
                    </ImageView>
     			</graphic>
     			<items>
-                      <MenuItem mnemonicParsing="false" text="User mode" />
+                      <MenuItem fx:id="goToCustomerView" mnemonicParsing="false" text="User mode" />
                       <MenuItem mnemonicParsing="false" text="Logout" />
                  </items>
 			</MenuButton>

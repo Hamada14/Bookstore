@@ -7,7 +7,7 @@ import client.alphabit.BookStoreApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import server.database.entities.Identity;
+import server.database.entities.user.Identity;
 import javafx.scene.control.PasswordField;
 
 public class LoginController implements CustomController {
@@ -38,7 +38,7 @@ public class LoginController implements CustomController {
 
 	@Override
 	public void initData(Parameters parameters) {
-		// TODO Auto-generated method stub
-		
+			userName.setText("");
+			password.setText("");
 	}
 }

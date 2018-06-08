@@ -22,20 +22,22 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import server.OrderResponseData;
 import server.ResponseData;
-import server.database.entities.Identity;
+import server.database.entities.user.Identity;
 import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
 
 public class OrdersController implements CustomController {
 
 	private static final String SUCCESSFUL_TITLE = "CHECKOUT ..DONE!";
-	private static final String SUCCESSFUL_TEXT = "Your have to check out later";
+	private static final String SUCCESSFUL_TEXT = "Your shopping items has been bought";
 
 	private static final String CONFIRM_REMOVE = "Are you sure you want to delete this order?";
 	private static final String DELETE_IMG = "../images/delete.png";
@@ -115,11 +117,16 @@ public class OrdersController implements CustomController {
 
 	@FXML
 	private void checkOut() {
-		showCreditCardPanel();
+		Dialog<OrderResponseData> dialog = new Dialog<>();
+		showcreditCardPanel(dialog);
+		OrderResponseData res = dialog.getResult();
+		if (res != null) {
+			showNewQuantityPanel(res);
+		}
 	}
 
-	private void showCreditCardPanel() {
-		Dialog<Pair<String, String>> dialog = new Dialog<>();
+
+	private void  showcreditCardPanel(Dialog<OrderResponseData> dialog) {
 		dialog.setTitle("Payment Step");
 		dialog.setHeaderText("PLease Enter your Payment Method");
 		ImageView creditCardView = new ImageView(this.getClass().getResource(PAYMENT_IMG).toString());
@@ -164,27 +171,73 @@ public class OrdersController implements CustomController {
 		});
 
 		dialog.getDialogPane().setContent(grid);
+		
+		
+		dialog.setResultConverter(dialogButton -> {
+		    if (dialogButton == buyButtonType) {
+		    	Identity identity = BookStoreApp.getUser().getIdentity();
+		    	return checkOutCart(identity, BookStoreApp.getShoppingCart());
+		    }
+		    return null;
+		});
+		dialog.showAndWait();
+	}
 
-		Platform.runLater(() -> expiryDatePicker.requestFocus());
-
-		((ButtonBase) buyButton).setOnAction(event -> {
-			Identity identity = BookStoreApp.getUser().getIdentity();
-			ResponseData res = BookClient.getServer().checkoutShoppingCart(identity, BookStoreApp.getShoppingCart());
-			if (res.isSuccessful()) {
-				BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, SUCCESSFUL_TEXT);
-			} else {
-				if (res.getError().equals(ShoppingCart.SHORTAGE_CODE)) {
-					BookStoreApp.displayDialog(AlertType.ERROR, "Error", null, "shortage");
-				} else {
-					BookStoreApp.displayDialog(AlertType.ERROR, "Error", null, res.getError());
-				}
-			}
+	private OrderResponseData checkOutCart(Identity identity, ShoppingCart cart) {
+		OrderResponseData res = BookClient.getServer().checkoutShoppingCart(identity, cart);
+		if (res.isSuccessful()) {
+			BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, SUCCESSFUL_TEXT);
+			BookStoreApp.getShoppingCart().clearCart();
 			BookStoreApp.showCustomer();
+		} else {
+			if (res.getError().equals(ShoppingCart.SHORTAGE_CODE)) {
+				return res;
+			} else {
+				BookStoreApp.displayDialog(AlertType.ERROR, null, null, res.getError());
+				return null;
+			}
+		}
+		return null;
+	}
+	
+	private void showNewQuantityPanel(OrderResponseData res) {
+		Dialog<String> dialog = new Dialog<>();
+		dialog.setTitle("Available Quantity changed!");
+		String header = String.format(" max avaiable Qantity: %s", Integer.toString(res.getOldQuantity()));
+		dialog.setHeaderText(header);
+		dialog.setContentText("Please enter your new Quantity then checkout AGAIN");
+ 
+		ButtonType buyButtonType = new ButtonType("Change", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(buyButtonType, ButtonType.CANCEL);	
+		Node buyButton = dialog.getDialogPane().lookupButton(buyButtonType);
+		TextField quantity = new TextField();
+	    quantity.setEditable(true);
+		dialog.getDialogPane().setContent(intializeInputDialog(quantity));
+		((ButtonBase) buyButton).setOnAction(event -> {
+			int quantityVal = Integer.parseInt(quantity.getText());
+			updateOrders(res.getOrder(), quantityVal);
 		});
 
 		dialog.showAndWait();
 	}
 
+
+	private GridPane intializeInputDialog(TextField quantity) {
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.setVgap(10);
+		grid.setPadding(new Insets(20, 150, 10, 10));
+		grid.add(new Label("      "), 0, 0);
+		grid.add(quantity, 1, 0);
+		return grid;
+	}
+	
+	private void updateOrders(Order order, int newQuantity) {
+		ShoppingCart cart = BookStoreApp.getShoppingCart();
+		order.setQuantity(newQuantity);
+		cart.addOrder(order);
+		showItems();
+	}
 	private static boolean validateCreditCard(String creditCardNum) {
 
 		String pattern = "[0-9]+";
@@ -211,4 +264,6 @@ public class OrdersController implements CustomController {
 		}
 		return false;
 	}
+	
+	
 }
