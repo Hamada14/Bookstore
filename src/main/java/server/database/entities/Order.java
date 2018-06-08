@@ -1,15 +1,16 @@
 package server.database.entities;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import lombok.Getter;
+import lombok.Setter;
 
 
-import server.ResponseData;
-
+@Getter
+@Setter
 public class Order {
 
 	private static final String PLACE_ORDER_QUERY = "insert into %s(BOOK_ISBN, QUANTITY) values(?, ?)";
@@ -21,18 +22,6 @@ public class Order {
 	public Order (int quantity, Book book) {
 		this.quantity = quantity;
 		this.book = book;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public Book getBook() {
-		return book;
 	}
 	
 	public static boolean addNewOrder(Order order, Connection connection) {
@@ -48,4 +37,21 @@ public class Order {
 		return true;
 	}
 
+	 @Override
+     public int hashCode() {
+		 return book.hashCode();
+	 }
+	 
+	 @Override
+	 public boolean equals(Object obj) {
+		 if (this == obj)
+             return true;
+         if (obj == null)
+             return false;
+         if (getClass() != obj.getClass())
+             return false;
+         Order other = (Order) obj;
+         return this.getBook().getBookISBN().equals(other.getBook().getBookISBN());
+	 }
+	 
 }

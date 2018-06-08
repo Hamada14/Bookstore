@@ -159,6 +159,7 @@ public class User implements Serializable {
 		try {
 			PreparedStatement ps = modifiedUser.createUpdatePersonalInfoQuery(connection, USER_TABLE);
 			ps.executeUpdate();
+			ps.close();
 			rs.setUser(modifiedUser);
 		} catch (SQLException e) {
 			rs.setError(e.getMessage());

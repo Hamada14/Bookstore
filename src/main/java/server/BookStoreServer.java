@@ -1,7 +1,5 @@
 package server;
 
-import java.util.ArrayList;
-
 
 import java.util.HashMap;
 
@@ -14,6 +12,7 @@ import javax.jws.soap.SOAPBinding.Style;
 import server.database.entities.Author;
 import server.database.entities.Book;
 import server.database.entities.Identity;
+import server.database.entities.ShoppingCart;
 import server.database.entities.User;
 import server.UserResponseData;
 import server.database.entities.UserBuilder;
@@ -34,7 +33,7 @@ public interface BookStoreServer {
 	ResponseData editUserIdentity(Identity identity, String newPassword);
 
 	@WebMethod
-	ArrayList<Book> searchBook(String filter, String valueFilter);
+	BooksResponseData searchBook(Identity identity, String filter, String valueFilter);
 
 	@WebMethod
 	boolean addNewBook(Book newBook, Author author, server.database.entities.Publisher publisher);
@@ -54,6 +53,12 @@ public interface BookStoreServer {
 	@WebMethod
 	boolean promoteUser(String userName);
 
+	@WebMethod
 	byte[] generateReport(Identity identity, ReportType reportType);
+
+	@WebMethod
+	ResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart);
+		
+	
 
 }

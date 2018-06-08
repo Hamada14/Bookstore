@@ -1,17 +1,12 @@
 package server;
 
+import lombok.Getter;
+import lombok.Setter;
 import server.database.entities.User;
 
-public class UserResponseData extends ResponseData{
-	
+@Getter
+@Setter
+public class UserResponseData extends ResponseData{	
 		private User user;
-		
-		public void setUser(User user) {
-			this.user = user;
-		}
-		
-		public User getUser() {
-			return user;
-		}
 	
 }

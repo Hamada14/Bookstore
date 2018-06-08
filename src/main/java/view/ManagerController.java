@@ -1,10 +1,13 @@
 package view;
 
+
 import client.BookClient;
+
 import client.alphabit.BookStoreApp;
 import javafx.fxml.FXML;
 import server.BookStoreServer;
 import server.database.report.ReportWriter;
+
 
 
 public class ManagerController implements CustomController {
