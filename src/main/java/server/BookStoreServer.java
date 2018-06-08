@@ -1,15 +1,17 @@
 package server;
 
+import java.util.List;
+
 import javax.jws.WebMethod;
 
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
-import server.database.entities.Author;
-import server.database.entities.Book;
 import server.database.entities.user.Identity;
 import server.database.entities.ShoppingCart;
+import server.database.entities.author.Author;
+import server.database.entities.book.Book;
 import server.UserResponseData;
 import server.database.entities.user.UserBuilder;
 import server.database.report.ReportType;
@@ -32,7 +34,7 @@ public interface BookStoreServer {
 	BooksResponseData searchBook(Identity identity, String filter, String valueFilter);
 
 	@WebMethod
-	boolean addNewBook(Book newBook, Author author, server.database.entities.Publisher publisher);
+	boolean addNewBook(Book newBook, Author author, server.database.entities.publisher.Publisher publisher);
 
 	@WebMethod
 	boolean editBook(Book modifiedBook);
@@ -60,4 +62,7 @@ public interface BookStoreServer {
 
 	@WebMethod
 	ResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart);
+
+	@WebMethod
+	List<String> getCategories();
 }

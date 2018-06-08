@@ -20,13 +20,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import server.BooksResponseData;
-import server.database.entities.Book;
+import server.database.entities.book.Book;
 import server.database.entities.user.Identity;
 
 public class CustomerController implements Initializable, CustomController {
 
 	private static final String ERROR_MESSAGE_TITLE = "Error while searching";
-	ObservableList<String> categoriesList = FXCollections.observableArrayList(Book.BOOK_CATEGORIES);
+	ObservableList<String> categoriesList = FXCollections.observableArrayList(BookClient.getServer().getCategories());
 	@FXML
 	private ChoiceBox<String> categories;
 	@FXML
@@ -38,7 +38,7 @@ public class CustomerController implements Initializable, CustomController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		categories.setValue(Book.BOOK_CATEGORIES[0]);
+		categories.setValue(BookClient.getServer().getCategories().get(0));
 		categories.setItems(categoriesList);
 	}
 

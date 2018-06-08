@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import lombok.Getter;
 import lombok.Setter;
+import server.database.entities.book.Book;
 
 @Getter
 @Setter
