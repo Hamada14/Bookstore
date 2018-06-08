@@ -50,9 +50,9 @@
                         <GridPane fx:id="ordersPane" layoutX="2.0" layoutY="14.0" prefHeight="18.0" prefWidth="603.0" style="-fx-background-color: #FFFFFF;" vgap="5.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.5999755859375" minWidth="0.0" prefWidth="24.799993896484374" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="284.7999755859375" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="87.60000000000002" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="82.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="297.59998779296876" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="101.79998779296875" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="82.60001220703128" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.6000061035156" minWidth="10.0" prefWidth="83.2000610351563" />
                           </columnConstraints>
                      <padding>

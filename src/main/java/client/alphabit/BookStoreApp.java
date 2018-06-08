@@ -1,7 +1,7 @@
 package client.alphabit;
 
+import client.BookClient;
 import javafx.application.Application;
-
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -11,9 +11,10 @@ import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
 import server.database.entities.User;
 
-
 public class BookStoreApp extends Application {
 
+	private static final String ERROR_MESSAGE_TITLE = "Access Denied!";
+	private static final String MANAGER_ERROR_MESSAGE = "You are not allowed to use this mode";
 	private static final String APP_TITLE = "Alphabet Bookstore";
 	private static final String LOGIN_VIEW = "/LoginView.fxml";
 	private static final String REGISTER_VIEW = "/RegisterView.fxml";
@@ -27,7 +28,6 @@ public class BookStoreApp extends Application {
 	private static ControlForm login, register, manager, customer, bookView, ordersView, editProfileView, addBookView;
 	private static ShoppingCart currentCart;
 	private static User currentUser;
-
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -43,10 +43,9 @@ public class BookStoreApp extends Application {
 		ordersView = new Controller(primaryStage, ORDERS_VIEW);	
 		editProfileView = new Controller(primaryStage, EDIT_PROFILE_VIEW);
 //		showLogin();
-		showManager();		
+		showManager();
 	}
 
-	
 	public static void showLogin() {
 		login.show();
 	}
@@ -59,7 +58,7 @@ public class BookStoreApp extends Application {
 		register.show();
 		register.getController().initData(null);
 	}
-    
+
 	public static void showEditProfile() {
 		editProfileView.show();
 		editProfileView.getController().initData(null);
@@ -68,36 +67,41 @@ public class BookStoreApp extends Application {
 		bookView.show();
 		view.Parameters params = new view.Parameters();
 		params.setBook(book);
-    	bookView.getController().initData(params);
+		bookView.getController().initData(params);
 	}
-	
-	public static void showOrdersView() {	
+
+	public static void showOrdersView() {
 		ordersView.show();
 		ordersView.getController().initData(null);
 	}
-	
+
 	public static void setUser(User user) {
 		BookStoreApp.currentUser = user;
 	}
-	
+
 	public static User getUser() {
 		return currentUser;
 	}
-	
+
 	public static void showCustomer() {
 		customer.show();
 		customer.getController().initData(null);
 	}
-	
+
 	public static void showManager() {
 		manager.show();
+//		if (BookClient.getServer().isManager(currentUser.getIdentity())) {
+//			manager.show();
+//		} else {
+//			displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, MANAGER_ERROR_MESSAGE);
+//		}
 	}
-	
+
 	public static ShoppingCart getShoppingCart() {
 		return currentCart;
-		
+
 	}
-	
+
 	public static void displayDialog(AlertType alertType, String dialogTitle, String dialogHeader, String dialogText) {
 		Alert alert = new Alert(alertType);
 		alert.setTitle(dialogTitle);
@@ -105,15 +109,16 @@ public class BookStoreApp extends Application {
 		alert.setContentText(dialogText);
 		alert.showAndWait();
 	}
-	
+
 	private static void pushSomeOrders() {
-//		float x = 1f;
-//		for (int i = 1; i <= 40; i++) {
-//			Book book = new Book(Integer.toString(i), new String("boook" + i),"1960", x, "arts", true);
-//			currentCart.addOrder(new Order(i, book));
-//		}
+		// float x = 1f;
+		// for (int i = 1; i <= 40; i++) {
+		// Book book = new Book(Integer.toString(i), new String("boook" + i),"1960", x,
+		// "arts", true);
+		// currentCart.addOrder(new Order(i, book));
+		// }
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}

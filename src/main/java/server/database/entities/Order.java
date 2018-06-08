@@ -1,6 +1,7 @@
 package server.database.entities;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,8 +9,8 @@ import java.sql.SQLException;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 public class Order {
 
 	private static final String PLACE_ORDER_QUERY = "insert into %s(BOOK_ISBN, QUANTITY) values(?, ?)";
@@ -62,4 +63,21 @@ public class Order {
 //		}
 //	}
 
+	 @Override
+     public int hashCode() {
+		 return book.hashCode();
+	 }
+	 
+	 @Override
+	 public boolean equals(Object obj) {
+		 if (this == obj)
+             return true;
+         if (obj == null)
+             return false;
+         if (getClass() != obj.getClass())
+             return false;
+         Order other = (Order) obj;
+         return this.getBook().getBookISBN().equals(other.getBook().getBookISBN());
+	 }
+	 
 }

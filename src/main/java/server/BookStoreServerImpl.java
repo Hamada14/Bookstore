@@ -12,6 +12,7 @@ import server.database.entities.Author;
 import server.database.entities.Book;
 import server.database.entities.Identity;
 import server.database.entities.Order;
+import server.database.entities.ShoppingCart;
 import server.database.entities.User;
 import server.database.entities.UserBuilder;
 import server.database.report.JasperReportCreator;
@@ -88,8 +89,17 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public ArrayList<Book> searchBook(String filter, String valueFilter) {
-	 return null;
+	public BooksResponseData searchBook(Identity identity, String filter, String valueFilter) {
+		BooksResponseData booksResponse = new BooksResponseData();
+		UserResponseData validUser = identity.isValidIdentity(connection);
+		if (validUser.isSuccessful()) {
+			BooksResponseData booksResponse2 = Book.searchBooks(filter, valueFilter, connection);
+//			System.out.println("in impl" + booksResponse2.getBooks().size());
+			return booksResponse2;
+		} else {
+			booksResponse.setError(validUser.getError());
+			return booksResponse;
+		}
 	}
 
 	@Override
@@ -123,6 +133,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 		return Order.addNewOrder(new Order(q, book), connection);
 	}
 	
+
 	@Override
 	public boolean promoteUser(String userName) {
 		return User.promoteUser(userName, connection);
@@ -137,4 +148,15 @@ public class BookStoreServerImpl implements BookStoreServer {
 //	public boolean deleteOrder(int orderId) {
 //		return Order.deleteOrderById(orderId, connection);
 //	}
+	@Override
+	public ResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart) {
+		ResponseData rs = new ResponseData();
+		UserResponseData validUser = identity.isValidIdentity(connection);
+		if (validUser.isSuccessful()) {
+			return cart.checkOut(identity.getUserName(), connection);
+		} else {
+			rs.setError(validUser.getError());
+			return rs;
+		}
+	}
 }

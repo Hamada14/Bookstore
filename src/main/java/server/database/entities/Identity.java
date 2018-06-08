@@ -62,7 +62,10 @@ public class Identity implements Serializable {
 		return rd;
 	}
 	
-	public  ResponseData editUserIdentity(String newPassword, Connection connection) {
+
+	
+	
+	public  ResponseData editUserIdentity( String newPassword, Connection connection) {
 		ResponseData rs = new ResponseData();
 		String query = String.format(UPDATE_PASSWORD, User.USER_TABLE);
 		PreparedStatement ps;
@@ -117,4 +120,7 @@ public class Identity implements Serializable {
 		   urs.setError(e.getMessage());
 		}	
 	}
+	
+	
+	
 }
