@@ -1,5 +1,6 @@
 package server;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
@@ -10,8 +11,6 @@ import net.sf.jasperreports.engine.JRException;
 import server.database.entities.user.Identity;
 import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
-import server.database.entities.author.Author;
-import server.database.entities.author.AuthorModel;
 import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
 import server.database.entities.book.BookModel;
@@ -62,6 +61,8 @@ public class BookStoreServerImpl implements BookStoreServer {
 				return jasperReporter.generateReport(reportType);
 			}
 		} catch (JRException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
