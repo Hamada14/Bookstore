@@ -1,5 +1,6 @@
 package server.database.entities.book;
 
+import java.io.Serializable;
 import java.sql.Connection;
 
 import java.sql.ResultSet;
@@ -7,14 +8,18 @@ import java.sql.SQLException;
 
 import lombok.Getter;
 import lombok.Setter;
+import server.database.entities.author.Author;
 import server.database.entities.book.query.AddBook;
 import server.database.entities.publisher.Publisher;
 import server.database.entities.publisher.PublisherModel;
 
 @Getter
 @Setter
-public class Book {
+public class Book implements Serializable {
 
+	private static final long serialVersionUID = -613193187079216677L;
+	
+	
 	private static final int ISBN_INDEX = 1;
 	private static final int BOOK_TITLE_INDEX = 2;
 	private static final int PUBLISHER_ID_INDEX = 3;
@@ -23,7 +28,7 @@ public class Book {
 	private static final int CATEGORY_INDEX = 6;
 	private static final int MIN_THRESHOLD_INDEX = 7;
 	private static final int QUANTITY_INDEX = 8;
-	
+
 	private String bookISBN;
 	private String bookTitle;
 	private String publicationYear;
@@ -32,6 +37,8 @@ public class Book {
 	private Publisher publisher;
 	private int quantity;
 	private int minimumThreshold;
+	private String publisherName;
+	private Author author;
 
 	Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
 			Publisher publisher, int quantity, int minimumThreshold) {
@@ -81,6 +88,7 @@ public class Book {
 			int rowsAffected = query.getUpdateCount();
 			return rowsAffected == 1;
 		} catch (SQLException | NumberFormatException e) {
+			e.printStackTrace();
 			return false;
 		} finally {
 			query.close();

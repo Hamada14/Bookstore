@@ -3,6 +3,7 @@ package view;
 import java.net.URL;
 
 
+
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -47,7 +48,6 @@ public class CustomerController implements Initializable, CustomController {
 		Identity identity = BookStoreApp.getUser().getIdentity();
 		BooksResponseData response = BookClient.getServer().searchBook(identity, "", "");
 		if (response.isSuccessful()) {
-//			System.out.println("in customer " + response.getBooks().size());
 			viewBooks(response.getBooks());
 		} else {
 			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, response.getError());
@@ -63,7 +63,6 @@ public class CustomerController implements Initializable, CustomController {
 				public void handle(ActionEvent e) {
 					BookStoreApp.showBookView(link.getBook());
 					link.setVisited(false);
-					System.out.println(link.getBook().getBookTitle());
 				}
 			});
 			booksLinks.getChildren().add(link);

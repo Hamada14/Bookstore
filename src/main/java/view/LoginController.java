@@ -38,7 +38,7 @@ public class LoginController implements CustomController {
 
 	@Override
 	public void initData(Parameters parameters) {
-		// TODO Auto-generated method stub
-		
+			userName.setText("");
+			password.setText("");
 	}
 }

@@ -36,6 +36,14 @@ public class ManagerController implements CustomController {
 		writer.createReport();
 	}
 	
+	@FXML
+	private void goToOrdersManagement() {
+		BookStoreApp.showAllOrdersView();
+	}
+	
+	@FXML
+	private void goToCustomerView() {
+	}
 	@Override
 	public void initData(Parameters parameters) {
 		// TODO Auto-generated method stub

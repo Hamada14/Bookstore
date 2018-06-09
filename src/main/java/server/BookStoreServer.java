@@ -12,6 +12,8 @@ import server.database.entities.user.Identity;
 import server.database.entities.ShoppingCart;
 import server.database.entities.author.Author;
 import server.database.entities.book.Book;
+
+import server.database.entities.Order;
 import server.UserResponseData;
 import server.database.entities.user.UserBuilder;
 import server.database.report.ReportType;
@@ -36,6 +38,7 @@ public interface BookStoreServer {
 	@WebMethod
 	boolean addNewBook(Book newBook, Author author, server.database.entities.publisher.Publisher publisher);
 
+
 	@WebMethod
 	boolean editBook(Book modifiedBook);
 	
@@ -51,17 +54,17 @@ public interface BookStoreServer {
 	@WebMethod
 	boolean promoteUser(String userName);
 
-//	@WebMethod
-//	ResultSet getAllOrders();
-//	
-//	@WebMethod
-//	boolean deleteOrder(int orderId);
+	@WebMethod
+	List<Order> getOrders(int offset, int limit);
+	
+	@WebMethod
+	boolean deleteOrder(int orderId);
 	
 	@WebMethod
 	byte[] generateReport(Identity identity, ReportType reportType);
 
 	@WebMethod
-	ResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart);
+	OrderResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart);
 
 	@WebMethod
 	List<String> getCategories();

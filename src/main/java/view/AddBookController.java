@@ -1,13 +1,15 @@
 package view;
 
 import client.BookClient;
+
 import client.alphabit.BookStoreApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+
 import server.database.entities.author.Author;
-import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
 import server.database.entities.publisher.Publisher;
+
 
 
 public class AddBookController implements CustomController {
@@ -45,6 +47,7 @@ public class AddBookController implements CustomController {
 			
 		}
 	}
+	
 	
 	@FXML 
 	private void backToManagerView() {
