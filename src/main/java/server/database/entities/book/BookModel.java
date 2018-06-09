@@ -49,8 +49,20 @@ public class BookModel {
 	
 	public static final ResponseData addBook(BookBuilder bookBuilder, Connection connection) {
 		ResponseData response = bookBuilder.validateBookAttributes();
+		if(!response.isSuccessful()) {
+			return response;
+		}
 		Book book = bookBuilder.buildBook();
 		return book.bookAddition(connection);
+	}
+	
+	public static ResponseData editBook(BookBuilder modifiedBook, Connection connection) {
+		ResponseData response = modifiedBook.validateBookAttributes();
+		if(!response.isSuccessful()) {
+			return response;
+		}
+		Book book = modifiedBook.buildBook();
+		return book.editBook(connection);
 	}
 
 	private static boolean authorRefAddition(String isbn, int authorId, Connection connection) {
@@ -142,5 +154,4 @@ public class BookModel {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

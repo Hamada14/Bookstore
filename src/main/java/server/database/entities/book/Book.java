@@ -5,16 +5,13 @@ import java.sql.Connection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import lombok.Getter;
 import lombok.Setter;
 import server.ResponseData;
 import server.database.entities.author.Author;
 import server.database.entities.book.query.AddBook;
+import server.database.entities.book.query.EditBook;
 import server.database.entities.publisher.Publisher;
 import server.database.entities.publisher.PublisherModel;
 import server.errors.BookError;
@@ -163,7 +160,7 @@ public class Book implements Serializable {
 		boolean isBookExisting = BookModel.selectBookByISBN(bookISBN, connection);
 		ResponseData response = new ResponseData();
 		if (isBookExisting) {
-			response.setError(BookError.IVALID_BOOK_ISBN.toString());
+			response.setError(BookError.INVALID_BOOK_ISBN.toString());
 			return response;
 		}
 		int categoryId = BookModel.getCategoryId(category, connection);
@@ -183,7 +180,6 @@ public class Book implements Serializable {
 			query.setQuantity(quantity);
 			query.setMinThreshold(minimumThreshold);
 			query.executeQuery(connection);
-			int rowsAffected = query.getUpdateCount();
 			return response;
 		} catch (SQLException | NumberFormatException e) {
 			response.setError(SqlError.DUPLICATE_KEY.toString());
@@ -193,4 +189,36 @@ public class Book implements Serializable {
 		}
 	}
 
+	public ResponseData editBook(Connection connection) {
+		boolean isBookExisting = BookModel.selectBookByISBN(bookISBN, connection);
+		ResponseData response = new ResponseData();
+		if (!isBookExisting) {
+			response.setError(BookError.BOOK_NOT_EXIST.toString());
+			return response;
+		}
+		int categoryId = BookModel.getCategoryId(category, connection);
+		if (categoryId == BookModel.CATEGORY_NOT_FOUND) {
+			response.setError(BookError.INVALID_BOOK_CATEGOTY.toString());
+			return response;
+		}
+		int publisherId = PublisherModel.addPublisher(publisher, connection);
+		EditBook query = new EditBook();
+		try {
+			query.setIsbn(bookISBN);
+			query.setTitle(bookTitle);
+			query.setPublisherId(publisherId);
+			query.setPublicationYear(publicationYear);
+			query.setSellingPrice(sellingPrice);
+			query.setCategoryId(categoryId);
+			query.setQuantity(quantity);
+			query.setMinThreshold(minimumThreshold);
+			query.executeQuery(connection);
+			return response;
+		} catch (SQLException | NumberFormatException e) {
+			response.setError(SqlError.DUPLICATE_KEY.toString());
+			return response;
+		} finally {
+			query.close();
+		}
+	}
 }
