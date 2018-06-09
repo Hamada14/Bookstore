@@ -6,7 +6,7 @@ import client.BookClient;
 import client.alphabit.BookStoreApp;
 import javafx.fxml.FXML;
 import server.BookStoreServer;
-import server.database.report.ReportWriter;
+import server.database.report.ReportViewer;
 
 
 
@@ -32,8 +32,8 @@ public class ManagerController implements CustomController {
 	@FXML
 	private void createReport() {
 		BookStoreServer server = BookClient.getServer();
-		ReportWriter writer = new ReportWriter(server);
-		writer.createReport();
+		ReportViewer writer = new ReportViewer(server);
+		writer.viewReport();
 	}
 	
 	@FXML
