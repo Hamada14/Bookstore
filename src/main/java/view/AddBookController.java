@@ -5,9 +5,11 @@ import client.BookClient;
 import client.alphabit.BookStoreApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import server.database.entities.book.Author;
-import server.database.entities.book.Book;
-import server.database.entities.book.Publisher;
+import server.ResponseData;
+import server.database.entities.author.Author;
+import server.database.entities.book.BookBuilder;
+import server.database.entities.publisher.Publisher;
+
 
 
 public class AddBookController implements CustomController {
@@ -26,19 +28,19 @@ public class AddBookController implements CustomController {
 	@FXML
 	private void confirmBookAddition() {
 		try {
-			Book book = new Book();
+			BookBuilder bookBuilder = new BookBuilder();
 			float p = Float.valueOf(price.getText());
 			int minimumQuantity = Integer.valueOf(minimumThreshold.getText());
-			book.setBookISBN(isbn.getText());
-			book.setBookTitle(title.getText());
-			book.setCategory(category.getText());
-			book.setPublicationYear(publicationYear.getText());
-			book.setSellingPrice(p);
-			book.setMinimumThreshold(minimumQuantity);
+			bookBuilder.setBookISBN(isbn.getText());
+			bookBuilder.setBookTitle(title.getText());
+			bookBuilder.setCategory(category.getText());
+			bookBuilder.setPublicationYear(publicationYear.getText());
+			bookBuilder.setSellingPrice(p);
+			bookBuilder.setMinimumThreshold(minimumQuantity);
 			Author author = new Author(authorFName.getText(), authorLName.getText());
 			Publisher publisher  = new Publisher(publisherName.getText());
-			boolean bookAdded = BookClient.getServer().addNewBook(book, author, publisher);
-			if(bookAdded) {
+			ResponseData bookAdded = BookClient.getServer().addNewBook(bookBuilder, publisher);
+			if(bookAdded.isSuccessful()) {
 				BookStoreApp.showManager();
 			}
 		} catch(NumberFormatException e) {

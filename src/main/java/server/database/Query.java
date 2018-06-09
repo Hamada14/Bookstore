@@ -35,5 +35,9 @@ public abstract class Query {
 		return resultSet;
 	}
 	
+	public ResultSet getGeneratedKeys() throws SQLException {
+		return ps.getGeneratedKeys();
+	}
+	
 	protected abstract void prepareStatement(Connection connection) throws SQLException ;
 }

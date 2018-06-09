@@ -1,13 +1,12 @@
 package client.alphabit;
 
-import client.BookClient;
 import javafx.application.Application;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+
 import server.database.entities.book.Book;
-import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
 import server.database.entities.user.User;
 
@@ -45,7 +44,7 @@ public class BookStoreApp extends Application {
 		ordersView = new Controller(primaryStage, ORDERS_VIEW);
 		editProfileView = new Controller(primaryStage, EDIT_PROFILE_VIEW);
 		allOrdersView = new Controller(primaryStage, ALL_ORDERS_VIEW);
-		 showLogin();
+		showLogin();
 //		showManager();
 	}
 
