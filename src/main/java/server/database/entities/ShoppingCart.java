@@ -13,7 +13,6 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 import server.OrderResponseData;
-import server.ResponseData;
 
 @Setter
 @Getter
@@ -206,5 +205,4 @@ public class ShoppingCart implements Iterable<Order> {
 		}
 		return false;
 	}
-	
 }

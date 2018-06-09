@@ -2,8 +2,6 @@ package view;
 
 import java.net.URL;
 
-
-
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -27,7 +25,8 @@ import server.database.entities.user.Identity;
 public class CustomerController implements Initializable, CustomController {
 
 	private static final String ERROR_MESSAGE_TITLE = "Error while searching";
-	ObservableList<String> categoriesList = FXCollections.observableArrayList(BookClient.getServer().getCategories());
+	private static final ObservableList<String> categoriesList = FXCollections
+			.observableArrayList(BookClient.getServer().getCategories());
 	@FXML
 	private ChoiceBox<String> categories;
 	@FXML
@@ -51,7 +50,7 @@ public class CustomerController implements Initializable, CustomController {
 			viewBooks(response.getBooks());
 		} else {
 			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, response.getError());
-		}	
+		}
 	}
 
 	private void viewBooks(List<Book> books) {

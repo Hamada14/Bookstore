@@ -23,7 +23,7 @@ public class BookModel {
 	public static final int CATEGORY_NOT_FOUND = -1;
 
 	private static final int ID_COL = 1;
-	private static final String CATEGORY_NAME_COL = null;
+	private static final String CATEGORY_NAME_COL = "CATEGORY";
 
 	public static BooksResponseData searchBooks(String filter, String valueFilter, Connection connection) {
 		BooksResponseData booksResponse = new BooksResponseData();
