@@ -89,7 +89,7 @@ public class BookBuilder {
 		if(matcher.matches()) {
 			return null;
 		}
-		return BookError.IVALID_BOOK_ISBN.toString();
+		return BookError.INVALID_BOOK_ISBN.toString();
 	}
 	
 }

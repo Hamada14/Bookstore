@@ -10,9 +10,9 @@ import javax.jws.soap.SOAPBinding.Style;
 
 import server.database.entities.user.Identity;
 import server.database.entities.ShoppingCart;
-import server.database.entities.author.Author;
 import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
+import server.database.entities.publisher.Publisher;
 import server.database.entities.Order;
 import server.UserResponseData;
 import server.database.entities.user.UserBuilder;
@@ -36,10 +36,10 @@ public interface BookStoreServer {
 	BooksResponseData searchBook(Identity identity, int offset, int limit, Book selectedBook);
 
 	@WebMethod
-	ResponseData addNewBook(BookBuilder newBook, server.database.entities.publisher.Publisher publisher);
+	ResponseData addNewBook(BookBuilder newBook);
 
 	@WebMethod
-	boolean editBook(Book modifiedBook);
+	ResponseData editBook(BookBuilder bookBuilder);
 	
 	@WebMethod
 	UserResponseData loginUser(Identity identity);

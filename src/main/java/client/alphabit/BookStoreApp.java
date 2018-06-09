@@ -24,9 +24,11 @@ public class BookStoreApp extends Application {
 	private static final String EDIT_PROFILE_VIEW = "/EditProfileView.fxml";
 	private static final String ADD_BOOK_VIEW = "/AddBook.fxml";
 	private static final String ALL_ORDERS_VIEW = "/AllOrdersView.fxml";
+	private static final String EDIT_BOOK_VIEW = "/EditBookView.fxml";
+	
 	private Stage primaryStage;
 	private static ControlForm login, register, manager, customer, bookView, ordersView, editProfileView, addBookView,
-			allOrdersView;
+			editBookView, allOrdersView;
 	private static ShoppingCart currentCart;
 	private static User currentUser;
 
@@ -44,8 +46,8 @@ public class BookStoreApp extends Application {
 		ordersView = new Controller(primaryStage, ORDERS_VIEW);
 		editProfileView = new Controller(primaryStage, EDIT_PROFILE_VIEW);
 		allOrdersView = new Controller(primaryStage, ALL_ORDERS_VIEW);
-//		showLogin();
-		showManager();
+		showLogin();
+//		showManager();
 	}
 
 	public static void showLogin() {
@@ -79,6 +81,13 @@ public class BookStoreApp extends Application {
 		bookView.getController().initData(params);
 	}
 
+	public static void editBookView(Book book) {
+		editBookView.show();
+		view.Parameters params = new view.Parameters();
+		params.setBook(book);
+		editBookView.getController().initData(params);
+	}
+	
 	public static void showOrdersView() {
 		ordersView.show();
 		ordersView.getController().initData(null);

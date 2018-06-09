@@ -1,34 +1,22 @@
 package view;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import client.BookClient;
 import client.alphabit.BookStoreApp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
-import server.BooksResponseData;
-import server.database.entities.Order;
-import server.database.entities.book.Author;
 import server.database.entities.book.Book;
-import server.database.entities.user.Identity;
 
 public class CustomerController implements Initializable, CustomController {
 
@@ -55,9 +43,7 @@ public class CustomerController implements Initializable, CustomController {
 	@FXML
 	private TextField title;
 	@FXML
-	private TextField authorFirstName;
-	@FXML
-	private TextField authorLastName;
+	private TextField authorName;
 	@FXML
 	private TextField publisherName;
 	@FXML

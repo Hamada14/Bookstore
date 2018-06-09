@@ -11,8 +11,7 @@ public class AuthorModel {
 
 	public static final String AUTHOR_TABLE = "AUTHOR";
 	private static final String AUTHOR_ID_COL = "AUTHOR_ID";
-	private static final String FIRST_NAME_COL = "FIRST_NAME";
-	private static final String LAST_NAME_COL = "LAST_NAME";
+	private static final String NAME_COL = "NAME";
 	private static final int AUTHOR_NOT_FOUND = -2;
 
 	public static int addAuthor(Author author, Connection connection) {
@@ -43,7 +42,7 @@ public class AuthorModel {
 	public static Author selectAuthorNameByISBN(String isbn, Connection connection) {
 		int id = selectAuthorIdByISBN(isbn, connection);
 		if(id == AUTHOR_NOT_FOUND) {
-			return new Author("", "");
+			return new Author("");
 		}
 		return getAuthorById(id, connection);
 	}
@@ -55,11 +54,11 @@ public class AuthorModel {
 			query.executeQuery(connection);
 			ResultSet rs = query.getResultSet();
 			if(rs != null && rs.next()) {
-				return new Author(rs.getString(FIRST_NAME_COL), rs.getString(LAST_NAME_COL));
+				return new Author(rs.getString(NAME_COL));
 			}
-			return new Author("", "");
+			return new Author("");
 		} catch(SQLException e) {
-			return new Author("", "");
+			return new Author("");
 		} finally {
 			query.close();
 		}

@@ -5,15 +5,19 @@ import client.BookClient;
 import client.alphabit.BookStoreApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import server.ResponseData;
-import server.database.entities.author.Author;
 import server.database.entities.book.BookBuilder;
 import server.database.entities.publisher.Publisher;
 
 
 
 public class AddBookController implements CustomController {
-
+	
+	private static final String ERROR_MESSAGE_TITLE = "Error!";
+	private static final String ERROR_MESSAGE_HEADER = "Couldn't edit";
+	private static final String INVALID_PRICE = "Invalid value for price";
+	
 	@FXML private TextField title;
 	@FXML private TextField publisherName;
 	@FXML private TextField isbn;
@@ -37,12 +41,12 @@ public class AddBookController implements CustomController {
 			bookBuilder.setMinimumThreshold(minimumQuantity);
 			Publisher publisher  = new Publisher(publisherName.getText());
 			bookBuilder.setPublisher(publisher);
-			ResponseData bookAdded = BookClient.getServer().addNewBook(bookBuilder, publisher);
+			ResponseData bookAdded = BookClient.getServer().addNewBook(bookBuilder);
 			if(bookAdded.isSuccessful()) {
 				BookStoreApp.showManager();
 			}
 		} catch(NumberFormatException e) {
-			
+			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, ERROR_MESSAGE_HEADER, INVALID_PRICE);
 		}
 	}
 	
