@@ -13,7 +13,7 @@ import server.database.report.JasperReportCreator;
 public class Publisher {
 
 
-	public static final String endPointURL = "http://localhost:9980/server/bookStore";
+	public static final String endPointURL = "http://localhost:9981/server/bookStore";
 
 	public static void main(String[] args) {
 		try {
@@ -28,7 +28,7 @@ public class Publisher {
 	}
 
 	public static Connection connectToDatabase(DBConfig config) {
-		try {
+		try { 
 			String dbName = config.getPropertyValue(DBConfig.DB_NAME);
 			String userName = config.getPropertyValue(DBConfig.DB_USER_NAME);
 			String password = config.getPropertyValue(DBConfig.DB_PASSWORD);

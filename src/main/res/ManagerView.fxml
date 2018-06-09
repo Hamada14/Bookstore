@@ -41,7 +41,7 @@
     			</graphic>
     			<items>
                       <MenuItem fx:id="goToCustomerView" mnemonicParsing="false" text="User mode" />
-                      <MenuItem mnemonicParsing="false" onAction="#logOut" text="Logout" />
+                      <MenuItem mnemonicParsing="false" text="Logout" />
                  </items>
 			</MenuButton>
          </items>

@@ -96,31 +96,31 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="authorFirstName" disable="true" />
+                  <TextField fx:id="authorFirstName" />
                   <Label text="Author Last Name">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="authorLastName" disable="true" />
+                  <TextField fx:id="authorLastName" />
                   <Label text="Publisher">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="publisherName" disable="true" />
+                  <TextField fx:id="publisherName" />
                   <Label text="Publication Year">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="publicationYear" disable="true" />
+                  <TextField fx:id="publicationYear" />
                   <Label fx:id="Price" text="Price">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="price" disable="true" />
+                  <TextField fx:id="price" />
                </children>
                <opaqueInsets>
                   <Insets />

@@ -36,7 +36,7 @@ public class Publisher extends Person {
 			publisherId = publisherAddition(publisher, connection);
 			return publisherId;
 		} else {
-			return ERROR_PUBLISHER_ADDITION;
+			return publisherId;
 		}
 	}
 	
