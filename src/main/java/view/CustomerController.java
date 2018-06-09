@@ -1,7 +1,11 @@
 package view;
 
 import java.net.URL;
+<<<<<<< HEAD
 import java.util.HashMap;
+=======
+
+>>>>>>> new-design
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -35,9 +39,14 @@ public class CustomerController implements Initializable, CustomController {
 	private static final int LIMIT = 16;
 	private static final String TITLE_COL = "bookTitle";
 	private static final String ERROR_MESSAGE_TITLE = "Error while searching";
+<<<<<<< HEAD
 	private static final String ERROR_YEAR= "invalid year, won't be considered";
 	private static final String ERROR_PRICE= "invalid price, won't be considered";
 	ObservableList<String> categoriesList = FXCollections.observableArrayList(Book.BOOK_CATEGORIES);
+=======
+	private static final ObservableList<String> categoriesList = FXCollections
+			.observableArrayList(BookClient.getServer().getCategories());
+>>>>>>> new-design
 	@FXML
 	private ChoiceBox<String> categories;
 
@@ -71,7 +80,7 @@ public class CustomerController implements Initializable, CustomController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		categories.setValue(Book.BOOK_CATEGORIES[0]);
+		categories.setValue(BookClient.getServer().getCategories().get(0));
 		categories.setItems(categoriesList);
 		bookTitleCol.setCellValueFactory(new PropertyValueFactory<BookTuple, BookHyperLink>(TITLE_COL));
 		criteriaBook = new Book("", "", "", -1, "", "", 0, 0);
@@ -96,6 +105,7 @@ public class CustomerController implements Initializable, CustomController {
 		} else {
 			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, response.getError());
 		}
+<<<<<<< HEAD
 	}
 
 	private void refresh() {
@@ -103,6 +113,8 @@ public class CustomerController implements Initializable, CustomController {
 		booksTable.setItems(ordersList);
 		offset = 0;
 
+=======
+>>>>>>> new-design
 	}
 
 	private void viewBooks(List<Book> books) {

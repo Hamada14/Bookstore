@@ -3,22 +3,28 @@ package server.database.entities.book;
 import java.io.Serializable;
 import java.sql.Connection;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+<<<<<<< HEAD
 import java.util.Calendar;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+=======
+>>>>>>> new-design
 
 import lombok.Getter;
 import lombok.Setter;
-import server.BooksResponseData;
+import server.database.entities.author.Author;
+import server.database.entities.book.query.AddBook;
+import server.database.entities.publisher.Publisher;
+import server.database.entities.publisher.PublisherModel;
 
 @Getter
 @Setter
 public class Book implements Serializable {
 
+<<<<<<< HEAD
 	/**
 	 * 
 	 */
@@ -51,6 +57,11 @@ public class Book implements Serializable {
 	private static final String BOOK_AUTHOR = "BOOK_AUTHOR";
 	private static final String BOOK_TABLE = "BOOK";
 	private static final String ID_COL = "ID";
+=======
+	private static final long serialVersionUID = -613193187079216677L;
+	
+	
+>>>>>>> new-design
 	private static final int ISBN_INDEX = 1;
 	private static final int BOOK_TITLE_INDEX = 2;
 	private static final int PUBLISHER_ID_INDEX = 3;
@@ -60,40 +71,34 @@ public class Book implements Serializable {
 	private static final int MIN_THRESHOLD_INDEX = 7;
 	private static final int QUANTITY_INDEX = 8;
 
-	private static final int BOOK_AUTHORS_ISBN_INDEX = 1;
-	private static final int BOOK_AUTHORS_ID_INDEX = 2;
-
-	private static final int ORIGINAL_QUANTITY = 0;
-
-	private static final int CATEGORY_NOT_FOUND = -1;
-
-	private static final float MAX_SELLING_PRICE = 999999.99f;
-	private static final float MIN_SELLING_PRICE = 0.00f;
-
 	private String bookISBN;
 	private String bookTitle;
 	private String publicationYear;
 	private float sellingPrice;
 	private String category;
-	private int publisherId;
+	private Publisher publisher;
 	private int quantity;
 	private int minimumThreshold;
 	private String publisherName;
 	private Author author;
 
-	public Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
-			String publisherName, int quantity, int minimumThreshold) {
-		super();
+	public Book() {
+	}
+	
+	Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
+			Publisher publisher, int quantity, int minimumThreshold) {
 		this.bookISBN = bookISBN;
 		this.bookTitle = bookTitle;
 		this.publicationYear = publicationYear;
 		this.sellingPrice = sellingPrice;
 		this.category = category;
+		this.publisher = publisher;
 		this.quantity = quantity;
 		this.minimumThreshold = minimumThreshold;
 		this.publisherName = publisherName;
 	}
 
+<<<<<<< HEAD
 	public Book() {
 
 	}
@@ -103,17 +108,21 @@ public class Book implements Serializable {
 	}
 
 	public Book(ResultSet rs) throws SQLException {
+=======
+	public Book(ResultSet rs, Connection connection) throws SQLException {
+>>>>>>> new-design
 		this.bookISBN = rs.getString(ISBN_INDEX);
 		this.bookTitle = rs.getString(BOOK_TITLE_INDEX);
 		this.publicationYear = Integer.toString(rs.getInt(PUBLICATION_YEAR_INDEX));
 		this.sellingPrice = rs.getFloat(SELLING_PRICE_INDEX);
-		this.category = BOOK_CATEGORIES[rs.getInt(CATEGORY_INDEX)];
+		this.category = BookModel.getCategory(rs.getInt(CATEGORY_INDEX), connection);
 		this.quantity = rs.getInt(QUANTITY_INDEX);
-		this.publisherId = rs.getInt(PUBLISHER_ID_INDEX);
+		this.publisher = PublisherModel.getPublisherByID(rs.getInt(PUBLISHER_ID_INDEX), connection);
 		this.minimumThreshold = rs.getInt(MIN_THRESHOLD_INDEX);
 
 	}
 
+<<<<<<< HEAD
 	public static BooksResponseData searchBooks(Book book, int offset, int limit, Connection connection) {
 		BooksResponseData booksResponse = new BooksResponseData();
 	
@@ -197,32 +206,39 @@ public class Book implements Serializable {
 
 	private static boolean bookAddition(Book book, int authorId, Connection connection) {
 		boolean isBookExisting = selectBookByISBN(book.getBookISBN(), connection);
+=======
+	public boolean bookAddition(int authorId, Connection connection) {
+		boolean isBookExisting = BookModel.selectBookByISBN(bookISBN, connection);
+>>>>>>> new-design
 		if (isBookExisting) {
 			return false;
 		}
-		int categoryId = getCategoryId(book.getCategory(), connection);
-		if (categoryId == CATEGORY_NOT_FOUND) {
+		int categoryId = BookModel.getCategoryId(category, connection);
+		if (categoryId == BookModel.CATEGORY_NOT_FOUND) {
 			return false;
 		}
+		int publisherId = PublisherModel.addPublisher(publisher, connection);
+		AddBook query = new AddBook();
 		try {
-			int pubYear = Integer.valueOf(book.getPublicationYear());
-			String query = String.format(INSERT_BOOK, BOOK_TABLE);
-			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
-			st.setString(ISBN_INDEX, book.getBookISBN());
-			st.setInt(CATEGORY_INDEX, categoryId);
-			st.setString(BOOK_TITLE_INDEX, book.getBookTitle());
-			st.setInt(PUBLISHER_ID_INDEX, book.getPublisherId());
-			st.setInt(PUBLICATION_YEAR_INDEX, pubYear);
-			st.setInt(QUANTITY_INDEX, ORIGINAL_QUANTITY);
-			st.setInt(MIN_THRESHOLD_INDEX, book.getMinimumThreshold());
-			st.setFloat(SELLING_PRICE_INDEX, book.getSellingPrice());
-			int rowsAffected = st.executeUpdate();
+			query.setIsbn(bookISBN);
+			query.setTitle(bookTitle);
+			query.setPublisherID(publisherId);
+			query.setPublicationYear(publicationYear);
+			query.setSellingPrice(sellingPrice);
+			query.setCategoryID(categoryId);
+			query.setQuantity(quantity);
+			query.setMinThreshold(minimumThreshold);
+			query.executeQuery(connection);
+			int rowsAffected = query.getUpdateCount();
 			return rowsAffected == 1;
 		} catch (SQLException | NumberFormatException e) {
 			e.printStackTrace();
 			return false;
+		} finally {
+			query.close();
 		}
 	}
+<<<<<<< HEAD
 
 	private static final int getCategoryId(String category, Connection connection) {
 		try {
@@ -282,4 +298,6 @@ public class Book implements Serializable {
 		return matcher.matches();
 	}
 
+=======
+>>>>>>> new-design
 }

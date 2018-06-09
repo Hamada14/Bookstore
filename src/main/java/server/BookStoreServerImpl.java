@@ -2,17 +2,23 @@ package server;
 
 import java.sql.Connection;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Map;
+=======
+>>>>>>> new-design
 
 import javax.jws.WebService;
 
 import net.sf.jasperreports.engine.JRException;
 
 import server.database.entities.user.Identity;
-import server.database.entities.book.Author;
 import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
+import server.database.entities.author.Author;
+import server.database.entities.author.AuthorModel;
 import server.database.entities.book.Book;
+import server.database.entities.book.BookModel;
+import server.database.entities.publisher.PublisherModel;
 import server.database.entities.user.UserBuilder;
 import server.database.entities.user.UserModel;
 import server.database.report.JasperReportCreator;
@@ -93,7 +99,11 @@ public class BookStoreServerImpl implements BookStoreServer {
 		BooksResponseData booksResponse = new BooksResponseData();
 		UserResponseData validUser = identity.isUser(connection);
 		if (validUser.isSuccessful()) {
+<<<<<<< HEAD
 			BooksResponseData booksResponse2 = Book.searchBooks(book, offset, limit, connection);
+=======
+			BooksResponseData booksResponse2 = BookModel.searchBooks(filter, valueFilter, connection);
+>>>>>>> new-design
 //			System.out.println("in impl" + booksResponse2.getBooks().size());
 			return booksResponse2;
 		} else {
@@ -103,15 +113,14 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public boolean addNewBook(Book newBook, Author author, server.database.entities.book.Publisher publisher) {
-		int authorId = Author.addAuthor(author, connection);
-		int publisherId = server.database.entities.book.Publisher.addPublisher(publisher, connection);
+	public boolean addNewBook(Book newBook, Author author, server.database.entities.publisher.Publisher publisher) {
+		int authorId = AuthorModel.addAuthor(author, connection);
+		int publisherId = PublisherModel.addPublisher(publisher, connection);
 		if (authorId == Author.ERROR_AUTHOR_ADDITION
-				|| publisherId == server.database.entities.book.Publisher.ERROR_PUBLISHER_ADDITION) {
+				|| publisherId == server.database.entities.publisher.Publisher.ERROR_PUBLISHER_ADDITION) {
 			return false;
 		}
-		newBook.setPublisherId(publisherId);
-		return Book.addBook(newBook, authorId, connection);
+		return BookModel.addBook(newBook, authorId, connection);
 	}
 
 	@Override
@@ -128,8 +137,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 		} catch (NumberFormatException e) {
 			return false;
 		}
-		Book book = new Book();
-		book.setBookISBN(isbn);
+		Book book = BookModel.getBookByISBN(isbn, connection);
 		return Order.addNewOrder(new Order(q, book), connection);
 	}
 	
@@ -159,5 +167,10 @@ public class BookStoreServerImpl implements BookStoreServer {
 			rs.setError(validUser.getError());
 			return rs;
 		}
+	}
+
+	@Override
+	public List<String> getCategories() {
+		return BookModel.getCategories(connection);
 	}
 }

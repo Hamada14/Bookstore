@@ -1,10 +1,5 @@
 package server;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +9,10 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
-import server.database.entities.book.Author;
-import server.database.entities.book.Book;
 import server.database.entities.user.Identity;
 import server.database.entities.ShoppingCart;
+import server.database.entities.author.Author;
+import server.database.entities.book.Book;
 
 import server.database.entities.Order;
 import server.UserResponseData;
@@ -42,7 +37,8 @@ public interface BookStoreServer {
 	BooksResponseData searchBook(Identity identity, int offset, int limit, Book selectedBook);
 
 	@WebMethod
-	boolean addNewBook(Book newBook, Author author, server.database.entities.book.Publisher publisher);
+	boolean addNewBook(Book newBook, Author author, server.database.entities.publisher.Publisher publisher);
+
 
 	@WebMethod
 	boolean editBook(Book modifiedBook);
@@ -70,5 +66,7 @@ public interface BookStoreServer {
 
 	@WebMethod
 	OrderResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart);
-	
+
+	@WebMethod
+	List<String> getCategories();
 }
