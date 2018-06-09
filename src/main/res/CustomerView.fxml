@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -14,7 +13,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CustomerController">
@@ -83,52 +81,6 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <VBox layoutX="20.0" layoutY="60.0" prefHeight="312.0" prefWidth="168.0" spacing="5.0">
-               <children>
-                  <Label text="ISBN">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="isbn" />
-                  <Label text="Author First Name">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="authorFirstName" disable="true" />
-                  <Label text="Author Last Name">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="authorLastName" disable="true" />
-                  <Label text="Publisher">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="publisherName" disable="true" />
-                  <Label text="Publication Year">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="publicationYear" disable="true" />
-                  <Label fx:id="Price" text="Price">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="price" disable="true" />
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets bottom="20.0" />
-               </padding>
-            </VBox>
             <Label alignment="CENTER" layoutX="440.0" layoutY="22.0" prefHeight="30.0" prefWidth="166.0" text="Found Books">
                <font>
                   <Font name="System Bold" size="20.0" />
@@ -140,6 +92,42 @@
                 <TableColumn fx:id="bookTitleCol" prefWidth="414.20001220703125" text="Book Title" />
               </columns>
             </TableView>
+            <TextField fx:id="price" layoutX="35.0" layoutY="324.0" />
+            <TextField fx:id="publicationYear" layoutX="35.0" layoutY="279.0" />
+            <Label fx:id="Price" layoutX="35.0" layoutY="304.0" text="Price">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="35.0" layoutY="255.0" text="Publication Year">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="publisherName" layoutX="35.0" layoutY="230.0" />
+            <Label layoutX="36.0" layoutY="208.0" text="Publisher">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="authorLastName" layoutX="35.0" layoutY="183.0" />
+            <Label layoutX="36.0" layoutY="160.0" text="Author Last Name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="authorFirstName" layoutX="32.0" layoutY="134.0" />
+            <Label layoutX="32.0" layoutY="110.0" text="Author First Name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="isbn" layoutX="33.0" layoutY="85.0" />
+            <Label layoutX="33.0" layoutY="62.0" text="ISBN">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children></Pane>
    </left>
 </BorderPane>

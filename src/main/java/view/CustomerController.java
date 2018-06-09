@@ -32,10 +32,11 @@ import server.database.entities.user.Identity;
 
 public class CustomerController implements Initializable, CustomController {
 
-	private static final int LIMIT = 10;
+	private static final int LIMIT = 16;
 	private static final String TITLE_COL = "bookTitle";
 	private static final String ERROR_MESSAGE_TITLE = "Error while searching";
-
+	private static final String ERROR_YEAR= "invalid year, won't be considered";
+	private static final String ERROR_PRICE= "invalid price, won't be considered";
 	ObservableList<String> categoriesList = FXCollections.observableArrayList(Book.BOOK_CATEGORIES);
 	@FXML
 	private ChoiceBox<String> categories;
@@ -73,7 +74,6 @@ public class CustomerController implements Initializable, CustomController {
 		categories.setValue(Book.BOOK_CATEGORIES[0]);
 		categories.setItems(categoriesList);
 		bookTitleCol.setCellValueFactory(new PropertyValueFactory<BookTuple, BookHyperLink>(TITLE_COL));
-//		editMeCol.setCellValueFactory(new PropertyValueFactory<BookTuple, BookHyperLink>(EDIT_ME_COL));
 		criteriaBook = new Book("", "", "", -1, "", "", 0, 0);
 		refresh();
 
@@ -100,6 +100,7 @@ public class CustomerController implements Initializable, CustomController {
 
 	private void refresh() {
 		ordersList = FXCollections.observableArrayList();
+		booksTable.setItems(ordersList);
 		offset = 0;
 
 	}
@@ -129,27 +130,34 @@ public class CustomerController implements Initializable, CustomController {
 		criteriaBook.setAuthor(new Author(authorFirstName.getText(), authorLastName.getText()));
 		criteriaBook.setPublisherName(publisherName.getText());
 		criteriaBook.setCategory(categories.getValue());
+		criteriaBook.setBookISBN(isbn.getText());
 		String yearValue = publicationYear.getText();
 		if (yearValue.equals("") || Book.isValidPublicationYear(yearValue)) {
 			criteriaBook.setPublicationYear(yearValue);
 		} else {
-			// errormessage
+			criteriaBook.setPublicationYear("");
+			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, ERROR_YEAR);
 		}
-		String isbnValue = isbn.getText();
-		if (isbn.equals("") || Book.isValidISBN(isbnValue)) {
-			criteriaBook.setPublicationYear(isbnValue);
-		} else {
-			// errormessage
-		}
+			
 		if (price.getText().equals("")) {
 			criteriaBook.setSellingPrice(-1);
 		} else {
-			float priceVal = Float.parseFloat(price.getText());
-			if (Book.isValidSellingPrice(priceVal)) {
+			
+			float priceVal = -1;
+			
+			try{
+				Float.parseFloat(price.getText());
+				if (Book.isValidSellingPrice(priceVal)) {
+					criteriaBook.setSellingPrice(priceVal);
+				} else {
+					criteriaBook.setSellingPrice(priceVal);
+					BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, ERROR_PRICE);
+				}
+			}catch (Exception e) {
 				criteriaBook.setSellingPrice(priceVal);
-			} else {
-				// errormessage
+				BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, ERROR_PRICE);
 			}
+			
 		}
 	}
 
@@ -170,6 +178,7 @@ public class CustomerController implements Initializable, CustomController {
 		userName.setText(BookStoreApp.getUser().getIdentity().getUserName());
 		clearSearchFields();
 		refresh();
+		
 	}
 
 	@FXML

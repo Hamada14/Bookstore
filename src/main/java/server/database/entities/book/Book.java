@@ -166,6 +166,7 @@ public class Book implements Serializable {
 			ps.setFloat(index, book.getSellingPrice());
 
 		}	
+//		System.out.println(ps.toString());
 		return ps;
 	}
 
