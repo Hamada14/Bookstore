@@ -10,6 +10,7 @@ import javax.jws.soap.SOAPBinding.Style;
 
 import server.database.entities.user.Identity;
 import server.database.entities.ShoppingCart;
+import server.database.entities.author.Author;
 import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
 import server.database.entities.publisher.Publisher;
@@ -64,6 +65,9 @@ public interface BookStoreServer {
 
 	@WebMethod
 	OrderResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart);
+	
+	@WebMethod
+	List<Author> getBookAuthors(String bookISBN);
 
 	@WebMethod
 	List<String> getCategories();

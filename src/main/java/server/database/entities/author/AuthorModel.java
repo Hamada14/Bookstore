@@ -3,6 +3,9 @@ package server.database.entities.author;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import server.database.entities.author.query.AuthorById;
 import server.database.entities.author.query.AuthorByIsbn;
@@ -24,27 +27,28 @@ public class AuthorModel {
 		}
 	}
 	
-	public static int selectAuthorIdByISBN(String isbn, Connection connection) {
+	public static List<Integer> selectAuthorIdByISBN(String isbn, Connection connection) {
 		try {
+			List<Integer> ids = new ArrayList<>();
 			AuthorByIsbn query = new AuthorByIsbn();
 			query.setIsbn(isbn);
 			query.executeQuery(connection);
 			ResultSet rs = query.getResultSet();
 			if(rs != null && rs.next()) {
-				return rs.getInt(AUTHOR_ID_COL);
+				ids.add(rs.getInt(AUTHOR_ID_COL));
 			}
-			return AUTHOR_NOT_FOUND;
+			return ids;
 		} catch (SQLException e) {
-			return AUTHOR_NOT_FOUND;
+			return null;
 		}
 	}
 	
-	public static Author selectAuthorNameByISBN(String isbn, Connection connection) {
-		int id = selectAuthorIdByISBN(isbn, connection);
-		if(id == AUTHOR_NOT_FOUND) {
-			return new Author("");
+	public static List<Author> selectAuthorNameByISBN(String isbn, Connection connection) {
+		List<Integer> ids = selectAuthorIdByISBN(isbn, connection);
+		if(ids == null) {
+			return null;
 		}
-		return getAuthorById(id, connection);
+		return ids.stream().map(id -> getAuthorById(id, connection)).collect(Collectors.toList());
 	}
 	
 	public static Author getAuthorById(int id, Connection connection) {

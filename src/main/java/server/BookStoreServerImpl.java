@@ -11,6 +11,8 @@ import net.sf.jasperreports.engine.JRException;
 import server.database.entities.user.Identity;
 import server.database.entities.Order;
 import server.database.entities.ShoppingCart;
+import server.database.entities.author.Author;
+import server.database.entities.author.AuthorModel;
 import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
 import server.database.entities.book.BookModel;
@@ -173,5 +175,11 @@ public class BookStoreServerImpl implements BookStoreServer {
 	@Override
 	public List<String> getCategories() {
 		return BookModel.getCategories(connection);
+	}
+
+	@Override
+	public List<Author> getBookAuthors(String bookISBN) {
+		List<Author> bookAuthors = AuthorModel.selectAuthorNameByISBN(bookISBN, connection);
+		return bookAuthors;
 	}
 }
