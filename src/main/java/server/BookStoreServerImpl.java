@@ -2,7 +2,7 @@ package server;
 
 import java.sql.Connection;
 import java.util.List;
-
+import java.util.Map;
 
 import javax.jws.WebService;
 
@@ -89,11 +89,11 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public BooksResponseData searchBook(Identity identity, String filter, String valueFilter) {
+	public BooksResponseData searchBook(Identity identity, int offset, int limit, Book book) {
 		BooksResponseData booksResponse = new BooksResponseData();
 		UserResponseData validUser = identity.isUser(connection);
 		if (validUser.isSuccessful()) {
-			BooksResponseData booksResponse2 = Book.searchBooks(filter, valueFilter, connection);
+			BooksResponseData booksResponse2 = Book.searchBooks(book, offset, limit, connection);
 //			System.out.println("in impl" + booksResponse2.getBooks().size());
 			return booksResponse2;
 		} else {

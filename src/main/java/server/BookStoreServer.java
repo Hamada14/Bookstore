@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.jws.WebMethod;
 
@@ -38,7 +39,7 @@ public interface BookStoreServer {
 	ResponseData editUserIdentity(Identity identity, String newPassword);
 
 	@WebMethod
-	BooksResponseData searchBook(Identity identity, String filter, String valueFilter);
+	BooksResponseData searchBook(Identity identity, int offset, int limit, Book selectedBook);
 
 	@WebMethod
 	boolean addNewBook(Book newBook, Author author, server.database.entities.book.Publisher publisher);

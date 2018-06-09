@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 
+
 import client.BookClient;
 import client.alphabit.BookStoreApp;
 import javafx.collections.FXCollections;

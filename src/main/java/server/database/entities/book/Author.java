@@ -2,6 +2,7 @@ package server.database.entities.book;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,13 +24,15 @@ public class Author extends Person {
 	private static final String SELECT_WITH_ID = "SELECT FIRST_NAME, LAST_NAME FROM %s WHERE ID = ?";
 	private static final String SELECT_ID_BY_ISBN = "SELECT AUTHOR_ID FROM %s WHERE BOOK_ISBN = ?";
 	private static final String ADD_AUTHOR = "INSERT INTO %s(FIRST_NAME, LAST_NAME) VALUES(?, ?)";
-	private static final String AUTHOR_TABLE = "AUTHOR";
-	private static final String BOOK_AUTHORS_TABLE = "BOOK_AUTHOR";
+	
 	private static final String AUTHOR_ID_COL = "AUTHOR_ID";
 	private static final String FIRST_NAME_COL = "FIRST_NAME";
 	private static final String LAST_NAME_COL = "LAST_NAME";
 	private static final int AUTHOR_FIRST_NAME = 1;
 	private static final int AUTHOR_LAST_NAME = 2;
+
+	static final String BOOK_AUTHORS_TABLE = "BOOK_AUTHOR";
+    static final String AUTHOR_TABLE = "AUTHOR";
 
 	private String LastName;
 

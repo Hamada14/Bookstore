@@ -2,12 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
@@ -33,7 +33,7 @@
             <Pane prefHeight="40.6" prefWidth="430.0">
                <children>
                   <ChoiceBox fx:id="categories" layoutX="-6.0" layoutY="8.0" prefHeight="20.0" prefWidth="100.0" />
-                  <TextField layoutX="93.0" layoutY="8.0" prefHeight="25.0" prefWidth="300.0" />
+                  <TextField fx:id="title" layoutX="93.0" layoutY="8.0" prefHeight="25.0" prefWidth="300.0" />
                   <Button layoutX="392.0" layoutY="8.0" mnemonicParsing="false" onAction="#searchBooks" prefHeight="25.0" prefWidth="35.0" style="-fx-background-color: transparent;">
                  	<graphic> 
                  	 <ImageView fitHeight="23.0" fitWidth="21.0" layoutX="402.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
@@ -85,37 +85,42 @@
             </Label>
             <VBox layoutX="20.0" layoutY="60.0" prefHeight="312.0" prefWidth="168.0" spacing="5.0">
                <children>
-                  <CheckBox mnemonicParsing="false" text="By Author">
+                  <Label text="ISBN">
                      <font>
                         <Font size="14.0" />
                      </font>
-                  </CheckBox>
-                  <TextField disable="true" />
-                  <CheckBox mnemonicParsing="false" text="By Publisher">
+                  </Label>
+                  <TextField fx:id="isbn" />
+                  <Label text="Author First Name">
                      <font>
                         <Font size="14.0" />
                      </font>
-                  </CheckBox>
-                  <TextField disable="true" />
-                  <CheckBox mnemonicParsing="false" text="By Publication Year">
+                  </Label>
+                  <TextField fx:id="authorFirstName" disable="true" />
+                  <Label text="Author Last Name">
                      <font>
                         <Font size="14.0" />
                      </font>
-                  </CheckBox>
-                  <TextField disable="true" />
-                  <CheckBox mnemonicParsing="false" text="By ISBN">
+                  </Label>
+                  <TextField fx:id="authorLastName" disable="true" />
+                  <Label text="Publisher">
                      <font>
                         <Font size="14.0" />
                      </font>
-                  </CheckBox>
-                  <TextField disable="true" />
-                  <CheckBox mnemonicParsing="false" text="By Price">
+                  </Label>
+                  <TextField fx:id="publisherName" disable="true" />
+                  <Label text="Publication Year">
                      <font>
                         <Font size="14.0" />
                      </font>
-                  </CheckBox>
-                  <TextField disable="true" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="174.0" text="GO" textOverrun="WORD_ELLIPSIS" />
+                  </Label>
+                  <TextField fx:id="publicationYear" disable="true" />
+                  <Label fx:id="Price" text="Price">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="price" disable="true" />
                </children>
                <opaqueInsets>
                   <Insets />
@@ -124,17 +129,17 @@
                   <Insets bottom="20.0" />
                </padding>
             </VBox>
-            <Label alignment="CENTER" layoutX="419.0" layoutY="22.0" prefHeight="30.0" prefWidth="166.0" text="Found Books">
+            <Label alignment="CENTER" layoutX="440.0" layoutY="22.0" prefHeight="30.0" prefWidth="166.0" text="Found Books">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <ScrollPane layoutX="243.0" layoutY="54.0" prefHeight="446.0" prefWidth="508.0">
-               <content>
-                  <VBox fx:id="booksLinks" prefHeight="421.0" prefWidth="479.0" />
-               </content>
-            </ScrollPane>
-            <Button fx:id="loadMore" layoutX="648.0" layoutY="510.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Load More" visible="false" />
+            <Button fx:id="loadMore" layoutX="668.0" layoutY="585.0" mnemonicParsing="false" onAction="#loadBooks" prefHeight="25.0" prefWidth="84.0" text="Load More" />
+            <TableView fx:id="booksTable" layoutX="316.0" layoutY="69.0" prefHeight="467.0" prefWidth="415.0">
+              <columns>
+                <TableColumn fx:id="bookTitleCol" prefWidth="414.20001220703125" text="Book Title" />
+              </columns>
+            </TableView>
          </children></Pane>
    </left>
 </BorderPane>

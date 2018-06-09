@@ -43,6 +43,11 @@ public class ManagerController implements CustomController {
 	
 	@FXML
 	private void goToCustomerView() {
+		BookStoreApp.showCustomer();
+	}
+	
+	@FXML void logOut() {
+		BookStoreApp.logOut();
 	}
 	@Override
 	public void initData(Parameters parameters) {

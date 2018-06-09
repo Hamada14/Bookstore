@@ -16,9 +16,11 @@ public class Publisher extends Person {
 	private static final String ADD_PUBLISHSER = "INSERT INTO %s (NAME) VALUES (?)";
 	private static final String SELECT_WITH_COND = "SELECT ID FROM %s WHERE NAME = ?";
 	private static final String SELECT_WITH_ID = "SELECT NAME FROM %s WHERE ID = ?";
-	private static final String PUBLISHER_TABLE = "PUBLISHER";
+
 	private static final String NAME_COL = "NAME";
 	private static final int PUBLISHER_FIRST_NAME = 1;
+	
+	static final String PUBLISHER_TABLE = "PUBLISHER";
 	
 	public Publisher(String publisherName) {
 		super(publisherName);

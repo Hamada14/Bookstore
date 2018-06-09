@@ -97,6 +97,12 @@ public class BookStoreApp extends Application {
 		customer.show();
 		customer.getController().initData(null);
 	}
+	
+	public static void logOut() {
+		setUser(null);
+		getShoppingCart().clearCart();
+		showLogin();
+	}
 
 	public static void showManager() {
 		manager.show();
