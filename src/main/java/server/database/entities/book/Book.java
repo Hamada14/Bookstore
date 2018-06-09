@@ -84,7 +84,7 @@ public class Book implements Serializable {
 		this.publisher = publisher;
 		this.quantity = quantity;
 		this.minimumThreshold = minimumThreshold;
-		this.publisherName = publisher.getName();
+
 	}
 
 	public Book(String title) {
