@@ -16,8 +16,6 @@ public class AddBookController implements CustomController {
 
 	@FXML private TextField title;
 	@FXML private TextField publisherName;
-	@FXML private TextField authorFName;
-	@FXML private TextField authorLName;
 	@FXML private TextField isbn;
 	@FXML private TextField publicationYear;
 	@FXML private TextField category;
@@ -37,7 +35,6 @@ public class AddBookController implements CustomController {
 			bookBuilder.setPublicationYear(publicationYear.getText());
 			bookBuilder.setSellingPrice(p);
 			bookBuilder.setMinimumThreshold(minimumQuantity);
-			Author author = new Author(authorFName.getText(), authorLName.getText());
 			Publisher publisher  = new Publisher(publisherName.getText());
 			ResponseData bookAdded = BookClient.getServer().addNewBook(bookBuilder, publisher);
 			if(bookAdded.isSuccessful()) {

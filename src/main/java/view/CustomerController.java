@@ -82,9 +82,9 @@ public class CustomerController implements Initializable, CustomController {
 
 	@FXML
 	private void searchBooks() {
-		refresh();
-		setCriteria();
-		loadBooks();
+//		refresh();
+//		setCriteria();
+//		loadBooks();
 	}
 
 	@FXML
