@@ -40,6 +40,9 @@ public class Book implements Serializable {
 	private String publisherName;
 	private Author author;
 
+	public Book() {
+	}
+	
 	Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
 			Publisher publisher, int quantity, int minimumThreshold) {
 		this.bookISBN = bookISBN;

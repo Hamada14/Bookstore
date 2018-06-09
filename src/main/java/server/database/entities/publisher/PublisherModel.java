@@ -27,7 +27,7 @@ public class PublisherModel {
 			query.setId(id);
 			query.executeQuery(connection);
 			ResultSet rs = query.getResultSet();
-			if(!rs.next()) {
+			if(rs == null || !rs.next()) {
 				return null;
 			}
 			return new Publisher(rs.getString(PUBLIISHER_NAME_COL));

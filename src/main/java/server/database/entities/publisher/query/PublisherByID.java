@@ -19,5 +19,4 @@ public class PublisherByID extends Query {
 		ps = connection.prepareStatement(query);
 		ps.setInt(ID_INDEX, id);
 	}
-
 }
