@@ -23,7 +23,7 @@ public class Book implements Serializable {
 	 */
 	private static final long serialVersionUID = 7418014002918381057L;
 	/* should be changed to be loaded from database at start of system */
-	public static final String[] BOOK_CATEGORIES = new String[] {"ALL", "Art", "Geography", "History", "Religion",
+	public static final String[] BOOK_CATEGORIES = new String[] { "ALL", "Art", "Geography", "History", "Religion",
 			"Science" };
 	private static final String ISBN_REGEX = "^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$";
 	private static final String INSERT_BOOK = "INSERT INTO BOOK(ISBN, TITLE, PUBLISHER_ID, PUBLICATION_YEAR,"
@@ -51,9 +51,8 @@ public class Book implements Serializable {
 	private static final int BOOK_AUTHORS_ID_INDEX = 2;
 
 	private static final int ORIGINAL_QUANTITY = 0;
-	
-	private static final int CATEGORY_NOT_FOUND = -1;
 
+	private static final int CATEGORY_NOT_FOUND = -1;
 
 	private static final float MAX_SELLING_PRICE = 999999.99f;
 	private static final float MIN_SELLING_PRICE = 0.00f;
@@ -66,6 +65,8 @@ public class Book implements Serializable {
 	private int publisherId;
 	private int quantity;
 	private int minimumThreshold;
+	private String publisherName;
+	private Author author;
 
 	public Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
 			String publisherName, int quantity, int minimumThreshold) {
@@ -107,16 +108,17 @@ public class Book implements Serializable {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Book newBook = new Book(rs);
+				newBook.setAuthor(Author.selectAuthorNameByISBN(newBook.getBookISBN(), connection));
+				newBook.setPublisherName(Publisher.selectPublisherById(newBook.getPublisherId(), connection));
 				booksResponse.addBook(newBook);
 			}
 		} catch (SQLException e) {
-		    booksResponse.setError(e.getMessage());
+			booksResponse.setError(e.getMessage());
 			e.printStackTrace();
-		}	
-	 return booksResponse;
+		}
+		return booksResponse;
 	}
-	
-	
+
 	public static final boolean addBook(Book book, int authorId, Connection connection) {
 		boolean validBook = validateBookAttributes(book);
 		if (!validBook) {
@@ -148,7 +150,7 @@ public class Book implements Serializable {
 			return false;
 		}
 		int categoryId = getCategoryId(book.getCategory(), connection);
-		if(categoryId == CATEGORY_NOT_FOUND) {
+		if (categoryId == CATEGORY_NOT_FOUND) {
 			return false;
 		}
 		try {
@@ -187,7 +189,6 @@ public class Book implements Serializable {
 		}
 	}
 
-	
 	private static boolean selectBookByISBN(String isbn, Connection connection) {
 		try {
 			String query = String.format(SELECT_BOOK, BOOK_TABLE);

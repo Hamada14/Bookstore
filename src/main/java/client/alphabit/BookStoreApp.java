@@ -45,8 +45,8 @@ public class BookStoreApp extends Application {
 		ordersView = new Controller(primaryStage, ORDERS_VIEW);
 		editProfileView = new Controller(primaryStage, EDIT_PROFILE_VIEW);
 		allOrdersView = new Controller(primaryStage, ALL_ORDERS_VIEW);
-		// showLogin();
-		showManager();
+		 showLogin();
+//		showManager();
 	}
 
 	public static void showLogin() {

@@ -15,7 +15,9 @@ public class Publisher extends Person {
 	private static final int PUBLISHER_NOT_FOUND = -2;
 	private static final String ADD_PUBLISHSER = "INSERT INTO %s (NAME) VALUES (?)";
 	private static final String SELECT_WITH_COND = "SELECT ID FROM %s WHERE NAME = ?";
+	private static final String SELECT_WITH_ID = "SELECT NAME FROM %s WHERE ID = ?";
 	private static final String PUBLISHER_TABLE = "PUBLISHER";
+	private static final String NAME_COL = "NAME";
 	private static final int PUBLISHER_FIRST_NAME = 1;
 	
 	public Publisher(String publisherName) {
@@ -33,6 +35,21 @@ public class Publisher extends Person {
 			return publisherId;
 		} else {
 			return ERROR_PUBLISHER_ADDITION;
+		}
+	}
+	
+	public static String selectPublisherById(int id, Connection connection) {
+		try {
+			String query = String.format(SELECT_WITH_ID, PUBLISHER_TABLE);
+			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();
+			if(rs != null && rs.next()) {
+				return rs.getString(NAME_COL);
+			}
+			return "";
+		} catch(SQLException e) {
+			return "";
 		}
 	}
 	

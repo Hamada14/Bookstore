@@ -46,6 +46,7 @@ public class AddBookController implements CustomController {
 		}
 	}
 	
+	
 	@FXML 
 	private void backToManagerView() {
 		BookStoreApp.showManager();
