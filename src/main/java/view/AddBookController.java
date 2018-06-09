@@ -37,6 +37,7 @@ public class AddBookController implements CustomController {
 			bookBuilder.setMinimumThreshold(minimumQuantity);
 			Publisher publisher  = new Publisher(publisherName.getText());
 			ResponseData bookAdded = BookClient.getServer().addNewBook(bookBuilder, publisher);
+			System.out.println("ERROE " + bookAdded.getError());
 			if(bookAdded.isSuccessful()) {
 				BookStoreApp.showManager();
 			}
