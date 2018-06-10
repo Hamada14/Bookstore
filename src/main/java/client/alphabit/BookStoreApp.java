@@ -2,12 +2,13 @@ package client.alphabit;
 
 import javafx.application.Application;
 
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 import server.database.entities.book.Book;
-import server.database.entities.ShoppingCart;
+import server.database.entities.shoppingcart.ShoppingCart;
 import server.database.entities.user.User;
 
 public class BookStoreApp extends Application {

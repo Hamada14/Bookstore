@@ -9,7 +9,7 @@ import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
 import server.database.entities.user.Identity;
-import server.database.entities.ShoppingCart;
+import server.database.entities.shoppingcart.ShoppingCart;
 import server.database.entities.author.Author;
 import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
@@ -34,7 +34,7 @@ public interface BookStoreServer {
 	ResponseData editUserIdentity(Identity identity, String newPassword);
 
 	@WebMethod
-	BooksResponseData searchBook(Identity identity, int offset, int limit, Book selectedBook);
+	BooksResponseData advancedSearchBooks(Identity identity, int offset, int limit, Book selectedBook);
 
 	@WebMethod
 	ResponseData addNewBook(BookBuilder newBook);

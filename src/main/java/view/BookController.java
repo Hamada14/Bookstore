@@ -2,6 +2,7 @@ package view;
 
 import client.alphabit.BookStoreApp;
 
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -9,7 +10,7 @@ import javafx.scene.control.TextField;
 
 import server.database.entities.book.Book;
 import server.database.entities.Order;
-import server.database.entities.ShoppingCart;
+import server.database.entities.shoppingcart.ShoppingCart;
 
 public class BookController implements CustomController {
 
@@ -47,7 +48,8 @@ public class BookController implements CustomController {
 		price.setText(String.valueOf(selectedBook.getSellingPrice()));
 		userName.setText(BookStoreApp.getUser().getIdentity().getUserName());
 		publisher.setText(selectedBook.getPublisherName());
-		author.setText(selectedBook.getAuthor().getName());
+		author.setText(selectedBook.getAuthors().get(0).getName());
+
 	}
 
 	@FXML

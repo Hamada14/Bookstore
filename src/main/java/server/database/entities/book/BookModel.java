@@ -1,6 +1,7 @@
 package server.database.entities.book;
 
 import java.sql.Connection;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 import server.BooksResponseData;
 import server.ResponseData;
 import server.database.entities.book.query.AddAuthorReference;
-import server.database.entities.book.query.AllBooks;
+import server.database.entities.book.query.AdvancedSelection;
 import server.database.entities.book.query.AllCategories;
 import server.database.entities.book.query.BookByISBN;
 import server.database.entities.book.query.CategoryById;
@@ -20,27 +21,30 @@ public class BookModel {
 	public static final String BOOK_TABLE = "BOOK";
 	public static final String BOOK_CATEGORY_TABLE = "BOOK_CATEGORY";
 	public static final String BOOK_AUTHOR = "BOOK_AUTHOR";
-
+    
 	public static final int CATEGORY_NOT_FOUND = -1;
 
 	private static final int ID_COL = 1;
 	private static final String CATEGORY_NAME_COL = "CATEGORY";
 
-	public static BooksResponseData searchBooks(String filter, String valueFilter, Connection connection) {
+	public static BooksResponseData searchAdvancedBooks(Book criteria, int offset, int limit, Connection connection) {
 		BooksResponseData booksResponse = new BooksResponseData();
-		AllBooks query = new AllBooks();
+	
 		try {
+			AdvancedSelection query = new AdvancedSelection();
+			query.setBook(criteria);
+			query.setLimit(limit);
+			query.setOffset(offset);
 			query.executeQuery(connection);
 			ResultSet rs = query.getResultSet();
 			while (rs.next()) {
 				Book newBook = new Book(rs, connection);
+//				newBook.setAuthor(Author.selectAuthorNameByISBN(newBook.getBookISBN(), connection));
 				booksResponse.addBook(newBook);
 			}
 		} catch (SQLException e) {
 			booksResponse.setError(e.getMessage());
 			e.printStackTrace();
-		} finally {
-			query.close();
 		}
 		return booksResponse;
 	}
@@ -148,10 +152,4 @@ public class BookModel {
 		}
 	}
 
-
-
-	public static BooksResponseData searchBooks(Book book, int offset, int limit, Connection connection) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
