@@ -30,6 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import server.BooksResponseData;
 import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
+import server.database.entities.publisher.Publisher;
 import server.database.entities.user.Identity;
 
 public class CustomerController implements Initializable, CustomController {
@@ -138,7 +139,7 @@ public class CustomerController implements Initializable, CustomController {
 
 	private void setCriteria() {
 		criteriaBook.setBookTitle(title.getText());
-		criteriaBook.setPublisherName(publisherName.getText());
+		criteriaBook.setPublisher(new Publisher(publisherName.getText()));
 		criteriaBook.setCategory(categories.getValue());
 		criteriaBook.setBookISBN(isbn.getText());
 		String yearValue = publicationYear.getText();

@@ -16,7 +16,7 @@ public class Person {
 	protected String name;
 	
 	public Person(String name) {
-		this.name = name;
+		this.name = name == null ? "" : name;
 	}
 	
 	public Person() {

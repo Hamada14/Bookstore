@@ -59,15 +59,21 @@ public class EditBookController implements CustomController {
 	
 	
 	@FXML 
+	private void goHome() {
+		BookStoreApp.showCustomer(true);
+	}
+	
+	@FXML 
 	private void backToManagerView() {
 		BookStoreApp.showManager();
 	}
+	
 	@Override
 	public void initData(Parameters parameters) {
 		Book book = parameters.getBook();
 		isbnLabel.setText(book.getBookISBN());
 		title.setText(book.getBookTitle());
-		publisherName.setText(book.getPublisherName());
+		publisherName.setText(book.getPublisher().getName());
 		publicationYear.setText(book.getPublicationYear());
 		category.setItems(categoriesList);
 		category.setValue(categoriesList.get(0));

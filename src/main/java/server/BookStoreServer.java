@@ -13,7 +13,6 @@ import server.database.entities.shoppingcart.ShoppingCart;
 import server.database.entities.author.Author;
 import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
-import server.database.entities.publisher.Publisher;
 import server.database.entities.Order;
 import server.UserResponseData;
 import server.database.entities.user.UserBuilder;

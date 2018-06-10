@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AddBookController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.EditBookController">
  <top>
       <ToolBar prefHeight="50.0" prefWidth="472.0" style="-fx-background-color: #926757;" BorderPane.alignment="CENTER">
          <items>
@@ -115,7 +115,7 @@
                   <ComboBox fx:id="category" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
-            <Button layoutX="645.0" layoutY="476.0" mnemonicParsing="false" onAction="#confirmBookAddition" prefHeight="43.0" prefWidth="115.0" text="Confirm">
+            <Button layoutX="645.0" layoutY="476.0" mnemonicParsing="false" onAction="#confirmBookEdit" prefHeight="43.0" prefWidth="115.0" text="Confirm">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                </font></Button>
