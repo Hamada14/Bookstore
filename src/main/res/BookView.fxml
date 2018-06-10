@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
@@ -96,11 +97,6 @@
                         <Font name="Calibri Light" size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="author" prefHeight="18.0" prefWidth="278.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                  	<font>
-                        <Font name="Calibri Light" size="16.0" />
-                     </font>
-                  </Label>
                   <Label fx:id="isbn" prefHeight="18.0" prefWidth="278.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                   	<font>
                         <Font name="Calibri Light" size="16.0" />
@@ -116,6 +112,7 @@
                         <Font name="Calibri Light" size="16.0" />
                      </font>
                   </Label>
+                  <ComboBox fx:id="authorsComboName" prefHeight="26.0" prefWidth="272.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             <Button layoutX="651.0" layoutY="544.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="43.0" prefWidth="115.0" text="Add To Cart">
