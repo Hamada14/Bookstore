@@ -3,9 +3,12 @@ package view;
 import client.BookClient;
 
 import client.alphabit.BookStoreApp;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
 import server.ResponseData;
 import server.database.entities.book.BookBuilder;
 import server.database.entities.publisher.Publisher;
@@ -22,10 +25,14 @@ public class AddBookController implements CustomController {
 	@FXML private TextField publisherName;
 	@FXML private TextField isbn;
 	@FXML private TextField publicationYear;
-	@FXML private TextField category;
+	@FXML private ComboBox<String> category;
 	@FXML private TextField quantity;
 	@FXML private TextField price;
 	@FXML private TextField minimumThreshold;
+	
+	private static final ObservableList<String> categoriesList = FXCollections
+			.observableArrayList(BookClient.getServer().getCategories());
+	
 	
 	@FXML
 	private void confirmBookAddition() {
@@ -36,7 +43,7 @@ public class AddBookController implements CustomController {
 			int q = Integer.valueOf(quantity.getText());
 			bookBuilder.setBookISBN(isbn.getText());
 			bookBuilder.setBookTitle(title.getText());
-			bookBuilder.setCategory(category.getText());
+			bookBuilder.setCategory(category.getValue());
 			bookBuilder.setPublicationYear(publicationYear.getText());
 			bookBuilder.setSellingPrice(p);
 			bookBuilder.setQuantity(q);
@@ -67,8 +74,7 @@ public class AddBookController implements CustomController {
 
 	@Override
 	public void initData(Parameters parameters) {
-		// TODO Auto-generated method stub
-		
+		category.setItems(categoriesList);
+		category.setValue(categoriesList.get(0));
 	}
-
 }
