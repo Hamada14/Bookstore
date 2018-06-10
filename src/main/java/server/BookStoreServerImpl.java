@@ -213,11 +213,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public List<String> getCategories(Identity identity) {
-		UserResponseData validUser = identity.isUser(connection);
-		if(!validUser.isSuccessful()) {
-			return null;
-		}
+	public List<String> getCategories() {
 		return BookModel.getCategories(connection);
 	}
 

@@ -38,7 +38,6 @@ public interface BookStoreServer {
 	@WebMethod
 	BooksResponseData simpleSearchBooks(Identity identity, int offset, int limit, String title);
 
-
 	@WebMethod
 	ResponseData addNewBook(Identity identity, BookBuilder newBook);
 
@@ -73,7 +72,7 @@ public interface BookStoreServer {
 	List<Author> getBookAuthors(Identity identity, String bookISBN);
 
 	@WebMethod
-	List<String> getCategories(Identity identity);
+	List<String> getCategories();
 
 	@WebMethod
 	ResponseData addAuthor(Identity identity, Author author, String isbn);

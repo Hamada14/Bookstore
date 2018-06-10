@@ -32,7 +32,7 @@ public class EditBookController implements CustomController {
 	@FXML private TextField minimumThreshold;
 	
 	private static final ObservableList<String> categoriesList = FXCollections
-			.observableArrayList(BookClient.getServer().getCategories(BookStoreApp.getUser().getIdentity()));
+			.observableArrayList(BookClient.getServer().getCategories());
 	
 	@FXML
 	private void confirmBookEdit() {
