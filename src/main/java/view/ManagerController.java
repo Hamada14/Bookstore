@@ -61,6 +61,11 @@ public class ManagerController implements CustomController {
 		BookStoreApp.showAuthorsView();
 	}
 	
+	@FXML
+	private void goToPublisherView() {
+		BookStoreApp.showPublisherView();
+	}
+	
 	@Override
 	public void initData(Parameters parameters) {
         fullName.setText(BookStoreApp.getUser().getFullName());
