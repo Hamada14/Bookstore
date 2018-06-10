@@ -9,8 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import server.ResponseData;
-import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
 import server.database.entities.publisher.Publisher;
 import server.errors.BookError;
@@ -22,24 +22,17 @@ public class AddBookController implements CustomController {
 	
 	private static final String SUCCESS_MESSAGE_TITLE = "Success!";
 	private static final String BOOK_ADDED_SUCCESSFULY = "Book added successfully";
-
-	@FXML
-	private TextField title;
-	@FXML
-	private TextField publisherName;
-	@FXML
-	private TextField isbn;
-	@FXML
-	private TextField publicationYear;
-	@FXML
-	private ComboBox<String> category;
-	@FXML
-	private TextField quantity;
-	@FXML
-	private TextField price;
-	@FXML
-	private TextField minimumThreshold;
-
+	
+	@FXML private Label fullName;
+	
+	@FXML private TextField title;
+	@FXML private TextField publisherName;
+	@FXML private TextField isbn;
+	@FXML private TextField publicationYear;
+	@FXML private ComboBox<String> category;
+	@FXML private TextField quantity;
+	@FXML private TextField price;
+	@FXML private TextField minimumThreshold;
 	
 	private static final ObservableList<String> categoriesList = FXCollections
 			.observableArrayList(BookClient.getServer().getCategories());
@@ -82,7 +75,7 @@ public class AddBookController implements CustomController {
 
 	@FXML
 	private void goHome() {
-
+		BookStoreApp.showCustomer(true);
 	}
 
 	@Override
@@ -96,5 +89,6 @@ public class AddBookController implements CustomController {
 		minimumThreshold.clear();
 		category.setItems(categoriesList);
 		category.setValue(categoriesList.get(0));
+		fullName.setText(BookStoreApp.getUser().getFullName());
 	}
 }

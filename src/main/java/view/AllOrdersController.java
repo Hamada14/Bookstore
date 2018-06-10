@@ -9,13 +9,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import server.ResponseData;
 import server.database.entities.Order;
-import server.errors.BookError;
 import server.errors.OrderError;
 import server.errors.SqlError;
 
@@ -30,16 +30,13 @@ public class AllOrdersController implements CustomController {
 	private int offset = 0;
 
 	private ObservableList<OrderTuple> ordersList;
-
-	@FXML
-	private TableView<OrderTuple> ordersTable;
-	@FXML
-	private TableColumn<OrderTuple, String> bookISBNCol;
-	@FXML
-	private TableColumn<OrderTuple, Integer> quantityCol;
-	@FXML
-	private TableColumn<OrderTuple, Hyperlink> confirmation;
-
+	
+	@FXML private Label fullName;
+	@FXML private TableView<OrderTuple> ordersTable;
+	@FXML private TableColumn<OrderTuple, String> bookISBNCol;
+	@FXML private TableColumn<OrderTuple, Integer> quantityCol;
+	@FXML private TableColumn<OrderTuple, Hyperlink> confirmation;
+	
 	@FXML
 	private void loadMore() {
 		load();
@@ -55,7 +52,7 @@ public class AllOrdersController implements CustomController {
 
 	@FXML
 	private void goHome() {
-
+		BookStoreApp.showCustomer(true);
 	}
 
 	@FXML
@@ -68,9 +65,10 @@ public class AllOrdersController implements CustomController {
 	@Override
 	public void initData(Parameters parameters) {
 		bookISBNCol.setCellValueFactory(new PropertyValueFactory<OrderTuple, String>(ISBN_COL));
-		quantityCol.setCellValueFactory(new PropertyValueFactory<OrderTuple, Integer>(QUANTITY_COL));
-		confirmation.setCellValueFactory(new PropertyValueFactory<OrderTuple, Hyperlink>(CONFIRMATION_COL));
-		refresh();
+        quantityCol.setCellValueFactory(new PropertyValueFactory<OrderTuple, Integer>(QUANTITY_COL));
+        confirmation.setCellValueFactory(new PropertyValueFactory<OrderTuple, Hyperlink>(CONFIRMATION_COL));
+        refresh();
+        fullName.setText(BookStoreApp.getUser().getFullName());
 	}
 
 	private void load() {

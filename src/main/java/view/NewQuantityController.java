@@ -1,7 +1,6 @@
 package view;
 
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;

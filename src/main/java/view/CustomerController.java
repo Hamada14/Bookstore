@@ -51,9 +51,13 @@ public class CustomerController implements CustomController {
 	private ObservableList<BookTuple> ordersList;
 
 	@FXML
+
 	private ComboBox<String> authorsList;
 
 	private ObservableList<String> authorNames;
+
+	private Label fullName;
+	
 
 	@FXML
 	private TableView<BookTuple> booksTable;
@@ -61,8 +65,6 @@ public class CustomerController implements CustomController {
 	private TableColumn<BookTuple, BookHyperLink> bookTitleCol;
 	@FXML
 	private Button loadMore;
-	@FXML
-	private Label userName;
 	@FXML
 	private TextField title;
 	@FXML
@@ -196,12 +198,12 @@ public class CustomerController implements CustomController {
 		categories.setItems(categoriesList);
 		bookTitleCol.setCellValueFactory(new PropertyValueFactory<BookTuple, BookHyperLink>(TITLE_COL));
 		authorNames = FXCollections.observableArrayList();
-		userName.setText(BookStoreApp.getUser().getIdentity().getUserName());
 		editOrBuyMode = parameters.getEditOrBuyMode();
 		clearSearchFields();
 		refresh();
 		boolean isManager = BookClient.getServer().isManager(BookStoreApp.getUser().getIdentity());
 		goToManagerModeButton.setVisible(isManager);
+        fullName.setText(BookStoreApp.getUser().getFullName());
 	}
 
 	private void setPrice(String price) {

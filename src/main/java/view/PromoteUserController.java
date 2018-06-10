@@ -1,6 +1,7 @@
 package view;
 
 import client.BookClient;
+import client.alphabit.BookStoreApp;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -9,8 +10,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
+import server.ResponseData;
+import server.errors.SqlError;
 
 public class PromoteUserController extends Dialog<Object> {
 
@@ -34,14 +38,16 @@ public class PromoteUserController extends Dialog<Object> {
 		getDialogPane().getButtonTypes().addAll(placeButtonType, ButtonType.CANCEL);
 		Node placeButton = getDialogPane().lookupButton(placeButtonType);
 		placeButton.addEventFilter(ActionEvent.ACTION, event -> {
-			boolean isValidClick = promoteUser();
-			if(!isValidClick) {
+			ResponseData isValidClick = promoteUser();
+			if(!isValidClick.isSuccessful()) {
+				BookStoreApp.displayDialog(AlertType.ERROR, SqlError.ERROR_MESSAGE_TITLE.toString(), 
+						SqlError.ERROR_MESSAGE_TITLE.toString(), isValidClick.getError());
 				event.consume();
 			}
 		});
 	}
 	
-	private boolean promoteUser() {
+	private ResponseData promoteUser() {
 		return BookClient.getServer().promoteUser(userName.getText());
 	}
 	

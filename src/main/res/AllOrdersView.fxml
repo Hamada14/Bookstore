@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="800.0" stylesheets="@styleSheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AllOrdersController">
+<BorderPane prefHeight="700.0" prefWidth="800.0" stylesheets="@styleSheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AllOrdersController">
 	<top>
       <ToolBar prefHeight="50.0" prefWidth="472.0" style="-fx-background-color: #926757;" BorderPane.alignment="CENTER">
          <items>
@@ -25,7 +30,7 @@
     			</graphic>
 			</Button>
             <Pane prefHeight="6.0" prefWidth="533.0" />
-            <Label fx:id="userName" alignment="CENTER" text=" User Name " textFill="#f8f3f3">
+            <Label fx:id="fullName" alignment="CENTER" text=" User Name " textFill="#f8f3f3">
                <font>
                   <Font size="14.0" />
                </font>

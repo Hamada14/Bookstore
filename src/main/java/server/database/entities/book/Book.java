@@ -45,6 +45,7 @@ public class Book implements Serializable {
 	private int quantity;
 	private int minimumThreshold;
 	private List<Author> authors;
+	private int publisherId;
 
 	public Book() {
 		authors = new ArrayList<>();
@@ -90,7 +91,6 @@ public class Book implements Serializable {
 		this.quantity = rs.getInt(QUANTITY_INDEX);
 		this.publisher = PublisherModel.getPublisherByID(rs.getInt(PUBLISHER_ID_INDEX), connection);
 		this.minimumThreshold = rs.getInt(MIN_THRESHOLD_INDEX);
-
 	}
 
 	public ResponseData bookAddition(Connection connection) {

@@ -71,6 +71,10 @@ public class User implements Serializable {
 				+ ", email=" + email + ", password=" + identity.getPassword() + ", phoneNumber=" + phoneNumber;
 	}
 
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
+	
 	void registerUser(Connection connection) throws SQLException {
 		NewUser newUser = new NewUser();
 		newUser.setUser(this);

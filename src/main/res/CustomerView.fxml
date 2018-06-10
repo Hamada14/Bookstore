@@ -17,10 +17,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CustomerController">
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CustomerController">
+
 	 <top>
-      <ToolBar prefHeight="50.0" prefWidth="472.0" style="-fx-background-color: #926757;" BorderPane.alignment="CENTER">
+      <ToolBar prefHeight="57.0" style="-fx-background-color: #926757;" BorderPane.alignment="CENTER">
          <items>
          	<Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="130.0" style="-fx-background-color: transparent;">
     			<graphic>
@@ -45,12 +48,12 @@
                   </Button>
                   
                </children></Pane>
-            <Label fx:id="userName" alignment="CENTER" prefWidth="93.0" text=" User Name " textFill="#f8f3f3">
+            <Label fx:id="fullName" alignment="CENTER" text="fullName" textFill="#f8f3f3">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button lineSpacing="10.0" mnemonicParsing="false" onAction="#viewOrders" prefHeight="22.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+            <Button lineSpacing="10.0" mnemonicParsing="false" onAction="#viewOrders" prefHeight="22.0" style="-fx-background-color: transparent;">
     			<graphic>
         			<ImageView fitHeight="51.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                       <image>
@@ -76,10 +79,10 @@
          </items>
       </ToolBar>
    </top>
-   <left>
-      <Pane prefHeight="549.0" prefWidth="799.0" style="-fx-background-color: #FFFFFF;" stylesheets="@styleSheet.css" BorderPane.alignment="CENTER">
+   <center>
+      <AnchorPane prefHeight="0.0" prefWidth="800.0" style="-fx-background-color: #FFFF;" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="18.0" layoutY="22.0" prefHeight="30.0" prefWidth="166.0" text="Advanced Search">
+            <Label alignment="CENTER" layoutX="25.0" layoutY="15.0" prefHeight="30.0" prefWidth="166.0" text="Advanced Search">
            		<font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -104,7 +107,7 @@
                      </font>
                   </Label>
                   <TextField fx:id="publicationYear" />
-                  <Label fx:id="Price" text="Price">
+                  <Label  text="Price">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -139,17 +142,18 @@
                   <Insets bottom="20.0" />
                </padding>
             </VBox>
-            <Label alignment="CENTER" layoutX="440.0" layoutY="22.0" prefHeight="30.0" prefWidth="166.0" text="Found Books">
+            <Label alignment="CENTER" layoutX="456.0" layoutY="15.0" prefHeight="30.0" prefWidth="166.0" text="Found Books">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="loadMore" layoutX="668.0" layoutY="585.0" mnemonicParsing="false" onAction="#loadBooks" prefHeight="25.0" prefWidth="84.0" text="Load More" />
-            <TableView fx:id="booksTable" layoutX="316.0" layoutY="69.0" prefHeight="467.0" prefWidth="415.0">
+            <Button fx:id="loadMore" layoutX="611.0" layoutY="568.0" minWidth="150.0" mnemonicParsing="false" onAction="#loadBooks" prefHeight="25.0" text="Load More" />
+            <TableView fx:id="booksTable" layoutX="344.0" layoutY="52.0" prefHeight="467.0">
               <columns>
                 <TableColumn fx:id="bookTitleCol" prefWidth="414.20001220703125" text="Book Title" />
               </columns>
             </TableView>
-         </children></Pane>
-   </left>
+         </children>
+      </AnchorPane>
+   </center>
 </BorderPane>
