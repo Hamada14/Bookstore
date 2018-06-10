@@ -161,9 +161,5 @@ public class Book implements Serializable {
 			query.close();
 		}
 	}
-
-	public void normalizeISBN() {
-		this.bookISBN = BookBuilder.normalizeISBN(bookISBN);
-	}
 }
 
