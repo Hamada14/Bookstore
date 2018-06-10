@@ -32,7 +32,7 @@ public class BookBuilder {
 	
 	public Book buildBook() {
 		if(validateBookAttributes().isSuccessful()) {
-			return new Book(bookISBN, bookTitle, publicationYear, sellingPrice, category, publisher, quantity, minimumThreshold);
+			return new Book(normalizeISBN(bookISBN), bookTitle, publicationYear, sellingPrice, category, publisher, quantity, minimumThreshold);
 		}
 		return null;
 	}
@@ -52,7 +52,7 @@ public class BookBuilder {
 		return response;
 	}
 
-	private static String isValidMinimumThreshold(int val) {
+	private String isValidMinimumThreshold(int val) {
 		boolean valid = val >= 0;
 		if(!valid) {
 			return BookError.INVALID_MIN_THRESHOLD.toString();
@@ -83,13 +83,87 @@ public class BookBuilder {
 		return null;
 	}
 
-	private static String isValidISBN(String isbn) {
-		Pattern pattern = Pattern.compile(ISBN_REGEX);
-		Matcher matcher = pattern.matcher(isbn);
-		if(matcher.matches()) {
+	public static String normalizeISBN(String isbnInput) {
+		String numericISBN = getNumericISBN(isbnInput);
+		if(numericISBN.length() == 13) {
+			return numericISBN;
+		}
+		return ISBN10toISBN13(numericISBN);
+	}
+	
+	private static String getNumericISBN(String isbnInput) {
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < isbnInput.length(); i++) {
+			if(Character.isDigit(isbnInput.charAt(i))) {
+				sb.append(isbnInput.charAt(i));
+			}
+		}
+		return sb.toString();
+	}
+	
+	private String isValidISBN(String isbn) {
+		if(isValidISBNFormat(isbn) && isValidISBNValue(isbn)) {
 			return null;
 		}
 		return BookError.INVALID_BOOK_ISBN.toString();
 	}
 	
+	private boolean isValidISBNFormat(String isbn) {
+		Pattern pattern = Pattern.compile(ISBN_REGEX);
+		Matcher matcher = pattern.matcher(isbn);
+		if(matcher.matches()) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isValidISBNValue(String malformedIsbn) {
+		String realIsbn = getNumericISBN(malformedIsbn);
+		if(realIsbn.length() == 13) {
+			return isValidISBN13Value(realIsbn);
+		} else if(realIsbn.length() == 10) {
+			return isValidISBN10Value(realIsbn);
+		}
+		return false;
+	}
+	
+	private boolean isValidISBN10Value(String isbn) {
+		Long isbnValue = Long.valueOf(isbn);
+		int result = 0;
+		int pos = 1;
+		while(pos <= 10) {
+			result += pos * (isbnValue % 10);
+			isbnValue /= 10;
+			pos++;
+		}
+		return (result % 11) == 0;
+	}
+	
+	private boolean isValidISBN13Value(String isbn) {
+		Long isbnValue = Long.valueOf(isbn);
+		int result = 0;
+		int pos = 1;
+		while(pos <= 13) {
+			result += (pos % 2 == 0 ? 3 : 1) * (isbnValue % 10);
+			isbnValue /= 10;
+			pos++;
+		}
+		return (result % 10) == 0;
+	}
+	
+	public static String ISBN10toISBN13(String ISBN10) {
+		String ISBN13 = ISBN10;
+		ISBN13 = "978" + ISBN13.substring(0, 9);
+		int d;
+
+		int sum = 0;
+		for (int i = 0; i < ISBN13.length(); i++) {
+			d = ((i % 2 == 0) ? 1 : 3);
+			sum += ((((int) ISBN13.charAt(i)) - '0') * d);
+		}
+		sum = (10 - (sum % 10)) % 10;
+		ISBN13 = ISBN13 + Integer.toString(sum);
+
+		return ISBN13;
+	}
 }
