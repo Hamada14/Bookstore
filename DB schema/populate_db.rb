@@ -43,6 +43,18 @@ def execute_batched_queries(client)
   $batched_queries.clear
 end
 
+def isbn10_to_isbn13(isbn10)
+  isbn13 = "978" + isbn10[0...9]
+  d = 3
+  sum = 0
+  isbn13.split("").each do |i|
+    d = d == 3 ? 1 : 3
+    sum = sum + i.to_i * d
+  end
+  sum = (10 - (sum % 10)) % 10
+  isbn13 + sum.to_s
+end
+
 def start_populate_message(table_name)
   "[" + table_name + "] Started to populate the Table"
 end
@@ -138,7 +150,7 @@ def populate_book_table(client)
   category = 1
   category_count = 5
   File.open('ISBN_10.txt').each do |line|
-    isbn = line;
+    isbn = isbn10_to_isbn13(line);
     title = Faker::Book.title
     publisher_id = 1 + (publisher_id % ($PUBLISHER_COUNT))
     publication_year = publication_year == 2018 ? 2000 : publication_year + 1
