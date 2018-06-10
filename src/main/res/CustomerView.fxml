@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -15,15 +11,14 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.geometry.Insets?>
 
-<BorderPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CustomerController">
+<BorderPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CustomerController">
 	 <top>
       <ToolBar prefHeight="50.0" prefWidth="472.0" style="-fx-background-color: #926757;" BorderPane.alignment="CENTER">
          <items>
@@ -89,7 +84,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <VBox layoutX="20.0" layoutY="60.0" prefHeight="312.0" prefWidth="168.0" spacing="5.0">
+            <VBox layoutX="20.0" layoutY="60.0" prefHeight="369.0" prefWidth="168.0" spacing="5.0">
                <children>
                   <Label text="ISBN">
                      <font>
@@ -97,12 +92,6 @@
                      </font>
                   </Label>
                   <TextField fx:id="isbn" />
-                  <Label text="Author">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="authorName" />
                   <Label text="Publisher">
                      <font>
                         <Font size="14.0" />
@@ -121,6 +110,27 @@
                      </font>
                   </Label>
                   <TextField fx:id="price" />
+                  <Label text="Author">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="authorName" />
+                  <ComboBox fx:id="authorsList" prefHeight="26.0" prefWidth="166.0" />
+                  <Pane prefHeight="0.0" prefWidth="168.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#addAuthor" prefHeight="31.0" prefWidth="64.0" text="Add ">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="80.0" mnemonicParsing="false" onAction="#deleteAuthor" prefHeight="31.0" prefWidth="87.0" text="Delete">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
                </children>
                <opaqueInsets>
                   <Insets />

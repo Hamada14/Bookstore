@@ -2,6 +2,7 @@ package server.database.entities.book.query;
 
 import java.sql.Connection;
 
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import server.database.entities.author.Author;
 import server.database.entities.author.AuthorModel;
 import server.database.entities.book.Book;
 import server.database.entities.book.BookModel;
-import server.database.entities.book.Publisher;
+import server.database.entities.publisher.PublisherModel;
 
 @Setter
 @Getter
@@ -36,7 +37,7 @@ public class AdvancedSelection extends Query {
 		boolean priceFound = false;
 		boolean yearFound = false;
 		String query = String.format(SELECT_All, BookModel.BOOK_TABLE, 
-				Publisher.PUBLISHER_TABLE, BookModel.BOOK_CATEGORY_TABLE);
+				PublisherModel.PUBLISHER_TABLE, BookModel.BOOK_CATEGORY_TABLE);
 		
 		query = addAuthorsSelectionQuery(query, book.getAuthors());
 		if (!book.getPublicationYear().equals("")) {
@@ -66,15 +67,15 @@ public class AdvancedSelection extends Query {
 			index++;
 			ps.setFloat(index, book.getSellingPrice());
 		}
-//		System.out.println("in query" + ps.toString());
 	}
 	
+
 	private String addAuthorsSelectionQuery(String query, List<Author> list) {
 		if (!list.isEmpty()) {
 			query += AUTHORS_HEADER;
 			for (int i = 1; i < list.size(); i++) {
-				query += SELECT_BY_AUTHOR_NAME + "AND ";
-				String.format(query, BookModel.BOOK_AUTHOR, AuthorModel.AUTHOR_TABLE);
+				query += SELECT_BY_AUTHOR_NAME + ") AND ISBN IN (";
+				query = String.format(query, BookModel.BOOK_AUTHOR, AuthorModel.AUTHOR_TABLE);
 			}
 			query += SELECT_BY_AUTHOR_NAME +" )";
 			query = String.format(query, BookModel.BOOK_AUTHOR, AuthorModel.AUTHOR_TABLE);	
@@ -88,7 +89,7 @@ public class AdvancedSelection extends Query {
 		if (!authors.isEmpty()) {		
 			for (int i = 0; i < authors.size(); i++) {
 				newIndex++;
-				ps.setString(newIndex, "%" + authors.get(0).getName() + "%");
+				ps.setString(newIndex, "%" + authors.get(i).getName() + "%");
 			}
 		}
 		return newIndex;
