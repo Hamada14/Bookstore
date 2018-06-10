@@ -20,6 +20,5 @@ public class SelectByTitle extends Query{
 		String query = String.format(SELECT_BY_TITLE, BookModel.BOOK_TABLE, offset, limit);
 		ps = connection.prepareStatement(query);
 		ps.setString(1, "%" + title + "%");
-		System.out.println(ps.toString());
 	}
 }
