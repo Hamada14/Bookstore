@@ -34,7 +34,7 @@ public class AuthorModel {
 			query.setIsbn(isbn);
 			query.executeQuery(connection);
 			ResultSet rs = query.getResultSet();
-			if(rs != null && rs.next()) {
+			while(rs != null && rs.next()) {
 				ids.add(rs.getInt(AUTHOR_ID_COL));
 			}
 			return ids;

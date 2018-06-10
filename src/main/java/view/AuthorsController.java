@@ -20,6 +20,7 @@ public class AuthorsController implements CustomController {
 	private static final String FAIL_TITLE = "Error";
 	
 	private static final String DELETE_DONE_TEXT = "Deleted successfully";
+	private static final String ADD_DONE_TEXT = "Added successfully";
 	
 	@FXML
 	private TextField bookISBN;
@@ -28,7 +29,7 @@ public class AuthorsController implements CustomController {
 	@FXML
 	private ComboBox<String> authorsList;
 
-	private ObservableList<String> authorNames = FXCollections.observableArrayList();
+	private ObservableList<String> authorNames;
 	
 	private String usedISBN = "";
 
@@ -38,19 +39,22 @@ public class AuthorsController implements CustomController {
 		Author author = new Author(authorName.getText());
 		ResponseData responseData = BookClient.getServer().addAuthor(author, usedISBN);
 		if(!responseData.isSuccessful()) {
-			
+			BookStoreApp.displayDialog(AlertType.ERROR, FAIL_TITLE, null, responseData.getError());
 		} else {
 			authorNames.add(author.getName());
 			authorsList.setItems(authorNames);
+			BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, ADD_DONE_TEXT);
 		}
 	}
 
 	@FXML
 	private void deleteAuthor() {
-		ResponseData rs = BookClient.getServer().deleteAuthorReference(usedISBN, new Author(authorsList.getValue()));
+		String remove = authorsList.getValue();
+		ResponseData rs = BookClient.getServer().deleteAuthorReference(usedISBN, new Author(remove));
 		if(rs.isSuccessful()) {
 			BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, DELETE_DONE_TEXT);
-			authorsList.getItems().remove(usedISBN);
+			authorsList.getItems().remove(remove);
+			authorNames.remove(remove);
 			authorsList.setValue("");
 		} else {
 			BookStoreApp.displayDialog(AlertType.ERROR, FAIL_TITLE, null, rs.getError());
@@ -76,8 +80,15 @@ public class AuthorsController implements CustomController {
 			authorsList.setValue(authorNames.get(0));
 		}	
 	}
+	
+	@FXML
+	private void goHome() {
+		
+	}
 
 	@Override
 	public void initData(Parameters parameters) {
+		authorNames = FXCollections.observableArrayList();
+		usedISBN = "";
 	}
 }
