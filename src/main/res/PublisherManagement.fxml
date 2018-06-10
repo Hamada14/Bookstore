@@ -47,8 +47,8 @@
                   <Font size="32.0" />
                </font>
             </Label>
-            <Button fx:id="loadInformation" layoutX="549.0" layoutY="125.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Load Inf." />
-            <Button fx:id="addPublisher" layoutX="624.0" layoutY="125.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="32.0" text="+" />
+            <Button layoutX="549.0" layoutY="125.0" mnemonicParsing="false" onAction="#loadInformation" prefHeight="26.0" prefWidth="68.0" text="Load Inf." />
+            <Button layoutX="624.0" layoutY="125.0" mnemonicParsing="false" onAction="#addPublisher" prefHeight="26.0" prefWidth="32.0" text="+" />
             <Label layoutX="45.0" layoutY="218.0" prefHeight="32.0" prefWidth="69.0" text="Phone">
                <font>
                   <Font size="21.0" />

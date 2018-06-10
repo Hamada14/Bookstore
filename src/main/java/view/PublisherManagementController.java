@@ -158,6 +158,11 @@ public class PublisherManagementController implements CustomController {
 		}
 	}
 
+	@FXML
+	private void goHome() {
+		
+	}
+	
 	@Override
 	public void initData(Parameters parameters) {
 		addressesList = FXCollections.observableArrayList();

@@ -66,7 +66,7 @@ public class PublisherAddress {
 		} catch (SQLException e) {
 			rs.setError(ERROR_ADDRESS_DELETION);
 		}
-		return null;
+		return rs;
 	}
 	
 }

@@ -26,7 +26,7 @@ public class DeleteAddress extends Query {
 		ps = connection.prepareStatement(query);
 		ps.setInt(ID_IND, id);
 		ps.setString(STREET_IND, street);
-		ps.setString(CITY_IND, country);
+		ps.setString(CITY_IND, city);
 		ps.setString(COUNTRY_IND, country);
 	}
 

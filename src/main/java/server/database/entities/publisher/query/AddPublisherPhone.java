@@ -12,7 +12,7 @@ public class AddPublisherPhone extends Query {
 	private static final String PHONE_TABLE = "PUBLISHER_PHONE";
 	
 	private static final int ID_IND = 1;
-	private static final int PHONE_IND = 1;
+	private static final int PHONE_IND = 2;
 	
 	@Setter private int id;
 	@Setter private String number;

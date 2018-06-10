@@ -50,8 +50,8 @@ public class BookStoreApp extends Application {
 		authorsView = new Controller(primaryStage, AUTHORS_VIEW);
 		editBookView = new Controller(primaryStage, EDIT_BOOK_VIEW);
 		publisherView = new Controller(primaryStage, PUBLISHER_VIEW);
-//		showLogin();
-		showManager();
+		showLogin();
+//		showManager();
 	}
 
 	public static void showLogin() {

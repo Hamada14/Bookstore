@@ -120,6 +120,18 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
+	public BooksResponseData simpleSearchBooks(Identity identity, int offset, int limit, String title) {
+		BooksResponseData booksResponse = new BooksResponseData();
+		UserResponseData validUser = identity.isUser(connection);
+		if (validUser.isSuccessful()) {
+			BooksResponseData booksResponse2 = BookModel.searchSimpleBooks(title, offset, limit, connection);
+			return booksResponse2;
+		} else {
+			booksResponse.setError(validUser.getError());
+			return booksResponse;
+		}
+	}
+	@Override
 	public ResponseData addNewBook(Identity identity, BookBuilder newBookBuilder) {
 		if(!identity.isManager(connection)) {
 			return null;
@@ -203,11 +215,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public List<String> getCategories(Identity identity) {
-		UserResponseData validUser = identity.isUser(connection);
-		if(!validUser.isSuccessful()) {
-			return null;
-		}
+	public List<String> getCategories() {
 		return BookModel.getCategories(connection);
 	}
 
@@ -300,6 +308,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 	@Override
 	public ResponseData addPublisherPhone(Identity identity, Publisher publisher, PublisherPhone publisherPhone) {
 		if(!identity.isManager(connection)) {
+			System.out.println("HERE");
 			return null;
 		}
 		return PublisherModel.addPublisherPhone(publisher, publisherPhone, connection);
@@ -320,5 +329,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 		}
 		return PublisherModel.getPhones(publisher, connection);
 	}
+
 
 }

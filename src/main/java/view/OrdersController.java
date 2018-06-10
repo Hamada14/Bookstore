@@ -34,8 +34,9 @@ public class OrdersController implements CustomController {
 	private static final int ID_INDEX = 0;
 	private static final int TITLE_INDEX = 1;
 	private static final int PRICE_INDEX = 2;
-	private static final int QUANTITY_INDEX = 3;
-	private static final int DELETE_INDEX = 4;
+	private static final int TOTAL_INDEX = 3;
+	private static final int QUANTITY_INDEX = 4;
+	private static final int DELETE_INDEX = 5;
 
 	@FXML
 	private Label fullName;
@@ -59,9 +60,12 @@ public class OrdersController implements CustomController {
 			Text titleTxt = new Text(order.getBook().getBookTitle());
 			ordersPane.add(titleTxt, TITLE_INDEX, index);
 
-			float priceOfQuantity = order.getBook().getSellingPrice() * order.getQuantity();
-			Text priceTxt = new Text(Float.toString(priceOfQuantity));
-			ordersPane.add(priceTxt, PRICE_INDEX, index);
+			float sellingItem = order.getBook().getSellingPrice();
+			Text itemPrice = new Text(Float.toString(sellingItem));
+			float priceOfQuantity = sellingItem * order.getQuantity();
+			Text TpriceTxt = new Text(Float.toString(priceOfQuantity));
+			ordersPane.add(itemPrice, PRICE_INDEX, index);
+			ordersPane.add(TpriceTxt, TOTAL_INDEX, index);
 			totalPrice += priceOfQuantity;
 
 			Text quantityTxt = new Text(Integer.toString(order.getQuantity()));

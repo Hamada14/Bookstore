@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -40,7 +41,10 @@ public class CustomerController implements CustomController {
 	private static final String ERROR_YEAR = "invalid year, won't be considered";
 	private static final String ERROR_PRICE = "invalid price, won't be considered";
 	private static final ObservableList<String> categoriesList = FXCollections
-			.observableArrayList(BookClient.getServer().getCategories(BookStoreApp.getUser().getIdentity()));
+			.observableArrayList(BookClient.getServer().getCategories());
+	
+	@FXML
+	private CheckBox advanced;
 
 	@FXML
 	private MenuItem goToManagerModeButton;
@@ -57,8 +61,6 @@ public class CustomerController implements CustomController {
 
 	@FXML
 	private Label fullName;
-	
-
 	@FXML
 	private TableView<BookTuple> booksTable;
 	@FXML
@@ -85,7 +87,8 @@ public class CustomerController implements CustomController {
 	/* true for buy, false for edit */
 	private boolean editOrBuyMode;
 
-
+    private boolean advancedSelection;
+    
 	@FXML
 	private void addAuthor() {
 		authorNames.add(authorName.getText());
@@ -111,7 +114,12 @@ public class CustomerController implements CustomController {
 	@FXML
 	private void loadBooks() {
 		Identity identity = BookStoreApp.getUser().getIdentity();
-		BooksResponseData response = BookClient.getServer().advancedSearchBooks(identity, offset, LIMIT, criteriaBook);
+		BooksResponseData response = null;
+		if (advancedSelection) { 
+			response = BookClient.getServer().advancedSearchBooks(identity, offset, LIMIT, criteriaBook);			
+		}else {
+			response = BookClient.getServer().simpleSearchBooks(identity, offset, LIMIT, title.getText());
+		}
 		if (response.isSuccessful()) {
 			viewBooks(response.getBooks());
 			offset += response.getBooks().size();
@@ -151,6 +159,7 @@ public class CustomerController implements CustomController {
 		String yearValue = publicationYear.getText();
 		setYear(yearValue);
 		setAuthors(authorNames);
+		advancedSelection = advanced.isSelected();
 
 	}
 
@@ -170,6 +179,7 @@ public class CustomerController implements CustomController {
 		List<Author> authors = new ArrayList<>();
 		criteriaBook = new Book("", "", "", -1, "", authors, "", 0, 0);
 		categories.setValue("");
+		advanced.setSelected(false);
 	}
 
 	@FXML
@@ -194,7 +204,7 @@ public class CustomerController implements CustomController {
 
 	@Override
 	public void initData(Parameters parameters) {
-		categories.setValue(BookClient.getServer().getCategories(BookStoreApp.getUser().getIdentity()).get(0));
+		categories.setValue(categoriesList.get(0));
 		categories.setItems(categoriesList);
 		bookTitleCol.setCellValueFactory(new PropertyValueFactory<BookTuple, BookHyperLink>(TITLE_COL));
 		authorNames = FXCollections.observableArrayList();
@@ -204,6 +214,7 @@ public class CustomerController implements CustomController {
 		boolean isManager = BookClient.getServer().isManager(BookStoreApp.getUser().getIdentity());
 		goToManagerModeButton.setVisible(isManager);
         fullName.setText(BookStoreApp.getUser().getFullName());
+        loadBooks();
 	}
 
 	private void setPrice(String price) {

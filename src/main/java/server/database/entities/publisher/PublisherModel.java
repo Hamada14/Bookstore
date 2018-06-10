@@ -96,6 +96,7 @@ public class PublisherModel {
 			rs.setError(PUBLISHER_NOT_FOUND);
 			return rs;
 		}
+		System.out.println("HEREEEEE1 " + id);
 		phone.setId(id);
 		return phone.addPhone(connection);
 	}

@@ -32,7 +32,9 @@ public class PublisherPhone {
 		try {
 			query.setNumber(number);
 			query.setId(id);
+			System.out.println("HERE2");
 			query.executeQuery(connection);
+			System.out.println("HERE3");
 			int rowsAffected = query.getUpdateCount();
 			if(rowsAffected == 0) {
 				throw new SQLException();
@@ -57,7 +59,7 @@ public class PublisherPhone {
 		} catch (SQLException e) {
 			rs.setError(ERROR_PHONE_DELETION);
 		}
-		return null;
+		return rs;
 	}
 
 }
