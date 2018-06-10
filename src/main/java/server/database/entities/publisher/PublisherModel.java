@@ -17,7 +17,7 @@ public class PublisherModel {
 			publisherId = publisher.addPublisher(connection);
 			return publisherId;
 		} else {
-			return Publisher.ERROR_PUBLISHER_ADDITION;
+			return publisherId;
 		}
 	}
 

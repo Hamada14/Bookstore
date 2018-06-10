@@ -19,6 +19,7 @@ import server.database.entities.author.AuthorModel;
 import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
 import server.database.entities.book.BookModel;
+import server.database.entities.publisher.Publisher;
 import server.database.entities.publisher.PublisherModel;
 import server.database.entities.user.UserBuilder;
 import server.database.entities.user.UserModel;
@@ -114,8 +115,8 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public ResponseData addNewBook(BookBuilder newBookBuilder, server.database.entities.publisher.Publisher publisher) {
-		int publisherId = PublisherModel.addPublisher(publisher, connection);
+	public ResponseData addNewBook(BookBuilder newBookBuilder) {
+		int publisherId = PublisherModel.addPublisher(newBookBuilder.getPublisher(), connection);
 		if (publisherId == server.database.entities.publisher.Publisher.ERROR_PUBLISHER_ADDITION) {
 			ResponseData responseData = new ResponseData();
 			responseData.setError(BookError.INVALID_PUBLISHER_NAME.toString());
@@ -125,9 +126,14 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public boolean editBook(Book modifiedBook) {
-		// TODO Auto-generated method stub
-		return false;
+	public ResponseData editBook(BookBuilder modifiedBook) {
+		int publisherId = PublisherModel.addPublisher(modifiedBook.getPublisher(), connection);
+		if (publisherId == Publisher.ERROR_PUBLISHER_ADDITION) {
+			ResponseData responseData = new ResponseData();
+			responseData.setError(BookError.INVALID_PUBLISHER_NAME.toString());
+			return responseData;
+		}
+		return BookModel.editBook(modifiedBook, connection);
 	}
 
 	@Override
@@ -173,5 +179,11 @@ public class BookStoreServerImpl implements BookStoreServer {
 	@Override
 	public List<String> getCategories() {
 		return BookModel.getCategories(connection);
+	}
+
+	@Override
+	public List<Author> getBookAuthors(String bookISBN) {
+		List<Author> bookAuthors = AuthorModel.selectAuthorNameByISBN(bookISBN, connection);
+		return bookAuthors;
 	}
 }

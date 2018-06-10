@@ -8,7 +8,7 @@ import server.database.Query;
 import server.database.entities.author.AuthorModel;
 
 public class AuthorById extends Query {
-	private static final String SELECT_WITH_ID = "SELECT FIRST_NAME, LAST_NAME FROM %s WHERE ID = ?";
+	private static final String SELECT_WITH_ID = "SELECT NAME FROM %s WHERE ID = ?";
 	private static final int INDEX_ID = 1;
 	
 	@Setter private int id;

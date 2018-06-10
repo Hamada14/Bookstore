@@ -60,7 +60,7 @@ public class BookBuilder {
 		return null;
 	}
 
-	private static String isValidSellingPrice(float value) {
+	public static String isValidSellingPrice(float value) {
 		boolean valid =  value >= MIN_SELLING_PRICE && value <= MAX_SELLING_PRICE;
 		if(!valid) {
 			return BookError.INVALID_SELLING_PRICE.toString();
@@ -68,7 +68,7 @@ public class BookBuilder {
 		return null;
 	}
 
-	private static String isValidPublicationYear(String strValue) {
+	public static String isValidPublicationYear(String strValue) {
 		int value;
 		try {
 			value = Integer.valueOf(strValue);
@@ -89,7 +89,7 @@ public class BookBuilder {
 		if(matcher.matches()) {
 			return null;
 		}
-		return BookError.IVALID_BOOK_ISBN.toString();
+		return BookError.INVALID_BOOK_ISBN.toString();
 	}
 	
 }

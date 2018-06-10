@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import server.database.entities.Person;
+import server.database.entities.publisher.query.AddPublisher;
 import server.database.entities.publisher.query.PublisherByName;
 
 public class Publisher extends Person {
@@ -46,7 +47,7 @@ public class Publisher extends Person {
 		if (!isValid()) {
 			return ERROR_PUBLISHER_ADDITION;
 		}
-		PublisherByName query = new PublisherByName();
+		AddPublisher query = new AddPublisher();
 		try {
 			query.setName(getName());
 			query.executeQuery(connection);

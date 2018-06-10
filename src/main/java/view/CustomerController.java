@@ -1,10 +1,12 @@
 package view;
 
+
 import java.net.URL;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+
+
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import client.BookClient;
@@ -15,20 +17,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 import server.BooksResponseData;
-import server.database.entities.Order;
-import server.database.entities.book.Author;
 import server.database.entities.book.Book;
+import server.database.entities.book.BookBuilder;
 import server.database.entities.user.Identity;
 
 public class CustomerController implements Initializable, CustomController {
@@ -58,9 +57,7 @@ public class CustomerController implements Initializable, CustomController {
 	@FXML
 	private TextField title;
 	@FXML
-	private TextField authorFirstName;
-	@FXML
-	private TextField authorLastName;
+	private TextField authorName;
 	@FXML
 	private TextField publisherName;
 	@FXML
@@ -136,28 +133,38 @@ public class CustomerController implements Initializable, CustomController {
 		criteriaBook.setCategory(categories.getValue());
 		criteriaBook.setBookISBN(isbn.getText());
 		String yearValue = publicationYear.getText();
-		criteriaBook.setPublicationYear(yearValue);
+		if (yearValue.equals("") || BookBuilder.isValidPublicationYear(yearValue) != null) {
+			criteriaBook.setPublicationYear(yearValue);
+		} else {
+			criteriaBook.setPublicationYear("");
+			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, ERROR_YEAR);
+		}
+
 		if (price.getText().equals("")) {
 			criteriaBook.setSellingPrice(-1);
 		} else {
-			
+
 			float priceVal = -1;
-			
-			try{
-				Float.parseFloat(price.getText());	
+
+			try {
+				Float.parseFloat(price.getText());
+				if (BookBuilder.isValidSellingPrice(priceVal) != null) {
 					criteriaBook.setSellingPrice(priceVal);
-			}catch (Exception e) {
+				} else {
+					criteriaBook.setSellingPrice(priceVal);
+					BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, ERROR_PRICE);
+				}
+			} catch (Exception e) {
 				criteriaBook.setSellingPrice(priceVal);
 				BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, ERROR_PRICE);
 			}
-			
+
 		}
 	}
 
 	private void clearSearchFields() {
 		title.setText("");
-		authorFirstName.setText("");
-		authorLastName.setText("");
+		authorName.setText("");
 		publisherName.setText("");
 		isbn.setText("");
 		price.setText("");

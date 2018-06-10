@@ -2,6 +2,7 @@ package server.database.entities.publisher.query;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import lombok.Setter;
 import server.database.Query;
@@ -17,7 +18,7 @@ public class AddPublisher extends Query {
 	@Override
 	protected void prepareStatement(Connection connection) throws SQLException {
 		String query = String.format(ADD_PUBLISHSER, PublisherModel.PUBLISHER_TABLE);
-		ps = connection.prepareStatement(query);
+		ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(NAME_INDEX, name);
 	}
 }

@@ -49,6 +49,7 @@ public class BookController implements CustomController {
 		userName.setText(BookStoreApp.getUser().getIdentity().getUserName());
 		publisher.setText(selectedBook.getPublisherName());
 		author.setText(selectedBook.getAuthors().get(0).getName());
+
 	}
 
 	@FXML
@@ -71,7 +72,5 @@ public class BookController implements CustomController {
 			e.printStackTrace();
 			BookStoreApp.displayDialog(AlertType.ERROR, INVALID_INPUT, null, ERROR_IN_QUANTITY);
 		}
-
 	}
-
 }
