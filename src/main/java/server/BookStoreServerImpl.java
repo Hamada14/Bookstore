@@ -107,7 +107,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 	@Override
 	public BooksResponseData advancedSearchBooks(Identity identity, int offset, int limit, Book book) {
 		BooksResponseData booksResponse = new BooksResponseData();
-		book.normalizeISBN();
 		UserResponseData validUser = identity.isUser(connection);
 		if (validUser.isSuccessful()) {
 			BooksResponseData booksResponse2 = BookModel.searchAdvancedBooks(book, offset, limit, connection);//shrouk part

@@ -43,6 +43,9 @@ public class CustomerController implements CustomController {
 	private static final ObservableList<String> categoriesList = FXCollections
 			.observableArrayList(BookClient.getServer().getCategories());
 	
+	public CustomerController () {
+		categoriesList.add("");
+	}
 	@FXML
 	private CheckBox advanced;
 
@@ -203,8 +206,8 @@ public class CustomerController implements CustomController {
 
 	@Override
 	public void initData(Parameters parameters) {
-		categoriesList.add("");
-		categories.setValue(categoriesList.get(0));
+		
+		categories.setValue("");
 		categories.setItems(categoriesList);
 		bookTitleCol.setCellValueFactory(new PropertyValueFactory<BookTuple, BookHyperLink>(TITLE_COL));
 		authorNames = FXCollections.observableArrayList();

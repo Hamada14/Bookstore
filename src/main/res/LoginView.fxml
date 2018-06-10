@@ -38,7 +38,7 @@
                </font>
             </Button>
             <Hyperlink layoutX="436.0" layoutY="236.0" onAction="#goToRegister" text="Don't have an account?" />
-            <TextField fx:id="userName" layoutX="367.0" layoutY="79.0" prefHeight="25.0" prefWidth="201.0" promptText="email" />
+            <TextField fx:id="userName" layoutX="367.0" layoutY="79.0" prefHeight="25.0" prefWidth="201.0" promptText="userName" />
             <PasswordField fx:id="password" layoutX="367.0" layoutY="113.0" prefHeight="25.0" prefWidth="201.0" promptText="password" />
          </children>
       </Pane>
