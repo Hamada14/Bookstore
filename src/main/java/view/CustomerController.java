@@ -51,11 +51,11 @@ public class CustomerController implements CustomController {
 	private ObservableList<BookTuple> ordersList;
 
 	@FXML
-
 	private ComboBox<String> authorsList;
 
 	private ObservableList<String> authorNames;
 
+	@FXML
 	private Label fullName;
 	
 

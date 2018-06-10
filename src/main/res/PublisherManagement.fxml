@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PublisherManagementController">
+ <top>
+      <ToolBar prefHeight="50.0" prefWidth="472.0" style="-fx-background-color: #926757;" BorderPane.alignment="CENTER">
+         <items>
+         	<Button lineSpacing="10.0" mnemonicParsing="false" onAction="#goHome" prefHeight="0.0" prefWidth="146.0" style="-fx-background-color: transparent;">
+    			<graphic>
+        			<ImageView fitHeight="45.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/logo.PNG" />
+                     </image>
+                  </ImageView>
+    			</graphic>
+			</Button>
+            <Pane prefHeight="6.0" prefWidth="533.0" />
+            <Label fx:id="fullName" alignment="CENTER" text=" User Name " textFill="#f8f3f3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
+   </top>
+   <center>
+      <Pane prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="212.0" layoutY="117.0" prefHeight="38.0" prefWidth="75.0" text="Name">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+            <TextField fx:id="publisherName" layoutX="293.0" layoutY="125.0" prefHeight="25.0" prefWidth="232.0" />
+            <Label layoutX="232.0" layoutY="10.0" prefHeight="79.0" prefWidth="349.0" text="Publisher Management">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+            <Button fx:id="loadInformation" layoutX="549.0" layoutY="125.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Load Inf." />
+            <Button fx:id="addPublisher" layoutX="624.0" layoutY="125.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="32.0" text="+" />
+            <Label layoutX="45.0" layoutY="218.0" prefHeight="32.0" prefWidth="69.0" text="Phone">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <TextField fx:id="phoneNumber" layoutX="123.0" layoutY="222.0" prefHeight="25.0" prefWidth="215.0" />
+            <ComboBox fx:id="phonesCombo" layoutX="355.0" layoutY="222.0" prefHeight="25.0" prefWidth="141.0" />
+            <Button layoutX="529.0" layoutY="222.0" mnemonicParsing="false" onAction="#addPhone" text="+" />
+            <Button layoutX="583.0" layoutY="222.0" mnemonicParsing="false" onAction="#deletePhone" prefHeight="25.0" prefWidth="72.0" text="Delete" />
+            <Label layoutX="45.0" layoutY="340.0" prefHeight="32.0" prefWidth="69.0" text="Street">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Label layoutX="45.0" layoutY="397.0" prefHeight="32.0" prefWidth="58.0" text="City">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Label layoutX="45.0" layoutY="453.0" prefHeight="32.0" prefWidth="84.0" text="Country">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <TextField fx:id="street" layoutX="153.0" layoutY="340.0" prefHeight="25.0" prefWidth="215.0" />
+            <TextField fx:id="city" layoutX="153.0" layoutY="400.0" prefHeight="25.0" prefWidth="215.0" />
+            <TextField fx:id="country" layoutX="153.0" layoutY="457.0" prefHeight="25.0" prefWidth="215.0" />
+            <Button layoutX="387.0" layoutY="401.0" mnemonicParsing="false" onAction="#addAddress" text="+" />
+            <Button layoutX="425.0" layoutY="401.0" mnemonicParsing="false" onAction="#deleteAddress" prefHeight="25.0" prefWidth="72.0" text="Delete" />
+            <ComboBox fx:id="addressesCombo" layoutX="521.0" layoutY="400.0" prefHeight="25.0" prefWidth="268.0" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
