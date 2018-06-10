@@ -47,7 +47,7 @@ public class PlaceOrderController extends Dialog<Object> {
 			ResponseData isValidClick = placeButtonFilter();
 			if(!isValidClick.isSuccessful()) {
 				BookStoreApp.displayDialog(AlertType.INFORMATION, SqlError.ERROR_MESSAGE_TITLE.toString(),
-						OrderError.ERROR_MESSAGE_HEADER.toString(), OrderError.ERROR_ADDING_ORDER.toString());
+						OrderError.ERROR_MESSAGE_HEADER.toString(), isValidClick.getError());
 				event.consume();
 			}
 		});

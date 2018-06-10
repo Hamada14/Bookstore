@@ -51,7 +51,7 @@ public interface BookStoreServer {
 	ResponseData placeOrder(String isbn, String quantity);
 	
 	@WebMethod
-	boolean promoteUser(String userName);
+	ResponseData promoteUser(String userName);
 
 	@WebMethod
 	List<Order> getOrders(int offset, int limit);

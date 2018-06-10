@@ -153,7 +153,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 	
 
 	@Override
-	public boolean promoteUser(String userName) {
+	public ResponseData promoteUser(String userName) {
 		return UserModel.promoteUser(userName, connection);
 	}
 	

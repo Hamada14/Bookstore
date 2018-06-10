@@ -22,6 +22,8 @@ public class UserModel {
 	
 	private static final String DUPLICATE_EMAIL_ERROR = "User with this email already registered";
 	private static final String DUPLICATE_USER_NAME_ERROR = "User with this user name already registered";
+	private static final String USER_NOT_FOUND = "User not found";
+	private static final String ERROR_PROMOTING_USER = "Cannot promote user";
 
 	public static List<String> getValidCountries() {
 		Locale[] locales = Locale.getAvailableLocales();
@@ -70,19 +72,25 @@ public class UserModel {
 		return rs;
 	}
 
-	public static boolean promoteUser(String userName, Connection connection) {
+	public static ResponseData promoteUser(String userName, Connection connection) {
 		boolean validUserName = isExistingUserName(userName, connection);
+		ResponseData rs = new ResponseData();
 		if (!validUserName) {
-			return false;
+			rs.setError(USER_NOT_FOUND);
+			return rs;
 		}
 		PromoteUser query = new PromoteUser();
 		try {
 			query.setUserName(userName);
 			query.executeQuery(connection);
 			int rowsAffected = query.getUpdateCount();
-			return rowsAffected == 1;
+			if(rowsAffected != 1) {
+				throw new SQLException();
+			}
+			return rs;
 		} catch (SQLException e) {
-			return false;
+			rs.setError(ERROR_PROMOTING_USER);
+			return rs;
  		} finally {
  			query.close();
  		}
