@@ -42,7 +42,7 @@ public class CustomerController implements Initializable, CustomController {
 	private static final String ERROR_YEAR= "invalid year, won't be considered";
 	private static final String ERROR_PRICE= "invalid price, won't be considered";
 	private static final ObservableList<String> categoriesList = FXCollections
-			.observableArrayList(BookClient.getServer().getCategories());
+			.observableArrayList(BookClient.getServer().getCategories(BookStoreApp.getUser().getIdentity()));
 
 	@FXML
 	private MenuItem goToManagerModeButton;
@@ -83,7 +83,7 @@ public class CustomerController implements Initializable, CustomController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		categories.setValue(BookClient.getServer().getCategories().get(0));
+		categories.setValue(BookClient.getServer().getCategories(BookStoreApp.getUser().getIdentity()).get(0));
 		categories.setItems(categoriesList);
 		bookTitleCol.setCellValueFactory(new PropertyValueFactory<BookTuple, BookHyperLink>(TITLE_COL));
 		List<String> authors = new ArrayList<>();

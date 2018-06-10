@@ -72,7 +72,7 @@ public class AllOrdersController implements CustomController {
 	}
 
 	private void load() {
-		List<Order> orders = BookClient.getServer().getOrders(offset, LIMIT);
+		List<Order> orders = BookClient.getServer().getOrders(BookStoreApp.getUser().getIdentity(), offset, LIMIT);
 		if (orders == null) {
 			BookStoreApp.displayDialog(AlertType.INFORMATION, SqlError.ERROR_MESSAGE_TITLE.toString(),
 					OrderError.ERROR_MESSAGE_HEADER.toString(), SqlError.SERVER_ERROR.toString());
@@ -97,7 +97,7 @@ public class AllOrdersController implements CustomController {
 		for (int i = 0; i < ordersList.size(); i++) {
 			if (orderId == ordersList.get(i).getId()) {
 				ordersList.remove(i);
-				ResponseData rs = BookClient.getServer().deleteOrder(orderId);
+				ResponseData rs = BookClient.getServer().deleteOrder(BookStoreApp.getUser().getIdentity(), orderId);
 				if(rs.isSuccessful()) {
 					BookStoreApp.displayDialog(AlertType.INFORMATION, OrderError.SUCCESS_MESSAGE_HEADER.toString(),
 							OrderError.SUCCESS_MESSAGE_HEADER.toString(), OrderError.ORDER_DELETED_SUCCESSFULLY.toString());

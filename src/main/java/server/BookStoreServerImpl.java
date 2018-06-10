@@ -89,6 +89,10 @@ public class BookStoreServerImpl implements BookStoreServer {
 
 	@Override
 	public ResponseData editUserIdentity(Identity identity, String newPassword) {
+		UserResponseData validUser = identity.isUser(connection);
+		if(!validUser.isSuccessful()) {
+			return null;
+		}
 		UserBuilder builder = new UserBuilder();
 		builder.setPassword(newPassword);
 		String errors = builder.validateNewPassword();
@@ -106,8 +110,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 		UserResponseData validUser = identity.isUser(connection);
 		if (validUser.isSuccessful()) {
 			BooksResponseData booksResponse2 = BookModel.searchAdvancedBooks(book, offset, limit, connection);//shrouk part
-
-//			System.out.println("in impl" + booksResponse2.getBooks().size());
 			return booksResponse2;
 		} else {
 			booksResponse.setError(validUser.getError());
@@ -116,7 +118,10 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public ResponseData addNewBook(BookBuilder newBookBuilder) {
+	public ResponseData addNewBook(Identity identity, BookBuilder newBookBuilder) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
 		int publisherId = PublisherModel.addPublisher(newBookBuilder.getPublisher(), connection);
 		if (publisherId == server.database.entities.publisher.Publisher.ERROR_PUBLISHER_ADDITION) {
 			ResponseData responseData = new ResponseData();
@@ -127,7 +132,10 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public ResponseData editBook(BookBuilder modifiedBook) {
+	public ResponseData editBook(Identity identity, BookBuilder modifiedBook) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
 		int publisherId = PublisherModel.addPublisher(modifiedBook.getPublisher(), connection);
 		if (publisherId == Publisher.ERROR_PUBLISHER_ADDITION) {
 			ResponseData responseData = new ResponseData();
@@ -138,7 +146,10 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public ResponseData placeOrder(String isbn, String quantity) {
+	public ResponseData placeOrder(Identity identity, String isbn, String quantity) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
 		int q = 0;
 		try {
 			q = Integer.valueOf(quantity);
@@ -153,21 +164,31 @@ public class BookStoreServerImpl implements BookStoreServer {
 	
 
 	@Override
-	public ResponseData promoteUser(String userName) {
+	public ResponseData promoteUser(Identity identity, String userName) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
 		return UserModel.promoteUser(userName, connection);
 	}
 	
 	@Override
-	public List<Order> getOrders(int offset, int limit) {
+	public List<Order> getOrders(Identity identity, int offset, int limit) {
+		UserResponseData validUser = identity.isUser(connection);
+		if(!validUser.isSuccessful()) {
+			return null;
+		}
 		return Order.selectAllOrders(offset, limit, connection);
 	}
 	
 	@Override
-	public ResponseData deleteOrder(int orderId) {
+	public ResponseData deleteOrder(Identity identity, int orderId) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
 		return Order.deleteOrderById(orderId, connection);
 	}
+	
 	@Override
-
 	public OrderResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart) {
 		OrderResponseData rs = new OrderResponseData();
 		UserResponseData validUser = identity.isUser(connection);
@@ -180,18 +201,29 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public List<String> getCategories() {
+	public List<String> getCategories(Identity identity) {
+		UserResponseData validUser = identity.isUser(connection);
+		if(!validUser.isSuccessful()) {
+			return null;
+		}
 		return BookModel.getCategories(connection);
 	}
 
 	@Override
-	public List<Author> getBookAuthors(String bookISBN) {
+	public List<Author> getBookAuthors(Identity identity, String bookISBN) {
+		UserResponseData validUser = identity.isUser(connection);
+		if(!validUser.isSuccessful()) {
+			return null;
+		}
 		List<Author> bookAuthors = AuthorModel.selectAuthorNameByISBN(bookISBN, connection);
 		return bookAuthors;
 	}
 
 	@Override
-	public ResponseData addAuthor(Author author, String isbn) {
+	public ResponseData addAuthor(Identity identity, Author author, String isbn) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
 		int id = AuthorModel.addAuthor(author, connection);
 		ResponseData response = new ResponseData();
 		if(id == Author.ERROR_AUTHOR_ADDITION) {
@@ -205,7 +237,11 @@ public class BookStoreServerImpl implements BookStoreServer {
 		return response;
 	}
 	
-	public ResponseData deleteAuthorReference(String usedIsbn, Author author) {
+	@Override
+	public ResponseData deleteAuthorReference(Identity identity, String usedIsbn, Author author) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
 		int authorId = author.getID(connection);
 		if(authorId == Author.AUTHOR_NOT_FOUND) {
 			ResponseData rs = new ResponseData();
@@ -220,4 +256,5 @@ public class BookStoreServerImpl implements BookStoreServer {
 		}
 		return new ResponseData();
 	}
+
 }
