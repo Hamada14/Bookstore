@@ -69,7 +69,7 @@ public class EditProfileController implements CustomController {
 		} else {
 			BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, SUCCESSFUL_TEXT);
 			BookStoreApp.setUser(response.getUser());
-			BookStoreApp.showCustomer();
+			BookStoreApp.showCustomer(true);
 		}
 	}
 
@@ -85,7 +85,7 @@ public class EditProfileController implements CustomController {
 			} else {
 				BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, SUCCESSFUL_TEXT);
 				BookStoreApp.getUser().getIdentity().setPassword(newPasswordVal);
-				BookStoreApp.showCustomer();
+				BookStoreApp.showCustomer(true);
 			}
 		} else {
 			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, ERROR_MESSAGE_HEADER, PASSWORD_ERROR);
@@ -94,7 +94,7 @@ public class EditProfileController implements CustomController {
 
 	@FXML
 	private void goHome() {
-		BookStoreApp.showCustomer();
+		BookStoreApp.showCustomer(true);
 	}
 
 	private UserBuilder getModifiedData() {

@@ -2,6 +2,7 @@ package server.database.entities.book;
 
 import java.sql.Connection;
 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class BookModel {
 //				newBook.setAuthor(Author.selectAuthorNameByISBN(newBook.getBookISBN(), connection));
 				booksResponse.addBook(newBook);
 			}
+			
 		} catch (SQLException e) {
 			booksResponse.setError(e.getMessage());
 			e.printStackTrace();
@@ -152,12 +154,6 @@ public class BookModel {
 			query.close();
 		}
 	}
-
-	public static BooksResponseData searchBooks(Book book, int offset, int limit, Connection connection) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 
 	public static boolean deleteAuthorReference(String usedIsbn, int authorId, Connection connection) {

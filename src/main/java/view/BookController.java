@@ -48,13 +48,13 @@ public class BookController implements CustomController {
 		price.setText(String.valueOf(selectedBook.getSellingPrice()));
 		userName.setText(BookStoreApp.getUser().getIdentity().getUserName());
 		publisher.setText(selectedBook.getPublisherName());
-		author.setText(selectedBook.getAuthors().get(0).getName());
+//		author.setText(selectedBook.getAuthors().get(0).getName());
 
 	}
 
 	@FXML
 	private void goHome() {
-		BookStoreApp.showCustomer();
+		BookStoreApp.showCustomer(true);
 	}
 
 	@FXML
@@ -67,7 +67,7 @@ public class BookController implements CustomController {
 			currentCart.addOrder(new Order(result, selectedBook));
 			BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, ORDER_ADDED_MESSAGE);
 			quantity.setText("");
-			BookStoreApp.showCustomer();
+			BookStoreApp.showCustomer(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			BookStoreApp.displayDialog(AlertType.ERROR, INVALID_INPUT, null, ERROR_IN_QUANTITY);

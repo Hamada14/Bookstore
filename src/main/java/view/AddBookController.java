@@ -33,18 +33,22 @@ public class AddBookController implements CustomController {
 			BookBuilder bookBuilder = new BookBuilder();
 			float p = Float.valueOf(price.getText());
 			int minimumQuantity = Integer.valueOf(minimumThreshold.getText());
+			int q = Integer.valueOf(quantity.getText());
 			bookBuilder.setBookISBN(isbn.getText());
 			bookBuilder.setBookTitle(title.getText());
 			bookBuilder.setCategory(category.getText());
 			bookBuilder.setPublicationYear(publicationYear.getText());
 			bookBuilder.setSellingPrice(p);
+			bookBuilder.setQuantity(q);
 			bookBuilder.setMinimumThreshold(minimumQuantity);
 			Publisher publisher  = new Publisher(publisherName.getText());
 			bookBuilder.setPublisher(publisher);
 			ResponseData bookAdded = BookClient.getServer().addNewBook(bookBuilder);
 			if(bookAdded.isSuccessful()) {
+				System.out.println("Zwe");
 				BookStoreApp.showManager();
 			}
+			System.out.println(bookAdded.getError());
 		} catch(NumberFormatException e) {
 			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, ERROR_MESSAGE_HEADER, INVALID_PRICE);
 		}

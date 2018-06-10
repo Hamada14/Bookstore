@@ -24,7 +24,6 @@ public class NewQuantityController extends Dialog<Integer> {
 
 		ButtonType changeButtonType = new ButtonType(BUTTON_NAME, ButtonData.OK_DONE);
 		this.getDialogPane().getButtonTypes().addAll(changeButtonType, ButtonType.CANCEL);
-		Node changeButton = this.getDialogPane().lookupButton(changeButtonType);
 
 		this.setResultConverter(dialogButton -> {
 			if (dialogButton == changeButtonType) {

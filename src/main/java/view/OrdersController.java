@@ -96,7 +96,7 @@ public class OrdersController implements CustomController {
 
 	@FXML
 	private void goHome() {
-		BookStoreApp.showCustomer();
+		BookStoreApp.showCustomer(true);
 	}
 
 	@FXML
@@ -107,6 +107,7 @@ public class OrdersController implements CustomController {
 		if (res != null) {
 			String bookTitle = res.getOrder().getBook().getBookTitle();
 			Dialog<Integer> newQuantityDialog = new NewQuantityController(bookTitle, res.getOldQuantity());
+			newQuantityDialog.showAndWait();
 			int newQuantity = newQuantityDialog.getResult();
 			if (newQuantity != -1) {
 				updateOrders(res.getOrder(), newQuantity);

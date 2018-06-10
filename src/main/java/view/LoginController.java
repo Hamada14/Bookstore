@@ -30,7 +30,7 @@ public class LoginController implements CustomController {
 			userName.clear();
 			password.clear();
 			BookStoreApp.setUser(response.getUser());
-			BookStoreApp.showCustomer();
+			BookStoreApp.showCustomer(true);
 		} else {
 			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_LOGIN_TITLE, null, response.getError());
 		}
