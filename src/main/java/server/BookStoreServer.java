@@ -49,7 +49,7 @@ public interface BookStoreServer {
 	boolean isManager(Identity identity);
 	
 	@WebMethod
-	boolean placeOrder(String isbn, String quantity);
+	ResponseData placeOrder(String isbn, String quantity);
 	
 	@WebMethod
 	boolean promoteUser(String userName);
@@ -58,7 +58,7 @@ public interface BookStoreServer {
 	List<Order> getOrders(int offset, int limit);
 	
 	@WebMethod
-	boolean deleteOrder(int orderId);
+	ResponseData deleteOrder(int orderId);
 	
 	@WebMethod
 	byte[] generateReport(Identity identity, ReportType reportType);

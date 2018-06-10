@@ -11,7 +11,10 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import server.ResponseData;
 import server.database.entities.book.Book;
+import server.errors.OrderError;
+import server.errors.SqlError;
 
 @Getter
 @Setter
@@ -43,17 +46,19 @@ public class Order implements Serializable {
 		
 	}
 	
-	public static boolean addNewOrder(Order order, Connection connection) {
+	public static ResponseData addNewOrder(Order order, Connection connection) {
+		ResponseData rs = new ResponseData();
 		try {
 			String query = String.format(PLACE_ORDER_QUERY, BOOK_ORDER_TABLE);
 			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
 			st.setString(1, order.book.getBookISBN());
 			st.setLong(2, order.quantity);
 			st.executeUpdate();
+			return rs;
 		} catch(SQLException | NumberFormatException sql) {
-			return false;
+			rs.setError(SqlError.SERVER_ERROR.toString());
+			return rs;
 		}
-		return true;
 	}
 	
 	public static List<Order> selectAllOrders(int offset, int limit, Connection connection) {
@@ -63,7 +68,7 @@ public class Order implements Serializable {
 			ResultSet rs = st.executeQuery();
 			return composeList(rs);
 		} catch(SQLException e) {
-			return new ArrayList<>();
+			return null;
 		}
 	}
 	
@@ -81,15 +86,20 @@ public class Order implements Serializable {
 		return orders;
 	}
 	
-	public static boolean deleteOrderById(int id, Connection connection) {
+	public static ResponseData deleteOrderById(int id, Connection connection) {
+		ResponseData responseData = new ResponseData();
 		try {
 			String query = String.format(DELETE_BY_ID, BOOK_ORDER_TABLE);
 			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
 			st.setInt(1, id);
 			int rowsAffected = st.executeUpdate();
-			return rowsAffected == 1;
+			if(rowsAffected != 1) {
+				throw new SQLException();
+			}
+			return responseData;
 		} catch(SQLException e) {
-			return false;
+			responseData.setError(OrderError.ERROR_DELETING_ORDER.toString());
+			return responseData;
 		}
 	}
 

@@ -12,7 +12,11 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
+import server.ResponseData;
+import server.errors.OrderError;
+import server.errors.SqlError;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 
 public class PlaceOrderController extends Dialog<Object> {
 	
@@ -40,14 +44,16 @@ public class PlaceOrderController extends Dialog<Object> {
 		getDialogPane().getButtonTypes().addAll(placeButtonType, ButtonType.CANCEL);
 		Node placeButton = getDialogPane().lookupButton(placeButtonType);
 		placeButton.addEventFilter(ActionEvent.ACTION, event -> {
-			boolean isValidClick = placeButtonFilter();
-			if(!isValidClick) {
+			ResponseData isValidClick = placeButtonFilter();
+			if(!isValidClick.isSuccessful()) {
+				BookStoreApp.displayDialog(AlertType.INFORMATION, SqlError.ERROR_MESSAGE_TITLE.toString(),
+						OrderError.ERROR_MESSAGE_HEADER.toString(), OrderError.ERROR_ADDING_ORDER.toString());
 				event.consume();
 			}
 		});
 	}
 	
-	private boolean placeButtonFilter() {
+	private ResponseData placeButtonFilter() {
 		return BookClient.getServer().placeOrder(isbn.getText(), quantity.getText());
 	}
 	

@@ -138,12 +138,14 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public boolean placeOrder(String isbn, String quantity) {
+	public ResponseData placeOrder(String isbn, String quantity) {
 		int q = 0;
 		try {
 			q = Integer.valueOf(quantity);
 		} catch (NumberFormatException e) {
-			return false;
+			ResponseData rs = new ResponseData();
+			rs.setError(BookError.INVALID_NUMBERS.toString());
+			return rs;
 		}
 		Book book = BookModel.getBookByISBN(isbn, connection);
 		return Order.addNewOrder(new Order(q, book), connection);
@@ -161,7 +163,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 	
 	@Override
-	public boolean deleteOrder(int orderId) {
+	public ResponseData deleteOrder(int orderId) {
 		return Order.deleteOrderById(orderId, connection);
 	}
 	@Override

@@ -10,7 +10,8 @@ public enum BookError {
 	INVALID_QUANTITY("ERROR: invalid quantity"),
 	INVALID_PUBLISHER_NAME("ERROR: invalid publisher name"),
 	INVALID_AUTHOR_NAME("ERROR: invalid author name"), 
-	BOOK_NOT_EXIST("ERROR: Book doesn't exist");
+	BOOK_NOT_EXIST("ERROR: Book doesn't exist"),
+	INVALID_NUMBERS("ERROR: invalid numbers");
 	
 	private final String text;
 
