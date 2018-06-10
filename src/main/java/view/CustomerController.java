@@ -3,6 +3,7 @@ package view;
 
 import java.net.URL;
 
+
 import java.util.ArrayList;
 
 
@@ -68,7 +69,11 @@ public class CustomerController implements Initializable, CustomController {
 	private TextField price;
 
 	private int offset = 0;
+	
 	private Book criteriaBook;
+	
+	/*true for buy, false for edit*/
+	private boolean editOrBuyMode;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -93,7 +98,6 @@ public class CustomerController implements Initializable, CustomController {
 		Identity identity = BookStoreApp.getUser().getIdentity();
 		BooksResponseData response = BookClient.getServer().advancedSearchBooks(identity, offset, LIMIT, criteriaBook);
 		if (response.isSuccessful()) {
-			System.out.println("susccessful");
 			viewBooks(response.getBooks());
 			offset += response.getBooks().size();
 		} else {
@@ -109,18 +113,19 @@ public class CustomerController implements Initializable, CustomController {
 
 	private void viewBooks(List<Book> books) {
 		for (Book book : books) {
-
 			BookHyperLink titleLink = new BookHyperLink(book);
 			titleLink.setText(new String(book.getBookTitle()));
 			titleLink.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
-					BookStoreApp.showBookView(titleLink.getBook());
+					if (editOrBuyMode) {
+						BookStoreApp.showBookView(titleLink.getBook());
+					}else {
+						BookStoreApp.editBookView(titleLink.getBook());
+					}
 					titleLink.setVisited(false);
-					System.out.println(titleLink.getBook().getBookTitle());
 				}
 			});
-
 			ordersList.add(new BookTuple(titleLink));
 		}
 		booksTable.setItems(ordersList);
@@ -176,6 +181,7 @@ public class CustomerController implements Initializable, CustomController {
 	@Override
 	public void initData(Parameters parameters) {
 		userName.setText(BookStoreApp.getUser().getIdentity().getUserName());
+		editOrBuyMode = parameters.getEditOrBuyMode();
 		clearSearchFields();
 		refresh();
 		

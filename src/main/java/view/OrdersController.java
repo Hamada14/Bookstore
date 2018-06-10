@@ -96,7 +96,7 @@ public class OrdersController implements CustomController {
 
 	@FXML
 	private void goHome() {
-		BookStoreApp.showCustomer();
+		BookStoreApp.showCustomer(true);
 	}
 
 	@FXML

@@ -102,7 +102,7 @@ public class CreditCardPController extends Dialog<OrderResponseData>{
 		if (res.isSuccessful()) {
 			BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, SUCCESSFUL_TEXT);
 			BookStoreApp.getShoppingCart().clearCart();
-			BookStoreApp.showCustomer();
+			BookStoreApp.showCustomer(true);
 		} else {
 			if (res.getError().equals(ShoppingCartModel.SHORTAGE_CODE)) {
 				return res;

@@ -22,6 +22,11 @@ public class ManagerController implements CustomController {
 	private void showAddNewBookPanel() {
 		BookStoreApp.showAddNewBook();
 	}
+	
+	@FXML
+	private void showEditBookPanel() {
+		BookStoreApp.showCustomer(false);
+	}
 
 	@FXML
 	private void showPromoteUser() {
@@ -43,7 +48,7 @@ public class ManagerController implements CustomController {
 	
 	@FXML
 	private void goToCustomerView() {
-		BookStoreApp.showCustomer();
+		BookStoreApp.showCustomer(true);
 	}
 	
 	@FXML void logOut() {

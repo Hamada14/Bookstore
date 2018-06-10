@@ -54,7 +54,7 @@ public class BookController implements CustomController {
 
 	@FXML
 	private void goHome() {
-		BookStoreApp.showCustomer();
+		BookStoreApp.showCustomer(true);
 	}
 
 	@FXML
@@ -67,7 +67,7 @@ public class BookController implements CustomController {
 			currentCart.addOrder(new Order(result, selectedBook));
 			BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, ORDER_ADDED_MESSAGE);
 			quantity.setText("");
-			BookStoreApp.showCustomer();
+			BookStoreApp.showCustomer(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			BookStoreApp.displayDialog(AlertType.ERROR, INVALID_INPUT, null, ERROR_IN_QUANTITY);

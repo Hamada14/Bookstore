@@ -49,8 +49,9 @@ public class BookStoreApp extends Application {
 		editProfileView = new Controller(primaryStage, EDIT_PROFILE_VIEW);
 		allOrdersView = new Controller(primaryStage, ALL_ORDERS_VIEW);
 		authorsView = new Controller(primaryStage, AUTHORS_VIEW);
-//		showLogin();
-		showManager();
+		editBookView = new Controller(primaryStage, EDIT_BOOK_VIEW);
+		showLogin();
+//		showManager();
 	}
 
 	public static void showLogin() {
@@ -109,9 +110,11 @@ public class BookStoreApp extends Application {
 		return currentUser;
 	}
 
-	public static void showCustomer() {
+	public static void showCustomer(boolean editOrBuyMode) {
 		customer.show();
-		customer.getController().initData(null);
+		view.Parameters params = new view.Parameters();
+		params.setEditOrBuyMode(editOrBuyMode);
+		customer.getController().initData(params);
 	}
 	
 	public static void logOut() {
