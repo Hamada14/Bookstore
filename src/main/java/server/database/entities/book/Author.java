@@ -32,7 +32,7 @@ public class Author extends Person {
 	private static final int AUTHOR_LAST_NAME = 2;
 
 	static final String BOOK_AUTHORS_TABLE = "BOOK_AUTHOR";
-    static final String AUTHOR_TABLE = "AUTHOR";
+    public static final String AUTHOR_TABLE = "AUTHOR";
 
 	private String LastName;
 

@@ -1,6 +1,7 @@
 package view;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,10 +36,12 @@ public class CustomerController implements Initializable, CustomController {
 	private static final int LIMIT = 16;
 	private static final String TITLE_COL = "bookTitle";
 	private static final String ERROR_MESSAGE_TITLE = "Error while searching";
+
 	private static final String ERROR_YEAR= "invalid year, won't be considered";
 	private static final String ERROR_PRICE= "invalid price, won't be considered";
 	private static final ObservableList<String> categoriesList = FXCollections
 			.observableArrayList(BookClient.getServer().getCategories());
+
 	@FXML
 	private ChoiceBox<String> categories;
 
@@ -72,31 +75,33 @@ public class CustomerController implements Initializable, CustomController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-//		categories.setValue(BookClient.getServer().getCategories().get(0));
-//		categories.setItems(categoriesList);
-//		bookTitleCol.setCellValueFactory(new PropertyValueFactory<BookTuple, BookHyperLink>(TITLE_COL));
-//		criteriaBook = new Book("", "", "", -1, "", "", 0, 0);
-//		refresh();
+		categories.setValue(BookClient.getServer().getCategories().get(0));
+		categories.setItems(categoriesList);
+		bookTitleCol.setCellValueFactory(new PropertyValueFactory<BookTuple, BookHyperLink>(TITLE_COL));
+		List<String> authors = new ArrayList<>();
+		authors.add(new String());
+		criteriaBook = new Book("", "", "", -1, "", "", 0, 0);
+		refresh();
 
 	}
 
 	@FXML
 	private void searchBooks() {
-//		refresh();
-//		setCriteria();
-//		loadBooks();
+		refresh();
+		setCriteria();
+		loadBooks();
 	}
 
 	@FXML
 	private void loadBooks() {
-//		Identity identity = BookStoreApp.getUser().getIdentity();
-//		BooksResponseData response = BookClient.getServer().searchBook(identity, offset, LIMIT, criteriaBook);
-//		if (response.isSuccessful()) {
-//			viewBooks(response.getBooks());
-//			offset += response.getBooks().size();
-//		} else {
-//			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, response.getError());
-//		}
+		Identity identity = BookStoreApp.getUser().getIdentity();
+		BooksResponseData response = BookClient.getServer().advancedSearchBooks(identity, offset, LIMIT, criteriaBook);
+		if (response.isSuccessful()) {
+			viewBooks(response.getBooks());
+			offset += response.getBooks().size();
+		} else {
+			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, response.getError());
+		}
 	}
 
 	private void refresh() {
@@ -106,71 +111,59 @@ public class CustomerController implements Initializable, CustomController {
 	}
 
 	private void viewBooks(List<Book> books) {
-//		for (Book book : books) {
-//
-//			BookHyperLink titleLink = new BookHyperLink(book);
-//			titleLink.setText(new String(book.getBookTitle()));
-//			titleLink.setOnAction(new EventHandler<ActionEvent>() {
-//				@Override
-//				public void handle(ActionEvent e) {
-//					BookStoreApp.showBookView(titleLink.getBook());
-//					titleLink.setVisited(false);
-//					System.out.println(titleLink.getBook().getBookTitle());
-//				}
-//			});
-//
-//			ordersList.add(new BookTuple(titleLink));
-//		}
-//		booksTable.setItems(ordersList);
-//		loadMore.setVisible(true);
+		for (Book book : books) {
+
+			BookHyperLink titleLink = new BookHyperLink(book);
+			titleLink.setText(new String(book.getBookTitle()));
+			titleLink.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent e) {
+					BookStoreApp.showBookView(titleLink.getBook());
+					titleLink.setVisited(false);
+					System.out.println(titleLink.getBook().getBookTitle());
+				}
+			});
+
+			ordersList.add(new BookTuple(titleLink));
+		}
+		booksTable.setItems(ordersList);
+		loadMore.setVisible(true);
 	}
 
 	private void setCriteria() {
-//		criteriaBook.setBookTitle(title.getText());
-//		criteriaBook.setAuthor(new Author(authorFirstName.getText(), authorLastName.getText()));
-//		criteriaBook.setPublisherName(publisherName.getText());
-//		criteriaBook.setCategory(categories.getValue());
-//		criteriaBook.setBookISBN(isbn.getText());
-//		String yearValue = publicationYear.getText();
-//		if (yearValue.equals("") || Book.isValidPublicationYear(yearValue)) {
-//			criteriaBook.setPublicationYear(yearValue);
-//		} else {
-//			criteriaBook.setPublicationYear("");
-//			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, ERROR_YEAR);
-//		}
-//			
-//		if (price.getText().equals("")) {
-//			criteriaBook.setSellingPrice(-1);
-//		} else {
-//			
-//			float priceVal = -1;
-//			
-//			try{
-//				Float.parseFloat(price.getText());
-//				if (Book.isValidSellingPrice(priceVal)) {
-//					criteriaBook.setSellingPrice(priceVal);
-//				} else {
-//					criteriaBook.setSellingPrice(priceVal);
-//					BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, ERROR_PRICE);
-//				}
-//			}catch (Exception e) {
-//				criteriaBook.setSellingPrice(priceVal);
-//				BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, ERROR_PRICE);
-//			}
-//			
-//		}
+		criteriaBook.setBookTitle(title.getText());
+		criteriaBook.setPublisherName(publisherName.getText());
+		criteriaBook.setCategory(categories.getValue());
+		criteriaBook.setBookISBN(isbn.getText());
+		String yearValue = publicationYear.getText();
+		criteriaBook.setPublicationYear(yearValue);
+		if (price.getText().equals("")) {
+			criteriaBook.setSellingPrice(-1);
+		} else {
+			
+			float priceVal = -1;
+			
+			try{
+				Float.parseFloat(price.getText());	
+					criteriaBook.setSellingPrice(priceVal);
+			}catch (Exception e) {
+				criteriaBook.setSellingPrice(priceVal);
+				BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, null, ERROR_PRICE);
+			}
+			
+		}
 	}
 
 	private void clearSearchFields() {
-//		title.setText("");
-//		authorFirstName.setText("");
-//		authorLastName.setText("");
-//		publisherName.setText("");
-//		isbn.setText("");
-//		price.setText("");
-//		publicationYear.setText("");
-//		criteriaBook = new Book("", "", "", -1, "", "", 0, 0);
-//		categories.setValue(Book.BOOK_CATEGORIES[0]);
+		title.setText("");
+		authorFirstName.setText("");
+		authorLastName.setText("");
+		publisherName.setText("");
+		isbn.setText("");
+		price.setText("");
+		publicationYear.setText("");
+		criteriaBook = new Book("", "", "", -1, "", "", 0, 0);
+		categories.setValue("");
 	}
 
 	@Override

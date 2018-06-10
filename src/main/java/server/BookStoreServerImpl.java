@@ -10,7 +10,12 @@ import net.sf.jasperreports.engine.JRException;
 
 import server.database.entities.user.Identity;
 import server.database.entities.Order;
-import server.database.entities.ShoppingCart;
+
+import server.database.entities.shoppingcart.ShoppingCart;
+import server.database.entities.shoppingcart.ShoppingCartModel;
+import server.database.entities.author.Author;
+import server.database.entities.author.AuthorModel;
+
 import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
 import server.database.entities.book.BookModel;
@@ -94,11 +99,12 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
-	public BooksResponseData searchBook(Identity identity, int offset, int limit, Book book) {
+	public BooksResponseData advancedSearchBooks(Identity identity, int offset, int limit, Book book) {
 		BooksResponseData booksResponse = new BooksResponseData();
 		UserResponseData validUser = identity.isUser(connection);
 		if (validUser.isSuccessful()) {
-			BooksResponseData booksResponse2 = BookModel.searchBooks(book, offset, limit, connection);//shrouk part
+			BooksResponseData booksResponse2 = BookModel.searchAdvancedBooks(book, offset, limit, connection);//shrouk part
+
 //			System.out.println("in impl" + booksResponse2.getBooks().size());
 			return booksResponse2;
 		} else {
@@ -157,7 +163,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 		OrderResponseData rs = new OrderResponseData();
 		UserResponseData validUser = identity.isUser(connection);
 		if (validUser.isSuccessful()) {
-			return cart.checkOut(identity.getUserName(), connection);
+			return ShoppingCartModel.checkOut(cart,identity.getUserName(), connection);
 		} else {
 			rs.setError(validUser.getError());
 			return rs;
