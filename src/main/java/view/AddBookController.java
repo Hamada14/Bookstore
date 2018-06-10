@@ -35,7 +35,7 @@ public class AddBookController implements CustomController {
 	@FXML private TextField minimumThreshold;
 	
 	private static final ObservableList<String> categoriesList = FXCollections
-			.observableArrayList(BookClient.getServer().getCategories());
+			.observableArrayList(BookClient.getServer().getCategories(BookStoreApp.getUser().getIdentity()));
 	
 	@FXML
 	private void confirmBookAddition() {
@@ -53,7 +53,7 @@ public class AddBookController implements CustomController {
 			bookBuilder.setMinimumThreshold(minimumQuantity);
 			Publisher publisher = new Publisher(publisherName.getText());
 			bookBuilder.setPublisher(publisher);
-			ResponseData bookAdded = BookClient.getServer().addNewBook(bookBuilder);
+			ResponseData bookAdded = BookClient.getServer().addNewBook(BookStoreApp.getUser().getIdentity(), bookBuilder);
 			if (bookAdded.isSuccessful()) {
 				BookStoreApp.showManager();
 				BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESS_MESSAGE_TITLE, SUCCESS_MESSAGE_TITLE,

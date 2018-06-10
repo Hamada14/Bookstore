@@ -50,7 +50,7 @@ public class Book implements Serializable {
 	public Book() {
 		authors = new ArrayList<>();
 	}
-	
+
 	Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
 			Publisher publisher, int quantity, int minimumThreshold) {
 		authors = new ArrayList<Author>();
@@ -64,7 +64,7 @@ public class Book implements Serializable {
 		this.minimumThreshold = minimumThreshold;
 	}
 
-	public Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
+	public Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category, List<Author> authors,
 			String publisherName,int quantity, int minimumThreshold) {
 		authors = new ArrayList<Author>();
 		this.bookISBN = bookISBN;
@@ -73,6 +73,7 @@ public class Book implements Serializable {
 		this.sellingPrice = sellingPrice;
 		this.category = category;
 		this.publisher = new Publisher(publisherName);
+		this.authors = authors;
 		this.quantity = quantity;
 		this.minimumThreshold = minimumThreshold;	
 	}

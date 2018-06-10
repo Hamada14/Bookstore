@@ -63,7 +63,7 @@ public class BookController implements CustomController {
 		price.setText(String.valueOf(selectedBook.getSellingPrice()));
 		publisher.setText(selectedBook.getPublisher().getName());
 		authorNames.clear();
-		List<Author> authors = BookClient.getServer().getBookAuthors(selectedBook.getBookISBN());
+		List<Author> authors = BookClient.getServer().getBookAuthors(BookStoreApp.getUser().getIdentity(), selectedBook.getBookISBN());
 		if (authors != null) {
 			authorNames = FXCollections
 					.observableArrayList(authors.stream().map(Author::getName).collect(Collectors.toList()));

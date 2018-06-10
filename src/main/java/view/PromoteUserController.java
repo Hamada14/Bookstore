@@ -48,7 +48,7 @@ public class PromoteUserController extends Dialog<Object> {
 	}
 	
 	private ResponseData promoteUser() {
-		return BookClient.getServer().promoteUser(userName.getText());
+		return BookClient.getServer().promoteUser(BookStoreApp.getUser().getIdentity(), userName.getText());
 	}
 	
 	private void initializeGrid() {
