@@ -54,7 +54,7 @@ public class PlaceOrderController extends Dialog<Object> {
 	}
 	
 	private ResponseData placeButtonFilter() {
-		return BookClient.getServer().placeOrder(isbn.getText(), quantity.getText());
+		return BookClient.getServer().placeOrder(BookStoreApp.getUser().getIdentity(), isbn.getText(), quantity.getText());
 	}
 	
 	private void initializeGrid() {

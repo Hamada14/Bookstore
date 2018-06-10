@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import server.ResponseData;
 import server.database.entities.author.Author;
+import server.database.entities.book.Book;
+import server.errors.BookError;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
@@ -40,7 +42,7 @@ public class AuthorsController implements CustomController {
 	@FXML
 	private void addAuthor() {
 		Author author = new Author(authorName.getText());
-		ResponseData responseData = BookClient.getServer().addAuthor(author, usedISBN);
+		ResponseData responseData = BookClient.getServer().addAuthor(BookStoreApp.getUser().getIdentity(), author, usedISBN);
 		if(!responseData.isSuccessful()) {
 			BookStoreApp.displayDialog(AlertType.ERROR, FAIL_TITLE, null, responseData.getError());
 		} else {
@@ -53,7 +55,7 @@ public class AuthorsController implements CustomController {
 	@FXML
 	private void deleteAuthor() {
 		String remove = authorsList.getValue();
-		ResponseData rs = BookClient.getServer().deleteAuthorReference(usedISBN, new Author(remove));
+		ResponseData rs = BookClient.getServer().deleteAuthorReference(BookStoreApp.getUser().getIdentity(), usedISBN, new Author(remove));
 		if(rs.isSuccessful()) {
 			BookStoreApp.displayDialog(AlertType.INFORMATION, SUCCESSFUL_TITLE, null, DELETE_DONE_TEXT);
 			authorsList.getItems().remove(remove);
@@ -72,7 +74,7 @@ public class AuthorsController implements CustomController {
 	@FXML
 	private void loadAuthors() {
 		authorNames.clear();
-		List<Author> authors = BookClient.getServer().getBookAuthors(bookISBN.getText());
+		List<Author> authors = BookClient.getServer().getBookAuthors(BookStoreApp.getUser().getIdentity(), bookISBN.getText());
 		if (authors != null) {
 			authorNames = FXCollections
 					.observableArrayList(authors.stream().map(Author::getName).collect(Collectors.toList()));

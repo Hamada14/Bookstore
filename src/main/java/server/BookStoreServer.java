@@ -36,10 +36,10 @@ public interface BookStoreServer {
 	BooksResponseData advancedSearchBooks(Identity identity, int offset, int limit, Book selectedBook);
 
 	@WebMethod
-	ResponseData addNewBook(BookBuilder newBook);
+	ResponseData addNewBook(Identity identity, BookBuilder newBook);
 
 	@WebMethod
-	ResponseData editBook(BookBuilder bookBuilder);
+	ResponseData editBook(Identity identity, BookBuilder bookBuilder);
 	
 	@WebMethod
 	UserResponseData loginUser(Identity identity);
@@ -48,16 +48,16 @@ public interface BookStoreServer {
 	boolean isManager(Identity identity);
 	
 	@WebMethod
-	ResponseData placeOrder(String isbn, String quantity);
+	ResponseData placeOrder(Identity identity, String isbn, String quantity);
 	
 	@WebMethod
-	ResponseData promoteUser(String userName);
+	ResponseData promoteUser(Identity identity, String userName);
 
 	@WebMethod
-	List<Order> getOrders(int offset, int limit);
+	List<Order> getOrders(Identity identity, int offset, int limit);
 	
 	@WebMethod
-	ResponseData deleteOrder(int orderId);
+	ResponseData deleteOrder(Identity identity, int orderId);
 	
 	@WebMethod
 	byte[] generateReport(Identity identity, ReportType reportType);
@@ -66,14 +66,14 @@ public interface BookStoreServer {
 	OrderResponseData checkoutShoppingCart(Identity identity, ShoppingCart cart);
 	
 	@WebMethod
-	List<Author> getBookAuthors(String bookISBN);
+	List<Author> getBookAuthors(Identity identity, String bookISBN);
 
 	@WebMethod
-	List<String> getCategories();
+	List<String> getCategories(Identity identity);
 
 	@WebMethod
-	ResponseData addAuthor(Author author, String isbn);
+	ResponseData addAuthor(Identity identity, Author author, String isbn);
 
 	@WebMethod
-	ResponseData deleteAuthorReference(String usedIsbn, Author author);
+	ResponseData deleteAuthorReference(Identity identity, String usedIsbn, Author author);
 }

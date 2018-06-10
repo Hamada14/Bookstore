@@ -40,7 +40,7 @@ public class CustomerController implements CustomController {
 	private static final String ERROR_YEAR = "invalid year, won't be considered";
 	private static final String ERROR_PRICE = "invalid price, won't be considered";
 	private static final ObservableList<String> categoriesList = FXCollections
-			.observableArrayList(BookClient.getServer().getCategories());
+			.observableArrayList(BookClient.getServer().getCategories(BookStoreApp.getUser().getIdentity()));
 
 	@FXML
 	private MenuItem goToManagerModeButton;
@@ -83,6 +83,7 @@ public class CustomerController implements CustomController {
 	/* true for buy, false for edit */
 	private boolean editOrBuyMode;
 
+
 	@FXML
 	private void addAuthor() {
 		authorNames.add(authorName.getText());
@@ -96,7 +97,6 @@ public class CustomerController implements CustomController {
 		authorNames.remove(remove);
 		authorsList.setValue("");
 		authorName.setText("");
-
 	}
 
 	@FXML
@@ -192,7 +192,7 @@ public class CustomerController implements CustomController {
 
 	@Override
 	public void initData(Parameters parameters) {
-		categories.setValue(BookClient.getServer().getCategories().get(0));
+		categories.setValue(BookClient.getServer().getCategories(BookStoreApp.getUser().getIdentity()).get(0));
 		categories.setItems(categoriesList);
 		bookTitleCol.setCellValueFactory(new PropertyValueFactory<BookTuple, BookHyperLink>(TITLE_COL));
 		authorNames = FXCollections.observableArrayList();
