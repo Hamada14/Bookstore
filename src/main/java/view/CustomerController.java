@@ -203,6 +203,7 @@ public class CustomerController implements CustomController {
 
 	@Override
 	public void initData(Parameters parameters) {
+		categoriesList.add("");
 		categories.setValue(categoriesList.get(0));
 		categories.setItems(categoriesList);
 		bookTitleCol.setCellValueFactory(new PropertyValueFactory<BookTuple, BookHyperLink>(TITLE_COL));
@@ -220,12 +221,10 @@ public class CustomerController implements CustomController {
 		if (price.equals("")) {
 			criteriaBook.setSellingPrice(-1);
 		} else {
-
 			float priceVal = -1;
-
 			try {
-				Float.parseFloat(price);
-				if (BookBuilder.isValidSellingPrice(priceVal) != null) {
+				priceVal = Float.parseFloat(price);
+				if (BookBuilder.isValidSellingPrice(priceVal) == null) {
 					criteriaBook.setSellingPrice(priceVal);
 				} else {
 					criteriaBook.setSellingPrice(priceVal);
@@ -240,7 +239,8 @@ public class CustomerController implements CustomController {
 	}
 	
 	private void setYear(String yearValue) {
-		if (yearValue.equals("") || BookBuilder.isValidPublicationYear(yearValue) != null) {
+	
+		if (yearValue.equals("") || BookBuilder.isValidPublicationYear(yearValue) == null) {
 			criteriaBook.setPublicationYear(yearValue);
 		} else {
 			criteriaBook.setPublicationYear("");
