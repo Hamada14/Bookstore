@@ -63,6 +63,7 @@ public class Publisher extends Person {
 				}
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return ERROR_PUBLISHER_ADDITION;
 		} finally {
 			query.close();

@@ -20,8 +20,5 @@ public class SelectQuantityByISBN extends Query{
 		String query = String.format(SELECT_QUANTITY, BOOKS_TABLE);
 		ps = connection.prepareStatement(query);
 		ps.setString(ISBN_INDEX, isbn);
-		
-		
 	}
-
 }
