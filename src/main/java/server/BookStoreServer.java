@@ -11,6 +11,9 @@ import javax.jws.soap.SOAPBinding.Style;
 import server.database.entities.user.Identity;
 import server.database.entities.shoppingcart.ShoppingCart;
 import server.database.entities.author.Author;
+import server.database.entities.publisher.Publisher;
+import server.database.entities.publisher.PublisherAddress;
+import server.database.entities.publisher.PublisherPhone;
 import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
 import server.database.entities.Order;
@@ -79,4 +82,26 @@ public interface BookStoreServer {
 
 	@WebMethod
 	ResponseData deleteAuthorReference(Identity identity, String usedIsbn, Author author);
+	
+	@WebMethod
+	ResponseData addPublisher(Identity identity, Publisher publisher);
+	
+	@WebMethod
+	ResponseData addPublisherAddress(Identity identity, Publisher publisher, PublisherAddress publisherAddress);
+	
+	@WebMethod
+	ResponseData deletePublisherAddress(Identity identity, Publisher publisher, PublisherAddress publisherAddress);
+	
+	@WebMethod 
+	List<PublisherAddress> loadPublisherAddresses(Identity identity, Publisher publisher);
+	
+	@WebMethod
+	ResponseData addPublisherPhone(Identity identity, Publisher publisher, PublisherPhone publisherPhone);
+	
+	@WebMethod
+	ResponseData deletePublisherPhone(Identity identity, Publisher publisher, PublisherPhone publisherPhone);
+	
+	@WebMethod
+	List<PublisherPhone> loadPublisherPhones(Identity identity, Publisher publisher);
+	
 }

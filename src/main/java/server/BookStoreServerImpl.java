@@ -20,7 +20,9 @@ import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
 import server.database.entities.book.BookModel;
 import server.database.entities.publisher.Publisher;
+import server.database.entities.publisher.PublisherAddress;
 import server.database.entities.publisher.PublisherModel;
+import server.database.entities.publisher.PublisherPhone;
 import server.database.entities.user.UserBuilder;
 import server.database.entities.user.UserModel;
 import server.database.report.JasperReportCreator;
@@ -135,7 +137,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 			return null;
 		}
 		int publisherId = PublisherModel.addPublisher(newBookBuilder.getPublisher(), connection);
-		if (publisherId == server.database.entities.publisher.Publisher.ERROR_PUBLISHER_ADDITION) {
+		if (publisherId == Publisher.ERROR_PUBLISHER_ADDITION) {
 			ResponseData responseData = new ResponseData();
 			responseData.setError(BookError.INVALID_PUBLISHER_NAME.toString());
 			return responseData;
@@ -162,7 +164,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 		if(!identity.isManager(connection)) {
 			return null;
 		}
-		isbn = BookBuilder.normalizeISBN(isbn);
 		int q = 0;
 		try {
 			q = Integer.valueOf(quantity);
@@ -224,7 +225,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 		if(!validUser.isSuccessful()) {
 			return null;
 		}
-		bookISBN = BookBuilder.normalizeISBN(bookISBN);
 		List<Author> bookAuthors = AuthorModel.selectAuthorNameByISBN(bookISBN, connection);
 		return bookAuthors;
 	}
@@ -234,7 +234,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 		if(!identity.isManager(connection)) {
 			return null;
 		}
-		isbn = BookBuilder.normalizeISBN(isbn);
 		int id = AuthorModel.addAuthor(author, connection);
 		ResponseData response = new ResponseData();
 		if(id == Author.ERROR_AUTHOR_ADDITION) {
@@ -253,7 +252,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 		if(!identity.isManager(connection)) {
 			return null;
 		}
-		usedIsbn = BookBuilder.normalizeISBN(usedIsbn);
 		int authorId = author.getID(connection);
 		if(authorId == Author.AUTHOR_NOT_FOUND) {
 			ResponseData rs = new ResponseData();
@@ -269,6 +267,68 @@ public class BookStoreServerImpl implements BookStoreServer {
 		return new ResponseData();
 	}
 
+	@Override
+	public ResponseData addPublisher(Identity identity, Publisher publisher) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
+		ResponseData rs = new ResponseData();
+		int id = PublisherModel.addPublisher(publisher, connection);
+		if(id == Publisher.ERROR_PUBLISHER_ADDITION) {
+			rs.setError(BookError.INVALID_PUBLISHER_NAME.toString());
+		} 
+		return rs;
+	}
+
+	@Override
+	public ResponseData addPublisherAddress(Identity identity, Publisher publisher, PublisherAddress publisherAddress) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
+		return PublisherModel.addPublisherAddress(publisher, publisherAddress, connection);
+	}
+
+	@Override
+	public ResponseData deletePublisherAddress(Identity identity, Publisher publisher,
+			PublisherAddress publisherAddress) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
+		return PublisherModel.deleteAddress(publisher, publisherAddress, connection);
+	}
+
+	@Override
+	public List<PublisherAddress> loadPublisherAddresses(Identity identity, Publisher publisher) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
+		return PublisherModel.getAddresses(publisher, connection);
+	}
+
+	@Override
+	public ResponseData addPublisherPhone(Identity identity, Publisher publisher, PublisherPhone publisherPhone) {
+		if(!identity.isManager(connection)) {
+			System.out.println("HERE");
+			return null;
+		}
+		return PublisherModel.addPublisherPhone(publisher, publisherPhone, connection);
+	}
+
+	@Override
+	public ResponseData deletePublisherPhone(Identity identity, Publisher publisher, PublisherPhone publisherPhone) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
+		return PublisherModel.deletePhone(publisher, publisherPhone, connection);
+	}
+
+	@Override
+	public List<PublisherPhone> loadPublisherPhones(Identity identity, Publisher publisher) {
+		if(!identity.isManager(connection)) {
+			return null;
+		}
+		return PublisherModel.getPhones(publisher, connection);
+	}
 
 
 }

@@ -61,6 +61,7 @@ public class CustomerController implements CustomController {
 	private ComboBox<String> authorsList;
 
 	private ObservableList<String> authorNames;
+
 	@FXML
 	private Label fullName;
 	@FXML
