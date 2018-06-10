@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class Person {
 	
-	private static final String NAME_REGEX = "^[a-zA-Z]++(?:[',.-][a-zA-Z]++)*+$";
+	private static final String NAME_REGEX = "^[^\\s].*";
 	protected static final String ID_COL = "ID";
 	
 	protected String name;
