@@ -49,6 +49,12 @@ public class ManagerController implements CustomController {
 	@FXML void logOut() {
 		BookStoreApp.logOut();
 	}
+	
+	@FXML
+	private void goToAuthorsManagement() {
+		BookStoreApp.showAuthorsView();
+	}
+	
 	@Override
 	public void initData(Parameters parameters) {
 		// TODO Auto-generated method stub

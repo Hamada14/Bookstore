@@ -2,6 +2,7 @@ package server.database.entities.author.query;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import lombok.Setter;
 import server.database.Query;
@@ -17,7 +18,7 @@ public class AddAuthor extends Query {
 	@Override
 	protected void prepareStatement(Connection connection) throws SQLException {
 		String query = String.format(ADD_AUTHOR, AuthorModel.AUTHOR_TABLE);
-		ps = connection.prepareStatement(query);
+		ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(NAME_INDEX, name);
 	}
 }

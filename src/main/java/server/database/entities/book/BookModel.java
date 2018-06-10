@@ -16,6 +16,7 @@ import server.database.entities.book.query.AllCategories;
 import server.database.entities.book.query.BookByISBN;
 import server.database.entities.book.query.CategoryById;
 import server.database.entities.book.query.CategoryIDByName;
+import server.database.entities.book.query.DeleteAuthorReference;
 
 public class BookModel {
 
@@ -71,7 +72,7 @@ public class BookModel {
 		return book.editBook(connection);
 	}
 
-	private static boolean authorRefAddition(String isbn, int authorId, Connection connection) {
+	public static boolean authorRefAddition(String isbn, int authorId, Connection connection) {
 		try {
 			AddAuthorReference query = new AddAuthorReference();
 			query.setAuthorId(authorId);
@@ -154,4 +155,23 @@ public class BookModel {
 		}
 	}
 
+	public static BooksResponseData searchBooks(Book book, int offset, int limit, Connection connection) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	public static boolean deleteAuthorReference(String usedIsbn, int authorId, Connection connection) {
+		DeleteAuthorReference query = new DeleteAuthorReference();
+		try {
+			query.setAuthorId(authorId);
+			query.setIsbn(usedIsbn);
+			query.executeQuery(connection);
+			int updateCount = query.getUpdateCount();
+			return updateCount != 0;
+		} catch(SQLException e) {
+			return false;
+		}
+	}
 }
