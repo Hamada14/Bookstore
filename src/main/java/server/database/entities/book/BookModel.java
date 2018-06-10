@@ -65,7 +65,7 @@ public class BookModel {
 		return book.editBook(connection);
 	}
 
-	private static boolean authorRefAddition(String isbn, int authorId, Connection connection) {
+	public static boolean authorRefAddition(String isbn, int authorId, Connection connection) {
 		try {
 			AddAuthorReference query = new AddAuthorReference();
 			query.setAuthorId(authorId);

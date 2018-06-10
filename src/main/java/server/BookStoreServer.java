@@ -71,4 +71,7 @@ public interface BookStoreServer {
 
 	@WebMethod
 	List<String> getCategories();
+	
+	@WebMethod
+	ResponseData addAuthor(Author author, String isbn);
 }

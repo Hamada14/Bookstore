@@ -5,10 +5,12 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import client.BookClient;
+import client.alphabit.BookStoreApp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import server.ResponseData;
 import server.database.entities.author.Author;
 import javafx.scene.control.ComboBox;
 
@@ -20,11 +22,20 @@ public class AuthorsController implements CustomController {
 	private TextField authorName;
 	@FXML
 	private ComboBox<String> authorsList;
-	private ObservableList<String> authorNames;
+	private ObservableList<String> authorNames = FXCollections.observableArrayList();
+	
+	private String usedISBN = "";
 
 	@FXML
 	private void addAuthor() {
-
+		Author author = new Author(authorName.getText());
+		ResponseData responseData = BookClient.getServer().addAuthor(author, usedISBN);
+		if(!responseData.isSuccessful()) {
+			
+		} else {
+			authorNames.add(author.getName());
+			authorsList.setItems(authorNames);
+		}
 	}
 
 	@FXML
@@ -34,7 +45,7 @@ public class AuthorsController implements CustomController {
 
 	@FXML
 	private void back() {
-
+		BookStoreApp.showManager();
 	}
 
 	@FXML

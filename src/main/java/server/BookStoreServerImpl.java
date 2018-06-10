@@ -182,4 +182,19 @@ public class BookStoreServerImpl implements BookStoreServer {
 		List<Author> bookAuthors = AuthorModel.selectAuthorNameByISBN(bookISBN, connection);
 		return bookAuthors;
 	}
+
+	@Override
+	public ResponseData addAuthor(Author author, String isbn) {
+		int id = AuthorModel.addAuthor(author, connection);
+		ResponseData response = new ResponseData();
+		if(id == Author.ERROR_AUTHOR_ADDITION) {
+			response.setError(BookError.INVALID_AUTHOR_NAME.toString());
+			return response;
+		}
+		boolean authorRefAddition = BookModel.authorRefAddition(isbn, id, connection);
+		if(!authorRefAddition) {
+			response.setError(BookError.INVALID_BOOK_ISBN.toString());
+		}
+		return response;
+	}
 }
