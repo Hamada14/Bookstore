@@ -17,6 +17,7 @@ import server.database.entities.book.query.BookByISBN;
 import server.database.entities.book.query.CategoryById;
 import server.database.entities.book.query.CategoryIDByName;
 import server.database.entities.book.query.DeleteAuthorReference;
+import server.database.entities.book.query.SelectByTitle;
 
 public class BookModel {
 
@@ -41,7 +42,6 @@ public class BookModel {
 			ResultSet rs = query.getResultSet();
 			while (rs.next()) {
 				Book newBook = new Book(rs, connection);
-//				newBook.setAuthor(Author.selectAuthorNameByISBN(newBook.getBookISBN(), connection));
 				booksResponse.addBook(newBook);
 			}
 			
@@ -52,6 +52,27 @@ public class BookModel {
 		return booksResponse;
 	}
 
+	public static BooksResponseData searchSimpleBooks(String title, int offset, int limit, Connection connection) {
+		BooksResponseData booksResponse = new BooksResponseData();
+	
+		try {
+			SelectByTitle query = new SelectByTitle();
+			query.setTitle(title);
+			query.setLimit(limit);
+			query.setOffset(offset);
+			query.executeQuery(connection);
+			ResultSet rs = query.getResultSet();
+			while (rs.next()) {
+				Book newBook = new Book(rs, connection);
+				booksResponse.addBook(newBook);
+			}
+			
+		} catch (SQLException e) {
+			booksResponse.setError(e.getMessage());
+			e.printStackTrace();
+		}
+		return booksResponse;
+	}
 	
 	
 	public static final ResponseData addBook(BookBuilder bookBuilder, Connection connection) {

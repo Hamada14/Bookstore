@@ -34,6 +34,10 @@ public interface BookStoreServer {
 
 	@WebMethod
 	BooksResponseData advancedSearchBooks(Identity identity, int offset, int limit, Book selectedBook);
+	
+	@WebMethod
+	BooksResponseData simpleSearchBooks(Identity identity, int offset, int limit, String title);
+
 
 	@WebMethod
 	ResponseData addNewBook(Identity identity, BookBuilder newBook);

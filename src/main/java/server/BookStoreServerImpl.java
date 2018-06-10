@@ -118,6 +118,18 @@ public class BookStoreServerImpl implements BookStoreServer {
 	}
 
 	@Override
+	public BooksResponseData simpleSearchBooks(Identity identity, int offset, int limit, String title) {
+		BooksResponseData booksResponse = new BooksResponseData();
+		UserResponseData validUser = identity.isUser(connection);
+		if (validUser.isSuccessful()) {
+			BooksResponseData booksResponse2 = BookModel.searchSimpleBooks(title, offset, limit, connection);
+			return booksResponse2;
+		} else {
+			booksResponse.setError(validUser.getError());
+			return booksResponse;
+		}
+	}
+	@Override
 	public ResponseData addNewBook(Identity identity, BookBuilder newBookBuilder) {
 		if(!identity.isManager(connection)) {
 			return null;
@@ -256,5 +268,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 		}
 		return new ResponseData();
 	}
+
+
 
 }
