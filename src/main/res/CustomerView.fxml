@@ -74,7 +74,7 @@
     			</graphic>
     			<items>
                       <MenuItem mnemonicParsing="false" onAction="#goToInformationForm" text="Edit your profle" />
-                  	  <MenuItem mnemonicParsing="false" onAction="#goToManagerView" text="Manager Mode" />
+                  	  <MenuItem fx:id="goToManagerModeButton" mnemonicParsing="false" onAction="#goToManagerView" text="Manager Mode" />
                       <MenuItem mnemonicParsing="false" onAction="#logOut" text="Logout" />
                  </items>
 			</MenuButton>

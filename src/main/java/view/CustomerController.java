@@ -22,6 +22,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -29,6 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import server.BooksResponseData;
 import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
+import server.database.entities.publisher.Publisher;
 import server.database.entities.user.Identity;
 
 public class CustomerController implements Initializable, CustomController {
@@ -42,6 +44,9 @@ public class CustomerController implements Initializable, CustomController {
 	private static final ObservableList<String> categoriesList = FXCollections
 			.observableArrayList(BookClient.getServer().getCategories());
 
+	@FXML
+	private MenuItem goToManagerModeButton;
+	
 	@FXML
 	private ChoiceBox<String> categories;
 
@@ -134,7 +139,7 @@ public class CustomerController implements Initializable, CustomController {
 
 	private void setCriteria() {
 		criteriaBook.setBookTitle(title.getText());
-		criteriaBook.setPublisherName(publisherName.getText());
+		criteriaBook.setPublisher(new Publisher(publisherName.getText()));
 		criteriaBook.setCategory(categories.getValue());
 		criteriaBook.setBookISBN(isbn.getText());
 		String yearValue = publicationYear.getText();
@@ -178,14 +183,6 @@ public class CustomerController implements Initializable, CustomController {
 		categories.setValue("");
 	}
 
-	@Override
-	public void initData(Parameters parameters) {
-		userName.setText(BookStoreApp.getUser().getIdentity().getUserName());
-		editOrBuyMode = parameters.getEditOrBuyMode();
-		clearSearchFields();
-		refresh();
-		
-	}
 
 	@FXML
 	private void viewOrders() {
@@ -205,5 +202,15 @@ public class CustomerController implements Initializable, CustomController {
 	@FXML
 	private void goToInformationForm() {
 		BookStoreApp.showEditProfile();
+	}
+	
+	@Override
+	public void initData(Parameters parameters) {
+		userName.setText(BookStoreApp.getUser().getIdentity().getUserName());
+		editOrBuyMode = parameters.getEditOrBuyMode();
+		clearSearchFields();
+		refresh();
+		boolean isManager = BookClient.getServer().isManager(BookStoreApp.getUser().getIdentity());
+		goToManagerModeButton.setVisible(isManager);
 	}
 }

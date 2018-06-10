@@ -13,8 +13,6 @@ import server.database.entities.user.User;
 
 public class BookStoreApp extends Application {
 
-	private static final String ERROR_MESSAGE_TITLE = "Access Denied!";
-	private static final String MANAGER_ERROR_MESSAGE = "You are not allowed to use this mode";
 	private static final String APP_TITLE = "Alphabet Bookstore";
 	private static final String LOGIN_VIEW = "/LoginView.fxml";
 	private static final String REGISTER_VIEW = "/RegisterView.fxml";
@@ -71,6 +69,7 @@ public class BookStoreApp extends Application {
 
 	public static void showAddNewBook() {
 		addBookView.show();
+		addBookView.getController().initData(new view.Parameters());
 	}
 
 	public static void showRegister() {

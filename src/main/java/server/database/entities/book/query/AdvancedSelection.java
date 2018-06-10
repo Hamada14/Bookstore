@@ -54,7 +54,7 @@ public class AdvancedSelection extends Query {
 		ps = connection.prepareStatement(query);
 		ps.setString(S_CATEGORY_INDEX, "%" + book.getCategory() + "%");
 		ps.setString(S_TITLE_INDEX, "%" + book.getBookTitle() + "%");
-		ps.setString(S_PUBLISHER_INDEX, "%" + book.getPublisherName() + "%");
+		ps.setString(S_PUBLISHER_INDEX, "%" + book.getPublisher().getName() + "%");
 		ps.setString(S_ISBN_INDEX, "%" + book.getBookISBN() + "%");
 		int index = S_ISBN_INDEX;
 		index = setAuthorsSelectionStatment(book.getAuthors(), index);

@@ -44,7 +44,6 @@ public class Book implements Serializable {
 	private Publisher publisher;
 	private int quantity;
 	private int minimumThreshold;
-	private String publisherName;
 	private List<Author> authors;
 
 	public Book() {
@@ -62,7 +61,6 @@ public class Book implements Serializable {
 		this.publisher = publisher;
 		this.quantity = quantity;
 		this.minimumThreshold = minimumThreshold;
-
 	}
 
 	public Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
@@ -129,6 +127,8 @@ public class Book implements Serializable {
 	}
 
 	public ResponseData editBook(Connection connection) {
+		System.out.println(bookISBN);
+		System.out.println("Hereee");
 		boolean isBookExisting = BookModel.selectBookByISBN(bookISBN, connection);
 		ResponseData response = new ResponseData();
 		if (!isBookExisting) {

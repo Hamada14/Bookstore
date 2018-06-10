@@ -147,8 +147,12 @@ public class BookModel {
 			query.setIsbn(isbn);
 			query.executeQuery(connection);
 			ResultSet rs = query.getResultSet();
+			if(rs == null || !rs.next()) {
+				return null;
+			}
 			return new Book(rs, connection);
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return null;
 		} finally {
 			query.close();
