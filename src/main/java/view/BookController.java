@@ -25,19 +25,32 @@ public class BookController implements CustomController {
 	private static final String ERROR_IN_QUANTITY = "Must be Integer, change it to procced";
 	private static final String INVALID_INPUT = "Invalid Input";
 	
-	@FXML private Label title;
-	@FXML private Label category;
-	@FXML private Label publisher;
-	@FXML private Label author;
-	@FXML private Label isbn;
-	@FXML private Label publicationYear;
-	@FXML private Label price;
-	@FXML private TextField quantity;
-	@FXML private Label userName;
+
 	@FXML private ComboBox<String> authorsComboName;
 	
 	private ObservableList<String> authorNames = FXCollections.observableArrayList();
 	
+	
+	@FXML
+	private Label fullName;
+	
+	@FXML
+	private Label title;
+	@FXML
+	private Label category;
+	@FXML
+	private Label publisher;
+	@FXML
+	private Label author;
+	@FXML
+	private Label isbn;
+	@FXML
+	private Label publicationYear;
+	@FXML
+	private Label price;
+	@FXML
+	private TextField quantity;
+
 	private Book selectedBook;
 
 	@Override
@@ -48,7 +61,6 @@ public class BookController implements CustomController {
 		isbn.setText(selectedBook.getBookISBN());
 		publicationYear.setText(selectedBook.getPublicationYear());
 		price.setText(String.valueOf(selectedBook.getSellingPrice()));
-		userName.setText(BookStoreApp.getUser().getIdentity().getUserName());
 		publisher.setText(selectedBook.getPublisher().getName());
 		authorNames.clear();
 		List<Author> authors = BookClient.getServer().getBookAuthors(selectedBook.getBookISBN());
@@ -60,6 +72,7 @@ public class BookController implements CustomController {
 		if(authorNames.size() != 0) {
 			authorsComboName.setValue(authorNames.get(0));
 		}	
+        fullName.setText(BookStoreApp.getUser().getFullName());
 	}
 	
 

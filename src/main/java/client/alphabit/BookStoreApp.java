@@ -53,8 +53,8 @@ public class BookStoreApp extends Application {
 	}
 
 	public static void showLogin() {
-		login.show();
 		login.getController().initData(null);
+		login.show();
 	}
 	
 	public static void showAuthorsView() { 
@@ -68,37 +68,37 @@ public class BookStoreApp extends Application {
 	}
 
 	public static void showAddNewBook() {
-		addBookView.show();
 		addBookView.getController().initData(new view.Parameters());
+		addBookView.show();
 	}
 
 	public static void showRegister() {
-		register.show();
 		register.getController().initData(null);
+		register.show();
 	}
 
 	public static void showEditProfile() {
-		editProfileView.show();
 		editProfileView.getController().initData(null);
+		editProfileView.show();
 	}
 
 	public static void showBookView(Book book) {
-		bookView.show();
 		view.Parameters params = new view.Parameters();
 		params.setBook(book);
 		bookView.getController().initData(params);
+		bookView.show();
 	}
 
 	public static void editBookView(Book book) {
-		editBookView.show();
 		view.Parameters params = new view.Parameters();
 		params.setBook(book);
 		editBookView.getController().initData(params);
+		editBookView.show();
 	}
 	
 	public static void showOrdersView() {
-		ordersView.show();
 		ordersView.getController().initData(null);
+		ordersView.show();
 	}
 
 	public static void setUser(User user) {
@@ -110,10 +110,10 @@ public class BookStoreApp extends Application {
 	}
 
 	public static void showCustomer(boolean editOrBuyMode) {
-		customer.show();
 		view.Parameters params = new view.Parameters();
 		params.setEditOrBuyMode(editOrBuyMode);
 		customer.getController().initData(params);
+		customer.show();
 	}
 	
 	public static void logOut() {
@@ -123,6 +123,7 @@ public class BookStoreApp extends Application {
 	}
 
 	public static void showManager() {
+		manager.getController().initData(null);
 		manager.show();
 		// if (BookClient.getServer().isManager(currentUser.getIdentity())) {
 		// manager.show();
@@ -134,7 +135,6 @@ public class BookStoreApp extends Application {
 
 	public static ShoppingCart getShoppingCart() {
 		return currentCart;
-
 	}
 
 	public static void displayDialog(AlertType alertType, String dialogTitle, String dialogHeader, String dialogText) {
@@ -144,8 +144,6 @@ public class BookStoreApp extends Application {
 		alert.setContentText(dialogText);
 		alert.showAndWait();
 	}
-
-
 
 	public static void main(String[] args) {
 		launch(args);

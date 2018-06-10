@@ -20,6 +20,8 @@ public class EditBookController implements CustomController {
 	private static final String ERROR_MESSAGE_HEADER = "Couldn't edit";
 	private static final String INVALID_PRICE = "Invalid value for price";
 	
+	@FXML private Label fullName;
+	
 	@FXML private Label isbnLabel;
 	@FXML private TextField title;
 	@FXML private TextField publisherName;
@@ -80,5 +82,6 @@ public class EditBookController implements CustomController {
 		quantity.setText(Integer.toString(book.getQuantity()));
 		price.setText(Float.toString(book.getSellingPrice()));
 		minimumThreshold.setText(Integer.toString(book.getMinimumThreshold()));
+        fullName.setText(BookStoreApp.getUser().getFullName());
 	}
 }

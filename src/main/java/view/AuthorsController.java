@@ -13,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import server.ResponseData;
 import server.database.entities.author.Author;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 
 public class AuthorsController implements CustomController {
 
@@ -21,6 +22,8 @@ public class AuthorsController implements CustomController {
 	
 	private static final String DELETE_DONE_TEXT = "Deleted successfully";
 	private static final String ADD_DONE_TEXT = "Added successfully";
+	
+	@FXML private Label fullName;
 	
 	@FXML
 	private TextField bookISBN;
@@ -83,12 +86,13 @@ public class AuthorsController implements CustomController {
 	
 	@FXML
 	private void goHome() {
-		
+		BookStoreApp.showCustomer(true);
 	}
 
 	@Override
 	public void initData(Parameters parameters) {
 		authorNames = FXCollections.observableArrayList();
 		usedISBN = "";
+        fullName.setText(BookStoreApp.getUser().getFullName());
 	}
 }

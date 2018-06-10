@@ -5,12 +5,14 @@ import client.BookClient;
 
 import client.alphabit.BookStoreApp;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import server.BookStoreServer;
 import server.database.report.ReportViewer;
 
 
-
 public class ManagerController implements CustomController {
+	
+	@FXML private Label fullName;
 	
 	@FXML
 	private void showPlaceNewOrderPanel() {
@@ -46,8 +48,7 @@ public class ManagerController implements CustomController {
 		BookStoreApp.showAllOrdersView();
 	}
 	
-	@FXML
-	private void goToCustomerView() {
+	@FXML void goToCustomerView() {
 		BookStoreApp.showCustomer(true);
 	}
 	
@@ -62,6 +63,6 @@ public class ManagerController implements CustomController {
 	
 	@Override
 	public void initData(Parameters parameters) {
-		// TODO Auto-generated method stub
+        fullName.setText(BookStoreApp.getUser().getFullName());
 	}
 }

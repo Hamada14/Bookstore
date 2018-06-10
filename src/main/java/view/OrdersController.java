@@ -38,6 +38,9 @@ public class OrdersController implements CustomController {
 	private static final int DELETE_INDEX = 4;
 
 	@FXML
+	private Label fullName;
+	
+	@FXML
 	private Label totalPrices;
 	@FXML
 	private GridPane ordersPane;
@@ -90,8 +93,7 @@ public class OrdersController implements CustomController {
 	@Override
 	public void initData(Parameters parameters) {
 		showItems();
-		userName.setText(BookStoreApp.getUser().getIdentity().getUserName());
-
+        fullName.setText(BookStoreApp.getUser().getFullName());
 	}
 
 	@FXML

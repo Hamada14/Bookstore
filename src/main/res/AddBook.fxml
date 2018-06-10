@@ -32,7 +32,7 @@
     			</graphic>
 			</Button>
             <Pane prefHeight="6.0" prefWidth="533.0" />
-            <Label fx:id="userName" alignment="CENTER" text=" User Name " textFill="#f8f3f3">
+            <Label fx:id="fullName" alignment="CENTER" text=" User Name " textFill="#f8f3f3">
                <font>
                   <Font size="14.0" />
                </font>

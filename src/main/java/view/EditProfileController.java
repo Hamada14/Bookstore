@@ -24,6 +24,9 @@ public class EditProfileController implements CustomController {
 	private static final String SUCCESSFUL_TITLE = "UPDATE ..DONE!";
 	private static final String SUCCESSFUL_TEXT = "Changes saved correctly";
 	private static final String PASSWORD_ERROR = "The new passwords don't match";
+	
+	@FXML private Label fullName;
+	
 	@FXML
 	private TextField firstName;
 	@FXML
@@ -41,15 +44,13 @@ public class EditProfileController implements CustomController {
 	@FXML
 	private TextField newPassword2;
 
-	@FXML
-	private Label userName;
+
 	@FXML
 	private ComboBox<String> country;
 
 	@Override
 	public void initData(Parameters parameters) {
 		User currentUser = BookStoreApp.getUser();
-		userName.setText(currentUser.getIdentity().getUserName());
 		firstName.setText(currentUser.getFirstName());
 		lastName.setText(currentUser.getLastName());
 		street.setText(currentUser.getStreet());
@@ -58,6 +59,7 @@ public class EditProfileController implements CustomController {
 		ObservableList<String> countriesList = FXCollections.observableList(UserModel.getValidCountries());
 		country.setItems(countriesList);
 		country.setValue(currentUser.getCountry());
+        fullName.setText(BookStoreApp.getUser().getFullName());
 	}
 
 	@FXML

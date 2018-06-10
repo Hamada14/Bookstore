@@ -53,13 +53,14 @@ public class CustomerController implements Initializable, CustomController {
 	private ObservableList<BookTuple> ordersList;
 
 	@FXML
+	private Label fullName;
+	
+	@FXML
 	private TableView<BookTuple> booksTable;
 	@FXML
 	private TableColumn<BookTuple, BookHyperLink> bookTitleCol;
 	@FXML
 	private Button loadMore;
-	@FXML
-	private Label userName;
 	@FXML
 	private TextField title;
 	@FXML
@@ -206,11 +207,11 @@ public class CustomerController implements Initializable, CustomController {
 	
 	@Override
 	public void initData(Parameters parameters) {
-		userName.setText(BookStoreApp.getUser().getIdentity().getUserName());
 		editOrBuyMode = parameters.getEditOrBuyMode();
 		clearSearchFields();
 		refresh();
 		boolean isManager = BookClient.getServer().isManager(BookStoreApp.getUser().getIdentity());
 		goToManagerModeButton.setVisible(isManager);
+        fullName.setText(BookStoreApp.getUser().getFullName());
 	}
 }
