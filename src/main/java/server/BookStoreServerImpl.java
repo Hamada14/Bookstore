@@ -25,6 +25,7 @@ import server.database.entities.user.UserBuilder;
 import server.database.entities.user.UserModel;
 import server.database.report.JasperReportCreator;
 import server.database.report.ReportType;
+import server.errors.AuthorError;
 import server.errors.BookError;
 
 //Service Implementation
@@ -200,5 +201,21 @@ public class BookStoreServerImpl implements BookStoreServer {
 			response.setError(BookError.INVALID_BOOK_ISBN.toString());
 		}
 		return response;
+	}
+	
+	public ResponseData deleteAuthorReference(String usedIsbn, Author author) {
+		int authorId = author.getID(connection);
+		if(authorId == Author.AUTHOR_NOT_FOUND) {
+			ResponseData rs = new ResponseData();
+			rs.setError(AuthorError.AUTHOR_NOT_FOUND.toString());
+			return rs;
+		}
+		boolean successful = BookModel.deleteAuthorReference(usedIsbn, authorId, connection);
+		if(!successful) {
+			ResponseData rs = new ResponseData();
+			rs.setError(AuthorError.INVALID_AUTHOR_REFERENCE.toString());
+			return rs;
+		}
+		return new ResponseData();
 	}
 }

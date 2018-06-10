@@ -74,4 +74,7 @@ public interface BookStoreServer {
 	
 	@WebMethod
 	ResponseData addAuthor(Author author, String isbn);
+
+	@WebMethod
+	ResponseData deleteAuthorReference(String usedIsbn, Author author);
 }
