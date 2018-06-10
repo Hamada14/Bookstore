@@ -155,12 +155,6 @@ public class BookModel {
 		}
 	}
 
-	public static BooksResponseData searchBooks(Book book, int offset, int limit, Connection connection) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 
 	public static boolean deleteAuthorReference(String usedIsbn, int authorId, Connection connection) {
 		DeleteAuthorReference query = new DeleteAuthorReference();
