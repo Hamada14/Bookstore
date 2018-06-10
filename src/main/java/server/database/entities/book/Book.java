@@ -48,10 +48,12 @@ public class Book implements Serializable {
 	private List<Author> authors;
 
 	public Book() {
+		authors = new ArrayList<>();
 	}
 	
 	Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
 			Publisher publisher, int quantity, int minimumThreshold) {
+		authors = new ArrayList<Author>();
 		this.bookISBN = bookISBN;
 		this.bookTitle = bookTitle;
 		this.publicationYear = publicationYear;
@@ -66,7 +68,6 @@ public class Book implements Serializable {
 	public Book(String bookISBN, String bookTitle, String publicationYear, float sellingPrice, String category,
 			String publisherName,int quantity, int minimumThreshold) {
 		authors = new ArrayList<Author>();
-		authors.add(new Author(""));
 		this.bookISBN = bookISBN;
 		this.bookTitle = bookTitle;
 		this.publicationYear = publicationYear;
@@ -81,6 +82,7 @@ public class Book implements Serializable {
 	}
 
 	public Book(ResultSet rs, Connection connection) throws SQLException {
+		authors = new ArrayList<Author>();
 		this.bookISBN = rs.getString(ISBN_INDEX);
 		this.bookTitle = rs.getString(BOOK_TITLE_INDEX);
 		this.publicationYear = Integer.toString(rs.getInt(PUBLICATION_YEAR_INDEX));
@@ -118,6 +120,7 @@ public class Book implements Serializable {
 			query.executeQuery(connection);
 			return response;
 		} catch (SQLException | NumberFormatException e) {
+			System.out.println(e.getMessage());
 			response.setError(SqlError.DUPLICATE_KEY.toString());
 			return response;
 		} finally {

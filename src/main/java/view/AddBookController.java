@@ -43,8 +43,10 @@ public class AddBookController implements CustomController {
 			bookBuilder.setPublisher(publisher);
 			ResponseData bookAdded = BookClient.getServer().addNewBook(bookBuilder);
 			if(bookAdded.isSuccessful()) {
+				System.out.println("Zwe");
 				BookStoreApp.showManager();
 			}
+			System.out.println(bookAdded.getError());
 		} catch(NumberFormatException e) {
 			BookStoreApp.displayDialog(AlertType.ERROR, ERROR_MESSAGE_TITLE, ERROR_MESSAGE_HEADER, INVALID_PRICE);
 		}

@@ -76,7 +76,6 @@ public class CustomerController implements Initializable, CustomController {
 		categories.setItems(categoriesList);
 		bookTitleCol.setCellValueFactory(new PropertyValueFactory<BookTuple, BookHyperLink>(TITLE_COL));
 		List<String> authors = new ArrayList<>();
-		authors.add(new String());
 		criteriaBook = new Book("", "", "", -1, "", "", 0, 0);
 		refresh();
 
@@ -94,6 +93,7 @@ public class CustomerController implements Initializable, CustomController {
 		Identity identity = BookStoreApp.getUser().getIdentity();
 		BooksResponseData response = BookClient.getServer().advancedSearchBooks(identity, offset, LIMIT, criteriaBook);
 		if (response.isSuccessful()) {
+			System.out.println("susccessful");
 			viewBooks(response.getBooks());
 			offset += response.getBooks().size();
 		} else {

@@ -2,6 +2,7 @@ package server.database.entities.book;
 
 import java.sql.Connection;
 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class BookModel {
 //				newBook.setAuthor(Author.selectAuthorNameByISBN(newBook.getBookISBN(), connection));
 				booksResponse.addBook(newBook);
 			}
+			
 		} catch (SQLException e) {
 			booksResponse.setError(e.getMessage());
 			e.printStackTrace();

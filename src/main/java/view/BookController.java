@@ -48,7 +48,7 @@ public class BookController implements CustomController {
 		price.setText(String.valueOf(selectedBook.getSellingPrice()));
 		userName.setText(BookStoreApp.getUser().getIdentity().getUserName());
 		publisher.setText(selectedBook.getPublisherName());
-		author.setText(selectedBook.getAuthors().get(0).getName());
+//		author.setText(selectedBook.getAuthors().get(0).getName());
 
 	}
 

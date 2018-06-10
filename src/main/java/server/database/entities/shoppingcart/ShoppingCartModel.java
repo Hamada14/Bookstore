@@ -27,7 +27,7 @@ public class ShoppingCartModel {
 			connection.setAutoCommit(false);
 			InsertShoppingOrder insertOrderStmt = new InsertShoppingOrder();
 			insertOrderStmt.setUserName(userName);
-		    insertOrderStmt.executeQuery(connection);
+			insertOrderStmt.executeQuery(connection);
 			curStmts.add(insertOrderStmt);
 			int orderID = 0;
 			ResultSet generatedKeys = insertOrderStmt.getGeneratedKeys();
@@ -45,6 +45,7 @@ public class ShoppingCartModel {
 			}
 			connection.commit();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			rs = handleError(order, e, connection);
 			if (!rollBackTransaction(connection)) {
 				rs.setError(ERROR_CONNECTION_CODE);
@@ -110,9 +111,11 @@ public class ShoppingCartModel {
 			query.setIsbn(isbn);
 			query.executeQuery(connection);
 			ResultSet result = query.getResultSet();
-			rs.setOldQuantity(result.getInt(1));
-			rs.setOrder(order);
-			rs.setError(SHORTAGE_CODE);
+			if (result.next()) {
+				rs.setOldQuantity(result.getInt(1));
+				rs.setOrder(order);
+				rs.setError(SHORTAGE_CODE);
+			}
 
 		} catch (SQLException e) {
 			rs.setError(e.getMessage());
