@@ -128,11 +128,12 @@ public class CreditCardPController extends Dialog<OrderResponseData>{
 
 		int sum = 0;
 		int[] intValues = new int[] { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 };
-		for (int i = 0; i < creditCardNum.length(); i++) {
-			if (i % 2 == 1) {
-				sum += intValues[creditCardNum.charAt(i) - '0'];
+		boolean evenNumber = creditCardNum.length() % 2 == 0;
+		for (int i = creditCardNum.length() ; i > 0 ; i--) {
+			if ((evenNumber && i % 2 == 1) ||(!evenNumber && i % 2 == 0)) {
+				sum += intValues[creditCardNum.charAt(i - 1) - '0'];
 			} else {
-				sum += creditCardNum.charAt(i) - '0';
+				sum += creditCardNum.charAt(i - 1) - '0';
 			}
 		}
 		if (sum % 10 == 0) {
