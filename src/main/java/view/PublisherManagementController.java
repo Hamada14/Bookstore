@@ -178,5 +178,4 @@ public class PublisherManagementController implements CustomController {
 		country.clear();
 		usedPublisher = "";
 	}
-
 }
