@@ -32,8 +32,12 @@ public class PublisherAddress {
 	}
 	
 	public ResponseData addAddress(Connection connection) {
-		AddPublisherAddress query = new AddPublisherAddress();
 		ResponseData rs = new ResponseData();
+		if(!validateAddressPart(street) || !validateAddressPart(city) || !validateAddressPart(country)) {
+			rs.setError(ERROR_ADDRESS_ADDITION);
+			return rs;
+		}
+		AddPublisherAddress query = new AddPublisherAddress();
 		try {
 			query.setCity(city);
 			query.setCountry(country);
@@ -48,6 +52,18 @@ public class PublisherAddress {
 			rs.setError(ERROR_ADDRESS_ADDITION);
 		}
 		return rs;
+	}
+	
+	private boolean validateAddressPart(String part) {
+		if(part == null || part.isEmpty()) {
+			return false;
+		}
+		for(int i = 0; i < part.length(); i++) {
+			if(part.charAt(i) == ',') {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public ResponseData deleteAddress(Connection connection) {

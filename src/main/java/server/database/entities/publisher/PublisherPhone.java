@@ -27,14 +27,16 @@ public class PublisherPhone {
 	}
 	
 	public ResponseData addPhone(Connection connection) {
-		AddPublisherPhone query = new AddPublisherPhone();
 		ResponseData rs = new ResponseData();
+		if(!validatePhoneNumber(number)) {
+			rs.setError(ERROR_PHONE_ADDITION);
+			return rs;
+		}
+		AddPublisherPhone query = new AddPublisherPhone();
 		try {
 			query.setNumber(number);
 			query.setId(id);
-			System.out.println("HERE2");
 			query.executeQuery(connection);
-			System.out.println("HERE3");
 			int rowsAffected = query.getUpdateCount();
 			if(rowsAffected == 0) {
 				throw new SQLException();
@@ -43,6 +45,18 @@ public class PublisherPhone {
 			rs.setError(ERROR_PHONE_ADDITION);
 		}
 		return rs;
+	}
+	
+	private boolean validatePhoneNumber(String n) {
+		if(n == null || n.isEmpty()) {
+			return false;
+		}
+		for(int i = 0; i < n.length(); i++) {
+			if(n.charAt(i) < '0' || n.charAt(i) > '9') {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public ResponseData deletePhone(Connection connection) {

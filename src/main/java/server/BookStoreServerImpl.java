@@ -313,7 +313,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 	@Override
 	public ResponseData addPublisherPhone(Identity identity, Publisher publisher, PublisherPhone publisherPhone) {
 		if(!identity.isManager(connection)) {
-			System.out.println("HERE");
 			return null;
 		}
 		return PublisherModel.addPublisherPhone(publisher, publisherPhone, connection);

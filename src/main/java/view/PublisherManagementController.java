@@ -15,6 +15,7 @@ import server.database.entities.publisher.Publisher;
 import server.database.entities.publisher.PublisherAddress;
 import server.database.entities.publisher.PublisherPhone;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 
 public class PublisherManagementController implements CustomController {
 
@@ -41,6 +42,8 @@ public class PublisherManagementController implements CustomController {
 	private TextField city;
 	@FXML
 	private TextField country;
+	@FXML
+	private Label fullName;
 
 	@FXML
 	private ComboBox<String> addressesCombo;
@@ -160,7 +163,7 @@ public class PublisherManagementController implements CustomController {
 
 	@FXML
 	private void goHome() {
-		
+		BookStoreApp.showCustomer(true);
 	}
 	
 	@Override
@@ -168,6 +171,7 @@ public class PublisherManagementController implements CustomController {
 		addressesList = FXCollections.observableArrayList();
 		phonesList = FXCollections.observableArrayList();
 		usedPublisher = "";
+		fullName.setText(BookStoreApp.getUser().getFullName());
 	}
 
 }

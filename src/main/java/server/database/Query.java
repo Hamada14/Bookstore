@@ -19,9 +19,7 @@ public abstract class Query {
 	
 	public boolean executeQuery(Connection connection) throws SQLException {
 		prepareStatement(connection);
-		System.out.println(ps);
 		hasResultSet = ps.execute();
-		System.out.println(ps);
 		resultSet = ps.getResultSet();
 		return hasResultSet;
 	}
