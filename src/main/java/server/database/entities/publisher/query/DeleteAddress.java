@@ -9,7 +9,7 @@ import server.database.Query;
 public class DeleteAddress extends Query {
 
 	private static final String DELETE_ADDRESS = "DELETE FROM %s WHERE ID = ? AND STREET = ? AND CITY = ? AND COUNTRY = ?";
-	private static final String ADDRESS_TABLE = "PUBLISHERS_ADDRESS";
+	private static final String ADDRESS_TABLE = "PUBLISHER_ADDRESS";
 	private static final int ID_IND = 1;
 	private static final int STREET_IND = 2;
 	private static final int CITY_IND = 3;

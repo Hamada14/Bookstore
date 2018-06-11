@@ -9,7 +9,7 @@ import server.database.Query;
 public class AddPublisherAddress extends Query {
 
 	private static String INSERT_ADDRESS = "INSERT INTO %s(ID, STREET, CITY, COUNTRY) VALUES (?, ?, ?, ?)";
-	private static String ADDRESS_TABLE = "PUBLISHERS_ADDRESS";
+	private static String ADDRESS_TABLE = "PUBLISHER_ADDRESS";
 	private static int ID_IND = 1;
 	private static int STREET_IND = 2;
 	private static int CITY_IND = 3;

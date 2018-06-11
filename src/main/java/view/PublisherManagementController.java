@@ -123,7 +123,7 @@ public class PublisherManagementController implements CustomController {
 				new Publisher(usedPublisher), pAddress);
 		response(ADDRESS_ADDED_SUCCESSFULLY, rs);
 		if (rs.isSuccessful()) {
-			addressesList.add(composeAddress(pAddress.getCity(), pAddress.getCountry(), pAddress.getCountry()));
+			addressesList.add(composeAddress(pAddress.getStreet(), pAddress.getCity(), pAddress.getCountry()));
 			addressesCombo.setItems(addressesList);
 		}
 	}
@@ -170,8 +170,13 @@ public class PublisherManagementController implements CustomController {
 	public void initData(Parameters parameters) {
 		addressesList = FXCollections.observableArrayList();
 		phonesList = FXCollections.observableArrayList();
-		usedPublisher = "";
 		fullName.setText(BookStoreApp.getUser().getFullName());
+		publisherName.clear();
+		phoneNumber.clear();
+		street.clear();
+		city.clear();
+		country.clear();
+		usedPublisher = "";
 	}
 
 }
