@@ -31,7 +31,7 @@ public class Order implements Serializable {
 	private static final String QUANTITY_COL = "QUANTITY";
 	private static final String BOOK_ISBN_COL = "BOOK_ISBN"; 
 	private static final String ORDER_ID_COL = "ORDER_ID";
-	
+	private static final String INVALID_QUANTITY = "Invalid quantity";
 	
 	private int quantity;
 	private Book book;
@@ -48,6 +48,10 @@ public class Order implements Serializable {
 	
 	public static ResponseData addNewOrder(Order order, Connection connection) {
 		ResponseData rs = new ResponseData();
+		if(order.quantity <= 0) {
+			rs.setError(INVALID_QUANTITY);
+			return rs;
+		}
 		try {
 			String query = String.format(PLACE_ORDER_QUERY, BOOK_ORDER_TABLE);
 			PreparedStatement st = (PreparedStatement) connection.prepareStatement(query);
