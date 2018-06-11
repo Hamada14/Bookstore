@@ -78,7 +78,7 @@ public class EditBookController implements CustomController {
 		publisherName.setText(book.getPublisher().getName());
 		publicationYear.setText(book.getPublicationYear());
 		category.setItems(categoriesList);
-		category.setValue(categoriesList.get(0));
+		category.setValue(book.getCategory());
 		quantity.setText(Integer.toString(book.getQuantity()));
 		price.setText(Float.toString(book.getSellingPrice()));
 		minimumThreshold.setText(Integer.toString(book.getMinimumThreshold()));
