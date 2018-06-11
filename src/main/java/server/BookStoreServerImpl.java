@@ -109,7 +109,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 	@Override
 	public BooksResponseData advancedSearchBooks(Identity identity, int offset, int limit, Book book) {
 		BooksResponseData booksResponse = new BooksResponseData();
-		book.normalizeISBN();
 		UserResponseData validUser = identity.isUser(connection);
 		if (validUser.isSuccessful()) {
 			BooksResponseData booksResponse2 = BookModel.searchAdvancedBooks(book, offset, limit, connection);//shrouk part
@@ -165,7 +164,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 		if(!identity.isManager(connection)) {
 			return null;
 		}
-		isbn = BookBuilder.normalizeISBN(isbn);
 		int q = 0;
 		try {
 			q = Integer.valueOf(quantity);
@@ -227,7 +225,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 		if(!validUser.isSuccessful()) {
 			return null;
 		}
-		bookISBN = BookBuilder.normalizeISBN(bookISBN);
 		List<Author> bookAuthors = AuthorModel.selectAuthorNameByISBN(bookISBN, connection);
 		return bookAuthors;
 	}
@@ -237,7 +234,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 		if(!identity.isManager(connection)) {
 			return null;
 		}
-		isbn = BookBuilder.normalizeISBN(isbn);
 		int id = AuthorModel.addAuthor(author, connection);
 		ResponseData response = new ResponseData();
 		if(id == Author.ERROR_AUTHOR_ADDITION) {
@@ -256,7 +252,6 @@ public class BookStoreServerImpl implements BookStoreServer {
 		if(!identity.isManager(connection)) {
 			return null;
 		}
-		usedIsbn = BookBuilder.normalizeISBN(usedIsbn);
 		int authorId = author.getID(connection);
 		if(authorId == Author.AUTHOR_NOT_FOUND) {
 			ResponseData rs = new ResponseData();
