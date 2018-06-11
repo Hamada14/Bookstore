@@ -45,6 +45,7 @@ public class EditBookController implements CustomController {
 			bookBuilder.setCategory(category.getValue());
 			bookBuilder.setPublisher(new Publisher(publisherName.getText()));
 			bookBuilder.setPublicationYear(publicationYear.getText());
+			bookBuilder.setQuantity(Integer.valueOf(quantity.getText()));
 			bookBuilder.setSellingPrice(p);
 			bookBuilder.setMinimumThreshold(minimumQuantity);
 			ResponseData bookEdit = BookClient.getServer().editBook(BookStoreApp.getUser().getIdentity(), bookBuilder);
