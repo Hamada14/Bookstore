@@ -2,10 +2,9 @@ require 'mysql2'
 require 'faker'
 
 $PUBLISHER_COUNT = 50_000
-$AUTHOR_COUNT = 200_000
-$BOOK_COUNT = 1000_000
+$AUTHOR_COUNT = 500_000
+$BOOK_COUNT = 1_000_000
 $USER_COUNT = 100_000
-$SHOPPING_ORDER_COUNT_PER_USER = 1
 $ITEM_PER_SHOPPING_ORDER = 2
 
 $batched_queries = Array.new
@@ -77,11 +76,11 @@ end
 
 def populate_publisher_phone_table(client)
   table_name = "PUBLISHER_PHONE"
-  statement = "INSERT INTO PUBLISHER_PHONE(ID, PHONE)VALUES(%d, \"%d\")"
+  statement = "INSERT INTO PUBLISHER_PHONE(ID, PHONE)VALUES(%d, \"%s\")"
   puts(start_populate_message(table_name))
-  phone = 00201000000000
+  phone = 1000000000
   $PUBLISHER_COUNT.times do |v|
-    batch_query(client, statement%[v + 1, phone])
+    batch_query(client, statement%[v + 1, "0020" + phone.to_s])
     phone = phone + 1
   end
   execute_batched_queries(client)
@@ -170,7 +169,7 @@ def populate_book_author_table(client)
   puts(start_populate_message(table_name))
   author_id = 1
   File.open('ISBN_10.txt').each do |line|
-    isbn = line
+    isbn = isbn10_to_isbn13(line)
     author1 = 1 + (rand * ($AUTHOR_COUNT - 1))
     author2 = 1 + (rand * ($AUTHOR_COUNT - 1))
     author_id = author2
@@ -181,6 +180,32 @@ def populate_book_author_table(client)
   puts(end_populate_message(table_name))
 end
 
+def populate_shopping_orders_table(client)
+  table_name = "SHOPPING_ORDER"
+  statement = "INSERT INTO SHOPPING_ORDER (USER_NAME) SELECT USER_NAME FROM CUSTOMER"
+  puts(start_populate_message(table_name))
+  batch_query(client, statement)
+  execute_batched_queries(client)
+  puts(end_populate_message(table_name))
+end
+
+def populate_shopping_items_table(client)
+  table_name = "SHOPPING_ORDER_ITEM"
+  statement = "insert into shopping_order_item(shopping_order_id, book_isbn, selling_price)values(%d, \"%s\", %f)"
+  puts(start_populate_message(table_name))
+  id = 0
+  max_price = 80
+  min_price = 50
+  File.open('ISBN_10.txt').each do |line|
+    isbn = isbn10_to_isbn13(line)
+    selling_price = min_price + (max_price - min_price) * rand
+    id = id + 1
+    batch_query(client, statement%[id, isbn, selling_price])
+    if id == $AUTHOR_COUNT then break end
+  end
+  execute_batched_queries(client)
+  puts(end_populate_message(table_name))
+end
 
 client = mysql_client
 populate_publisher_table(client)
@@ -190,3 +215,5 @@ populate_author_table(client)
 populate_user_table(client)
 populate_book_table(client)
 populate_book_author_table(client)
+populate_shopping_orders_table(client)
+populate_shopping_items_table(client)
