@@ -173,5 +173,4 @@ public class PublisherManagementController implements CustomController {
 		usedPublisher = "";
 		fullName.setText(BookStoreApp.getUser().getFullName());
 	}
-
 }

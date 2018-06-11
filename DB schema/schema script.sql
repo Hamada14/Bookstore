@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS BOOK_AUTHOR (
 CREATE TABLE IF NOT EXISTS BOOK_ORDER(
     ORDER_ID        INT NOT NULL AUTO_INCREMENT,
     BOOK_ISBN       VARCHAR(15) NOT NULL,
-    QUANTITY        INT NOT NULL,
+    QUANTITY        INT UNSIGNED NOT NULL,
     ISSUE_TIME      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY(ORDER_ID),
@@ -160,10 +160,31 @@ begin
 end;$$
 delimiter ;
 
+delimiter $$
+create trigger INSERT_NON_POSITIVE_ORDERS before insert on BOOK_ORDER
+for each row
+begin
+  if new.QUANTITY <= 0 then
+      signal sqlstate '45000';
+  end if;
+end;$$
+delimiter ;
+
+delimiter $$
+create trigger UPDATE_NON_POSITIVE_ORDERS before insert on BOOK_ORDER
+for each row
+begin
+  if new.QUANTITY <= 0 then
+      signal sqlstate '45000';
+  end if;
+end;$$
+delimiter ;
+
+
 CREATE TABLE IF NOT EXISTS COMPLETE_ORDER (
     ORDER_ID          INT NOT NULL,
     BOOK_ISBN         VARCHAR(15) NOT NULL,
-    QUANTITY          INT NOT NULL,
+    QUANTITY          INT UNSIGNED NOT NULL,
     ISSUE_TIME        TIMESTAMP NOT NULL,
     COMPLETE_TIME     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
@@ -196,8 +217,7 @@ CREATE TABLE IF NOT EXISTS CUSTOMER (
     PRIMARY KEY(USER_NAME),
     UNIQUE(EMAIL)
 );
-use bookstore;
-insert into customer values("usernamee", "email", "first", "last", "password", "phone", "street", "city", "country");
+
 CREATE TABLE IF NOT EXISTS MANAGER (
     USER_NAME        VARCHAR(20) NOT NULL,
 
@@ -205,7 +225,6 @@ CREATE TABLE IF NOT EXISTS MANAGER (
     FOREIGN KEY(USER_NAME) REFERENCES CUSTOMER(USER_NAME) on DELETE CASCADE ON UPDATE CASCADE
 );
 
-#INSERT INTO USERS VALUES("USER1", "EMAIL1", "FIRST1", "LAST1", "PASSWORD1", "NUMBER1", "ADDRESS1", 0);
 
 # Check https://docs.oracle.com/javase/6/docs/api/java/sql/Statement.html#executeUpdate%28java.lang.String,%20int%29
 # To obtain auto generated ID after insert.
@@ -218,10 +237,6 @@ CREATE TABLE IF NOT EXISTS SHOPPING_ORDER (
     FOREIGN KEY(USER_NAME) REFERENCES CUSTOMER(USER_NAME) ON DELETE CASCADE ON UPDATE CASCADE,
     INDEX(CHECKOUT_TIME)
 );
-
-#INSERT INTO SHOPPING_ORDER(USER_NAME) VALUES("USER1");
-#INSERT INTO SHOPPING_ORDER(USER_NAME) VALUES("USER1");
-
 
 # Event used to delete all the old data in the shopping order table.
 # It basically runs every day once and delete every shopping order that is older than three months.\
@@ -241,8 +256,7 @@ CREATE TABLE IF NOT EXISTS SHOPPING_ORDER_ITEM (
     FOREIGN KEY(SHOPPING_ORDER_ID) REFERENCES SHOPPING_ORDER(ID) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(BOOK_ISBN) REFERENCES BOOK(ISBN) ON DELETE CASCADE ON UPDATE CASCADE
 );
-#INSERT INTO SHOPPING_ORDER_ITEMS VALUES(1, "ISBN1", 1, 70);
-#INSERT INTO SHOPPING_ORDER_ITEMS VALUES(2, "ISBN1", 1, 30);
+
 
 delimiter $$
 create trigger PROCESS_BOOK_CHECKOUT before insert on SHOPPING_ORDER_ITEM
