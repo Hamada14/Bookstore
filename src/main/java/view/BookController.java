@@ -1,6 +1,7 @@
 package view;
 
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 import client.BookClient;
@@ -14,7 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 
 import server.database.entities.book.Book;
-import server.database.entities.Order;
+import server.database.entities.order.Order;
 import server.database.entities.author.Author;
 import server.database.entities.shoppingcart.ShoppingCart;
 

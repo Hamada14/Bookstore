@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 
+
 import client.BookClient;
 import client.alphabit.BookStoreApp;
 import javafx.collections.FXCollections;
@@ -15,7 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import server.ResponseData;
-import server.database.entities.Order;
+import server.database.entities.order.Order;
 import server.errors.OrderError;
 import server.errors.SqlError;
 

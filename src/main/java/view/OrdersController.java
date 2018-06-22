@@ -3,6 +3,7 @@ package view;
 import java.util.Optional;
 
 
+
 import client.alphabit.BookStoreApp;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,7 +24,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import server.OrderResponseData;
 
-import server.database.entities.Order;
+import server.database.entities.order.Order;
 import server.database.entities.shoppingcart.ShoppingCart;
 
 public class OrdersController implements CustomController {

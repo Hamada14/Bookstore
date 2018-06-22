@@ -3,8 +3,9 @@ package server;
 
 
 import lombok.Getter;
+
 import lombok.Setter;
-import server.database.entities.Order;
+import server.database.entities.order.Order;
 
 @Setter
 @Getter

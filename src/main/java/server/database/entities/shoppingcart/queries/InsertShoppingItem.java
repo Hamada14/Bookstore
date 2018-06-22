@@ -1,12 +1,13 @@
 package server.database.entities.shoppingcart.queries;
 
 import java.sql.Connection;
+
 import java.sql.SQLException;
 
 import lombok.Getter;
 import lombok.Setter;
 import server.database.Query;
-import server.database.entities.Order;
+import server.database.entities.order.Order;
 
 @Getter
 @Setter

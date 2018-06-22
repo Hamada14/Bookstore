@@ -43,6 +43,7 @@ public class PublisherAddress {
 			query.setCountry(country);
 			query.setId(id);
 			query.setStreet(street);
+			System.out.println(query.toString());
 			query.executeQuery(connection);
 			int rowsAffected = query.getUpdateCount();
 			if(rowsAffected == 0) {

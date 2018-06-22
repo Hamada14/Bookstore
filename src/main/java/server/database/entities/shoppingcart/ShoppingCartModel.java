@@ -1,6 +1,7 @@
 package server.database.entities.shoppingcart;
 
 import java.sql.Connection;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.Iterator;
 
 import server.OrderResponseData;
 import server.database.Query;
-import server.database.entities.Order;
+import server.database.entities.order.Order;
 import server.database.entities.book.query.SelectQuantityByISBN;
 import server.database.entities.shoppingcart.queries.InsertShoppingItem;
 import server.database.entities.shoppingcart.queries.InsertShoppingOrder;

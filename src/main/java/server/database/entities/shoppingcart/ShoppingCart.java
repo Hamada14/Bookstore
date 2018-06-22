@@ -1,13 +1,14 @@
 package server.database.entities.shoppingcart;
 
 import java.util.HashSet;
+
 import java.util.Iterator;
 import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import server.database.entities.Order;
+import server.database.entities.order.Order;
 
 
 @Setter

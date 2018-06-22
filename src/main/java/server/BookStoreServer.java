@@ -2,6 +2,7 @@ package server;
 
 import java.util.List;
 
+
 import javax.jws.WebMethod;
 
 import javax.jws.WebService;
@@ -16,7 +17,7 @@ import server.database.entities.publisher.PublisherAddress;
 import server.database.entities.publisher.PublisherPhone;
 import server.database.entities.book.Book;
 import server.database.entities.book.BookBuilder;
-import server.database.entities.Order;
+import server.database.entities.order.Order;
 import server.UserResponseData;
 import server.database.entities.user.UserBuilder;
 import server.database.report.ReportType;

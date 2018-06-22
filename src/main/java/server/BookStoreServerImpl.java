@@ -1,6 +1,8 @@
 package server;
 
 import java.io.IOException;
+
+
 import java.sql.Connection;
 import java.util.List;
 
@@ -9,7 +11,7 @@ import javax.jws.WebService;
 import net.sf.jasperreports.engine.JRException;
 
 import server.database.entities.user.Identity;
-import server.database.entities.Order;
+import server.database.entities.order.*;
 
 import server.database.entities.shoppingcart.ShoppingCart;
 import server.database.entities.shoppingcart.ShoppingCartModel;
@@ -173,7 +175,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 			return rs;
 		}
 		Book book = BookModel.getBookByISBN(isbn, connection);
-		return Order.addNewOrder(new Order(q, book), connection);
+		return OrderModel.addNewOrder(new Order(q, book), connection);
 	}
 	
 
@@ -191,7 +193,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 		if(!validUser.isSuccessful()) {
 			return null;
 		}
-		return Order.selectAllOrders(offset, limit, connection);
+		return OrderModel.selectAllOrders(offset, limit, connection);
 	}
 	
 	@Override
@@ -199,7 +201,7 @@ public class BookStoreServerImpl implements BookStoreServer {
 		if(!identity.isManager(connection)) {
 			return null;
 		}
-		return Order.deleteOrderById(orderId, connection);
+		return OrderModel.deleteOrderById(orderId, connection);
 	}
 	
 	@Override
