@@ -1,5 +1,6 @@
 require 'mysql2'
 require 'faker'
+require 'tempfile'
 
 $PUBLISHER_COUNT = 50_000
 $AUTHOR_COUNT = 500_000
@@ -52,6 +53,28 @@ def isbn10_to_isbn13(isbn10)
   end
   sum = (10 - (sum % 10)) % 10
   isbn13 + sum.to_s
+end
+
+def is_valid_isbn10?(isbn10)
+  isbn_digits = isbn10.to_s.split('').reverse
+  sum = 0
+  isbn_digits.each_with_index do |value, index|
+    sum = sum + (index + 1) * value.to_i
+  end
+  sum % 11 == 0
+end
+
+def generate_isbn()
+  puts "Generating fake ISBN"
+  isbn13_list = Array.new
+  isbn = 1_000_000_000
+  while isbn13_list.size < $BOOK_COUNT do
+    if is_valid_isbn10?(isbn)
+      isbn13_list.push isbn10_to_isbn13(isbn.to_s).to_s
+    end
+    isbn = isbn + 1
+  end
+  puts "Successfully generated fake ISBN"
 end
 
 def start_populate_message(table_name)
@@ -137,7 +160,7 @@ def populate_user_table(client)
   puts(end_populate_message(table_name))
 end
 
-def populate_book_table(client)
+def populate_book_table(client, isbn_list)
   table_name = "BOOK"
   statement = "INSERT INTO BOOK(ISBN, TITLE, PUBLISHER_ID, PUBLICATION_YEAR, SELLING_PRICE, CATEGORY, MIN_THRESHOLD, QUANTITY)\
    VALUES(\"%s\",\"%s\",%d,%d,%d,%d,%d,%d)"
@@ -148,8 +171,7 @@ def populate_book_table(client)
   min_price = 50
   category = 1
   category_count = 5
-  File.open('ISBN_10.txt').each do |line|
-    isbn = isbn10_to_isbn13(line);
+  isbn_list.each do |isbn|
     title = Faker::Book.title
     publisher_id = 1 + (publisher_id % ($PUBLISHER_COUNT))
     publication_year = publication_year == 2018 ? 2000 : publication_year + 1
@@ -163,13 +185,12 @@ def populate_book_table(client)
   puts(end_populate_message(table_name))
 end
 
-def populate_book_author_table(client)
+def populate_book_author_table(client, isbn_list)
   table_name = "BOOK_AUTHOR"
   statement = "INSERT INTO BOOK_AUTHOR (BOOK_ISBN, AUTHOR_ID) VALUES (\"%s\", \"%s\")"
   puts(start_populate_message(table_name))
   author_id = 1
-  File.open('ISBN_10.txt').each do |line|
-    isbn = isbn10_to_isbn13(line)
+  isbn_list.each do |isbn|
     author1 = 1 + (rand * ($AUTHOR_COUNT - 1))
     author2 = 1 + (rand * ($AUTHOR_COUNT - 1))
     author_id = author2
@@ -189,15 +210,14 @@ def populate_shopping_orders_table(client)
   puts(end_populate_message(table_name))
 end
 
-def populate_shopping_items_table(client)
+def populate_shopping_items_table(client, isbn_list)
   table_name = "SHOPPING_ORDER_ITEM"
   statement = "insert into shopping_order_item(shopping_order_id, book_isbn, selling_price)values(%d, \"%s\", %f)"
   puts(start_populate_message(table_name))
   id = 0
   max_price = 80
   min_price = 50
-  File.open('ISBN_10.txt').each do |line|
-    isbn = isbn10_to_isbn13(line)
+  isbn_list.each do |isbn|
     selling_price = min_price + (max_price - min_price) * rand
     id = id + 1
     batch_query(client, statement%[id, isbn, selling_price])
@@ -208,12 +228,13 @@ def populate_shopping_items_table(client)
 end
 
 client = mysql_client
+isbn_list = generate_isbn()
 populate_publisher_table(client)
 populate_publisher_phone_table(client)
 populate_publisher_address_table(client)
 populate_author_table(client)
 populate_user_table(client)
-populate_book_table(client)
-populate_book_author_table(client)
+populate_book_table(client, isbn_list)
+populate_book_author_table(client, isbn_list)
 populate_shopping_orders_table(client)
-populate_shopping_items_table(client)
+populate_shopping_items_table(client, isbn_list)
